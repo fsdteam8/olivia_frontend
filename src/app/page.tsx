@@ -1,8 +1,27 @@
+import { AboutSection } from "@/components/home/AboutSection";
+import { CommunityCTA } from "@/components/home/CommunityCTA";
+import CommunityFeedback from "@/components/home/CommunityMarquee";
+import { Features } from "@/components/home/Features";
+import { Hero } from "@/components/home/Hero";
+import { HowItWorks } from "@/components/home/HowItWorks";
+import { Newsletter } from "@/components/home/Newsletter";
+import { UpcomingEvents } from "@/components/home/UpcomingEvents";
+import { WhatWeOffer } from "@/components/home/WhatWeOffer";
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold">Template Setup</h1>
-      <p className="mt-4 text-xl">The application root is ready.</p>
+    <main className="space-y-[100px]">
+      <Hero />
+      <Features />
+      <AboutSection />
+      <WhatWeOffer />
+      <HowItWorks />
+      <CommunityFeedback />
+      <UpcomingEvents />
+      <div>
+        <CommunityCTA />
+        <Newsletter />
+      </div>
     </main>
   );
 }
