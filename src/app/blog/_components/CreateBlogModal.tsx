@@ -120,6 +120,41 @@ const CreateBlogModal = ({
             </div>
           </div>
 
+          {/* --- Author Information --- */}
+          <div className="space-y-4 p-6 rounded-2xl border border-slate-100">
+            <h3 className="text-[#004242]  text-sm">Author Information</h3>
+            <div className="grid grid-cols-1 gap-4">
+              <div className="space-y-2">
+                <Label className="text-[#004242]  text-xs">Author Name</Label>
+                <Input
+                  defaultValue="Olivia Krap"
+                  className="rounded-lg border-slate-200"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div className="md:col-span-3 space-y-2">
+                  <Label className="text-slate-400 font-medium text-xs">
+                    Description
+                  </Label>
+                  <Textarea
+                    className="rounded-lg border-slate-200 min-h-[100px]"
+                    placeholder="Tell candidates about the role and its impact on the climate..."
+                  />
+                </div>
+                <div className="md:col-span-1 space-y-2">
+                  <Label className="text-[#004242] font-bold text-xs">
+                    Profile Image
+                  </Label>
+                  <div className="flex flex-col items-center justify-center w-full h-[100px] border border-dashed border-slate-300 rounded-lg bg-slate-50 hover:bg-slate-100 cursor-pointer text-[#729094]">
+                    <Upload size={20} className="mb-2" />
+                    <span className="text-[10px] font-bold">Upload</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Submit Button */}
           <div className="pt-4">
             <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg font-bold text-md transition-all active:scale-[0.98]">
