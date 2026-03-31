@@ -4,8 +4,6 @@ import PageHero from "@/components/home/PageHero";
 import SuggestCourseModal from "./suggest-course-modal";
 import CourseListSection from "./course-list-section";
 import CollaborateSection from "./collaborate-section";
-import CommunitySection from "@/components/home/CommunitySection";
-import { Newsletter } from "@/components/home/Newsletter";
 
 const CourseMain = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

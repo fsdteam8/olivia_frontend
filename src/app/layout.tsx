@@ -53,7 +53,7 @@ export default function RootLayout({
 
             <TopLoader color="#2563eb" easing="ease-in" showSpinner={false} />
 
-            {children}
+            <main className="min-h-[calc(100vh-200px)]">{children}</main>
 
             <Footer />
           </Provider>

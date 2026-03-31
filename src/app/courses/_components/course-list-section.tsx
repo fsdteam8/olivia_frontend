@@ -14,6 +14,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import Link from "next/link";
 
 const categories = [
   "All Courses",
@@ -168,9 +169,11 @@ const CourseListSection = () => {
                   {course.description}
                 </p>
 
-                <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg font-bold text-sm mt-auto">
-                  Explore Course
-                </Button>
+                <Link href={`/courses/adfasdfasf`}>
+                  <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg font-bold text-sm mt-auto">
+                    Explore Course
+                  </Button>
+                </Link>
               </div>
             </div>
           ))}
