@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import CommunitySection from "@/components/home/CommunitySection";
 
 const otherCourses = [
   {
@@ -40,7 +41,7 @@ const otherCourses = [
 
 const ExploreOtherCourses = () => {
   return (
-    <section className="bg-[#F8FAFA] py-16">
+    <section>
       <div className="container">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-10">

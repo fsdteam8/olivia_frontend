@@ -20,7 +20,7 @@ const benefits = [
 
 const CourseBenefits = () => {
   return (
-    <section className="bg-white">
+    <section className="bg-[#eef4f5] py-16">
       <div className="container">
         <div className="space-y-8">
           {/* Section Heading */}
