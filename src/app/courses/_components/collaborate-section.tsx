@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { Newsletter } from "@/components/home/Newsletter";
+import CommunitySection from "@/components/home/CommunitySection";
 
 interface CollaborateSectionProps {
   setOpen: (open: boolean) => void;
@@ -54,6 +56,11 @@ const CollaborateSection = ({ setOpen }: CollaborateSectionProps) => {
             </div>
           </div>
         </div>
+      </div>
+
+      <div>
+        <Newsletter />
+        <CommunitySection />
       </div>
     </section>
   );
