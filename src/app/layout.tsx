@@ -6,6 +6,7 @@ import Provider from "@/Providers/Provider";
 import { Toaster } from "sonner";
 import { Navbar } from "@/components/home/Navbar";
 import TopLoader from "nextjs-toploader";
+import Footer from "@/components/home/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -52,7 +53,9 @@ export default function RootLayout({
 
             <TopLoader color="#2563eb" easing="ease-in" showSpinner={false} />
 
-            {children}
+            <main className="min-h-[calc(100vh-200px)]">{children}</main>
+
+            <Footer />
           </Provider>
         </MainProviders>
 
