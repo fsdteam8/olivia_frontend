@@ -19,7 +19,7 @@ const BlogMain = () => {
         title="Our Blog"
       />
       <BlogGallery />
-      <SubmitBlogBanner />
+      <SubmitBlogBanner setOpen={setIsCreateBlogOpen} />
       <CommunitySection />
       <Footer />
       <CreateBlogModal

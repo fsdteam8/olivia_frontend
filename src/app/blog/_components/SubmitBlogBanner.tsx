@@ -1,7 +1,11 @@
 // components/SubmitBlogBanner.tsx
 import React from "react";
 
-const SubmitBlogBanner = () => {
+const SubmitBlogBanner = ({
+  setOpen,
+}: {
+  setOpen: (open: boolean) => void;
+}) => {
   return (
     <section className="relative w-full bg-white py-20 px-6 overflow-hidden flex flex-col items-center justify-center text-center min-h-[400px]">
       {/* Background Decorative Rings - Left */}
@@ -43,7 +47,10 @@ const SubmitBlogBanner = () => {
           us on a whole range of climate topics.
         </p>
 
-        <button className="bg-[#004242] hover:bg-[#003333] text-white px-8 py-3 rounded-md font-bold text-sm transition-colors duration-200 mb-6">
+        <button
+          onClick={() => setOpen(true)}
+          className="bg-[#004242] hover:bg-[#003333] text-white px-8 py-3 rounded-md font-bold text-sm transition-colors duration-200 mb-6"
+        >
           Submit here
         </button>
 

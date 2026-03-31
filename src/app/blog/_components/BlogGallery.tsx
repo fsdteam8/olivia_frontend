@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { MoveRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface BlogPost {
   id: number;
@@ -121,7 +122,7 @@ const BlogCard = ({ post }: { post: BlogPost }) => {
           height={400}
           src={post.image}
           alt={post.title}
-          className="w-full h-52 object-cover rounded-xl"
+          className="w-full h-56 object-cover rounded-xl"
         />
       </div>
 
@@ -138,9 +139,12 @@ const BlogCard = ({ post }: { post: BlogPost }) => {
           {post.description}
         </p>
 
-        <button className="flex items-center gap-2 text-[#5D8AA8] font-bold text-sm hover:gap-3 transition-all">
-          Read More <MoveRight size={18} />
-        </button>
+        <Link
+          href={`/blog/${post.id}`}
+          className="text-[#004242] text-sm font-semibold flex items-center gap-2"
+        >
+          Read More <MoveRight size={16} />
+        </Link>
       </div>
     </div>
   );
