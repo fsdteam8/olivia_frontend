@@ -5,8 +5,10 @@ const nextConfig: NextConfig = {
     domains: [
       "img.freepik.com",
       "images.unsplash.com",
+      "plus.unsplash.com",
       "res.cloudinary.com",
       "api.dicebear.com",
+      "unsplash.com",
     ],
   },
 };
