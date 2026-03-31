@@ -17,6 +17,7 @@ const BlogMain = () => {
         bgImage="/blog.jpg"
         subtitle="Transforming Workplaces with End-to-End IWMS Solutions Like Consulting, Implementation, Integration, and Support All in One Place"
         title="Our Blog"
+        buttonTitle="Submit a Blog for Us"
       />
       <BlogGallery />
       <SubmitBlogBanner />

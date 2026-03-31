@@ -5,11 +5,13 @@ const PageHero = ({
   title = "Our Blog",
   subtitle = "Transforming Workplaces with End-to-End IWMS Solutions Like Consulting, Implementation, Integration, and Support All in One Place",
   bgImage = "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&q=80&w=1920",
+  buttonTitle,
   setOpen,
 }: {
   title?: string;
   subtitle?: string;
   bgImage?: string;
+  buttonTitle: string;
   setOpen?: (open: boolean) => void;
 }) => {
   return (
@@ -34,10 +36,7 @@ const PageHero = ({
 
         {/* Reusable Button - Careful with margins to avoid "messing" layout */}
         <div className="pt-4">
-          <PrimaryButton
-            text="Submit a Blog for Us"
-            onClick={() => setOpen?.(true)}
-          />
+          <PrimaryButton text={buttonTitle} onClick={() => setOpen?.(true)} />
         </div>
       </div>
     </section>
