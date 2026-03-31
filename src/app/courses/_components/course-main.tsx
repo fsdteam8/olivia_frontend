@@ -3,6 +3,7 @@ import { useState } from "react";
 import PageHero from "@/components/home/PageHero";
 import SuggestCourseModal from "./suggest-course-modal";
 import CourseListSection from "./course-list-section";
+import CollaborateSection from "./collaborate-section";
 
 const CourseMain = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,6 +19,8 @@ const CourseMain = () => {
       />
 
       <CourseListSection />
+
+      <CollaborateSection setOpen={setIsModalOpen} />
 
       {/* The Modal Component */}
       <SuggestCourseModal open={isModalOpen} onOpenChange={setIsModalOpen} />
