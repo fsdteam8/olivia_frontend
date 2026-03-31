@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Clock, BookOpen, BarChart, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const FeaturedCourseSection = () => {
   return (
@@ -70,9 +71,11 @@ const FeaturedCourseSection = () => {
               </div>
             </div>
 
-            <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-7 rounded-lg font-bold text-lg mt-8">
-              Enroll in Course
-            </Button>
+            <Link href={`/courses/adfasdfasf/enroll-course`}>
+              <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-7 rounded-lg font-bold text-lg mt-8">
+                Enroll in Course
+              </Button>
+            </Link>
           </div>
 
           {/* Right Video/Image Preview */}
