@@ -1,6 +1,10 @@
 import PageHero from "@/components/home/PageHero";
 import React from "react";
 import AssistanceSection from "./assistance-section";
+import { Newsletter } from "@/components/home/Newsletter";
+import CommunitySection from "@/components/home/CommunitySection";
+import HowItWorks from "./how-it-work";
+import PricingSection from "./pricing-section";
 
 const CareerServices = () => {
   return (
@@ -13,6 +17,13 @@ const CareerServices = () => {
           isHide={true}
         />
         <AssistanceSection />
+      </div>
+      <HowItWorks />
+
+      <div>
+        <PricingSection />
+        <Newsletter />
+        <CommunitySection />
       </div>
     </div>
   );
