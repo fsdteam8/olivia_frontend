@@ -2,6 +2,8 @@ import PageHero from "@/components/home/PageHero";
 import React from "react";
 import OurMission from "./_components/our-mission";
 import MeetOurTeam from "./_components/meet-our-team";
+import { Newsletter } from "@/components/home/Newsletter";
+import CommunitySection from "@/components/home/CommunitySection";
 
 const page = () => {
   return (
@@ -14,6 +16,10 @@ const page = () => {
       />
       <OurMission />
       <MeetOurTeam />
+      <div>
+        <Newsletter />
+        <CommunitySection />
+      </div>
     </div>
   );
 };
