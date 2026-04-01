@@ -2,7 +2,6 @@ import React from "react";
 import BlogDetails from "../_components/BlogDetails";
 import ClimateOpportunities from "../_components/ClimateOpportunities";
 import CommunitySection from "@/components/home/CommunitySection";
-import Footer from "@/components/home/Footer";
 
 const page = () => {
   return (
@@ -10,7 +9,6 @@ const page = () => {
       <BlogDetails />
       <ClimateOpportunities />
       <CommunitySection />
-      <Footer />
     </div>
   );
 };
