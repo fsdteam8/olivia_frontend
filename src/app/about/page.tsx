@@ -1,6 +1,7 @@
 import PageHero from "@/components/home/PageHero";
 import React from "react";
 import OurMission from "./_components/our-mission";
+import MeetOurTeam from "./_components/meet-our-team";
 
 const page = () => {
   return (
@@ -12,6 +13,7 @@ const page = () => {
         isHide={true}
       />
       <OurMission />
+      <MeetOurTeam />
     </div>
   );
 };
