@@ -4,7 +4,6 @@ import React from "react";
 import BlogGallery from "./BlogGallery";
 import SubmitBlogBanner from "./SubmitBlogBanner";
 import CommunitySection from "@/components/home/CommunitySection";
-import Footer from "@/components/home/Footer";
 import CreateBlogModal from "./CreateBlogModal";
 
 const BlogMain = () => {
@@ -22,7 +21,6 @@ const BlogMain = () => {
       <BlogGallery />
       <SubmitBlogBanner />
       <CommunitySection />
-      <Footer />
       <CreateBlogModal
         isOpen={isCreateBlogOpen}
         setOpen={setIsCreateBlogOpen}
