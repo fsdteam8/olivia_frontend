@@ -6,12 +6,14 @@ const PageHero = ({
   subtitle = "Transforming Workplaces with End-to-End IWMS Solutions Like Consulting, Implementation, Integration, and Support All in One Place",
   bgImage = "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&q=80&w=1920",
   buttonTitle,
+  isHide,
   setOpen,
 }: {
   title?: string;
   subtitle?: string;
   bgImage?: string;
-  buttonTitle: string;
+  buttonTitle?: string;
+  isHide?: boolean;
   setOpen?: (open: boolean) => void;
 }) => {
   return (
@@ -35,8 +37,11 @@ const PageHero = ({
         </p>
 
         {/* Reusable Button - Careful with margins to avoid "messing" layout */}
-        <div className="pt-4">
-          <PrimaryButton text={buttonTitle} onClick={() => setOpen?.(true)} />
+        <div className={`${isHide === true ? "hidden" : "block pt-4"}`}>
+          <PrimaryButton
+            text={buttonTitle as string}
+            onClick={() => setOpen?.(true)}
+          />
         </div>
       </div>
     </section>
