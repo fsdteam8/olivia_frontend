@@ -2,6 +2,11 @@ import ClimateJourneyBanner from "./climate-journey-banner";
 import CareerServicesTiers from "./career-services-tiers";
 import PricingCards from "./pricing-cards";
 import PricingCTA from "./pricing-cta";
+import HowItWorksSecondary from "./how-it-work-secoundary";
+import ComparePlans from "./compare-plans";
+import SpecificServicePricing from "./specific-service-pricing";
+import { Newsletter } from "@/components/home/Newsletter";
+import CommunitySection from "@/components/home/CommunitySection";
 
 const ClimateJourney = () => {
   return (
@@ -12,6 +17,13 @@ const ClimateJourney = () => {
         <PricingCards />
       </div>
       <PricingCTA />
+      <HowItWorksSecondary />
+      <ComparePlans />
+      <SpecificServicePricing />
+      <div>
+        <Newsletter />
+        <CommunitySection />
+      </div>
     </div>
   );
 };
