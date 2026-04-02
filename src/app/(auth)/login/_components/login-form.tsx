@@ -10,16 +10,17 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox"; // Checkbox component add kora lagte pare
+import { Checkbox } from "@/components/ui/checkbox";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { useState } from "react";
-import { Eye, EyeOff, Lock, ShieldCheck, ArrowRight } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
+import Image from "next/image";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -60,7 +61,7 @@ const LoginForm = () => {
         window.location.href = "/";
       }
     } catch (error) {
-      console.log(`login error : ${error}`);
+      console.error(`login error : ${error}`);
       toast.error("Something went wrong!");
     } finally {
       setIsLoading(false);
@@ -72,156 +73,142 @@ const LoginForm = () => {
   }
 
   return (
-    <div className="w-full mx-auto p-4 flex flex-col items-center">
-      {/* Header Section */}
-      <div className="text-center mb-8">
-        <span className="bg-[#E0F2F1] text-primary px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+    <div className="lg:max-w-[500px] bg-white rounded-[24px] p-8 md:p-10 shadow-2xl mx-4">
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="text-[28px] text-[#053535] leading-tight">
           Welcome Back
-        </span>
-        <h1 className="text-4xl font-bold text-[#1A2E35] mt-4">
-          Login to Bookersi
         </h1>
-        <p className="text-gray-500 mt-2">
-          Your wellness journey continues here.
+        <p className="text-gray-400 text-[14px] mt-2">
+          Enter your credentials to mange your attractions.
         </p>
       </div>
 
-      {/* Login Card */}
-      <div className="w-full bg-white border border-gray-100 rounded-3xl p-8 shadow-sm">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-[#1A2E35] font-semibold">
-                    Email address
-                  </FormLabel>
-                  <FormControl>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="space-y-1.5">
+                <FormLabel className="text-[#053535] text-sm font-medium">
+                  Email Address
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="hello@example.com"
+                    className="h-11 border border-gray-100 bg-white rounded-lg focus-visible:ring-1 focus-visible:ring-[#053535] placeholder:text-gray-300"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem className="space-y-1.5">
+                <FormLabel className="text-[#053535] text-sm font-medium">
+                  Password
+                </FormLabel>
+                <FormControl>
+                  <div className="relative">
                     <Input
-                      placeholder="you@example.com"
-                      className="h-[52px] bg-[#F4F9F9] border-none rounded-xl focus-visible:ring-1 focus-visible:ring-primary"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Enter password"
+                      className="h-11 border border-gray-100 bg-white rounded-lg pr-12 focus-visible:ring-1 focus-visible:ring-[#053535] placeholder:text-gray-300"
                       {...field}
                     />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="flex justify-between items-center">
-                    <FormLabel className="text-[#1A2E35] font-semibold">
-                      Password
-                    </FormLabel>
-                    <Link
-                      href="/forgot-password"
-                      className="text-xs font-medium text-primary hover:underline hover:text-primary"
+                    <button
+                      type="button"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                      onClick={() => setShowPassword(!showPassword)}
                     >
-                      Forgot password?
-                    </Link>
+                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
                   </div>
-                  <FormControl>
-                    <div className="relative">
-                      <Input
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Enter your password"
-                        className="h-[52px] bg-[#F4F9F9] border-none rounded-xl pr-12 focus-visible:ring-1 focus-visible:ring-primary"
-                        {...field}
-                      />
-                      <button
-                        type="button"
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
-                        onClick={() => setShowPassword(!showPassword)}
-                      >
-                        {showPassword ? (
-                          <EyeOff size={20} />
-                        ) : (
-                          <Eye size={20} />
-                        )}
-                      </button>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
+          <div className="flex items-center justify-between pb-2">
             <div className="flex items-center space-x-2">
               <Checkbox
                 id="remember"
-                className="border-gray-300 data-[state=checked]:bg-primary"
+                className="w-4 h-4 border-gray-300 rounded data-[state=checked]:bg-[#053535] data-[state=checked]:border-[#053535]"
               />
               <label
                 htmlFor="remember"
-                className="text-sm font-medium text-gray-600 cursor-pointer"
+                className="text-[13px] text-[#053535] font-medium cursor-pointer"
               >
                 Remember me
               </label>
             </div>
-
-            <Button
-              disabled={isLoading}
-              type="submit"
-              className="h-[52px] w-full bg-primary hover:bg-primary text-white rounded-xl text-lg font-semibold transition-all"
+            <Link
+              href="/forgot-password"
+              className="text-[13px] font-medium text-[#008080] hover:underline"
             >
-              {isLoading ? <Spinner className="mr-2" /> : "Login"}
-            </Button>
-          </form>
-        </Form>
-
-        {/* Divider */}
-        {/* <div className="relative my-8">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t border-gray-200"></span>
+              Forgot password?
+            </Link>
           </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white px-4 text-gray-400">Or sign up with</span>
-          </div>
-        </div> */}
 
-        {/* Social Buttons */}
-        {/* <div>
           <Button
+            disabled={isLoading}
+            type="submit"
+            className="h-12 w-full bg-[#053535] hover:bg-[#042a2a] text-white rounded-lg text-base font-semibold transition-all active:scale-[0.98]"
+          >
+            {isLoading ? <Spinner className="mr-2" /> : "Sign In"}
+          </Button>
+        </form>
+      </Form>
+
+      {/* Divider */}
+      {/* <div className="relative my-8">
+        <div className="absolute inset-0 flex items-center">
+          <span className="w-full border-t border-gray-100"></span>
+        </div>
+        <div className="relative flex justify-center text-[12px]">
+          <span className="bg-white px-3 text-gray-400">
+            Or continue with email
+          </span>
+        </div>
+      </div> */}
+
+      {/* Social Buttons */}
+      {/* <div className="grid grid-cols-4 gap-3 mb-8">
+        {["google", "facebook", "linkedin", "apple"].map((social) => (
+          <Button
+            key={social}
             variant="outline"
-            className="h-[52px] w-full rounded-xl border-gray-100 flex gap-2 font-medium hover:bg-gray-100"
+            className="h-12 w-full rounded-lg border-gray-100 p-0 hover:bg-gray-50 flex items-center justify-center transition-colors"
           >
             <Image
-              src="/images/google-icon.png"
+              src={`/icons/${social}.svg`} 
               width={20}
               height={20}
-              alt="Google"
-            />{" "}
-            Google
+              alt={social}
+              className="opacity-80"
+            />
           </Button>
-        </div> */}
-      </div>
+        ))}
+      </div> */}
 
-      {/* Footer Links */}
-      <div className="mt-8 text-center">
-        <p className="text-gray-500">
+      {/* Footer */}
+      <div className="text-center mt-5">
+        <p className="text-[14px] text-gray-400">
           Don&apos;t have an account?{" "}
           <Link
             href="/sign-up"
-            className="text-[#009688] font-bold inline-flex items-center hover:underline"
+            className="text-[#053535] font-bold hover:underline ml-1"
           >
-            Sign up for free <ArrowRight size={16} className="ml-1" />
+            Sign up
           </Link>
         </p>
-      </div>
-
-      <div className="mt-8 flex gap-6 text-gray-500 text-sm">
-        <div className="flex items-center gap-2">
-          <Lock size={16} /> Secure & encrypted
-        </div>
-        <div className="flex items-center gap-2">
-          <ShieldCheck size={16} /> Privacy protected
-        </div>
       </div>
     </div>
   );

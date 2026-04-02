@@ -3,7 +3,6 @@ import { CommunityCTA } from "@/components/home/CommunityCTA";
 import CommunityFeedback from "@/components/home/CommunityMarquee";
 import CommunitySection from "@/components/home/CommunitySection";
 import { Features } from "@/components/home/Features";
-import Footer from "@/components/home/Footer";
 import { Hero } from "@/components/home/Hero";
 import { HowItWorks } from "@/components/home/HowItWorks";
 import { Newsletter } from "@/components/home/Newsletter";
@@ -19,13 +18,12 @@ export default function Home() {
       <WhatWeOffer />
       <HowItWorks />
       <CommunityFeedback />
-      <UpcomingEvents />
       <div>
+        <UpcomingEvents />
         <CommunityCTA />
         <Newsletter />
+        <CommunitySection />
       </div>
-      <CommunitySection />
-      <Footer />
     </main>
   );
 }

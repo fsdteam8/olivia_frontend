@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Calendar, User } from "lucide-react";
-import EventDetailsPage from "@/app/event/_components/EventDetailsPage";
+import EventDetailsPage from "@/app/(website)/event/_components/EventDetailsPage";
 
 const BlogDetails = () => {
   return (
