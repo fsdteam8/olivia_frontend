@@ -25,7 +25,7 @@ export const MentorsGallery = () => {
               Browse 124 professionals available for guidance.
             </p>
           </div>
-          <button className="text-[#064E4B] font-bold flex items-center gap-2 hover:underline">
+          <button className="text-[#064E4B]  flex items-center gap-2 hover:underline">
             View All Coaches & Mentors <span>→</span>
           </button>
         </div>
@@ -74,7 +74,7 @@ export const MentorsGallery = () => {
               </p>
 
               <div className="flex gap-2">
-                <button className="flex-grow border-2 border-[#064E4B] text-[#064E4B] py-2 rounded-lg text-xs font-bold hover:bg-slate-50">
+                <button className="flex-grow border-2 border-[#064E4B] text-[#064E4B] py-2 rounded-lg text-xs  hover:bg-slate-50">
                   View Profile
                 </button>
                 <button className="bg-[#064E4B] text-white p-2 rounded-lg hover:bg-[#043331]">

@@ -50,7 +50,7 @@ const ExploreOtherCourses = () => {
           </h2>
           <Button
             variant="outline"
-            className="border-[#004242] text-[#004242] hover:bg-[#004242] hover:text-white font-bold rounded-lg px-6"
+            className="border-[#004242] text-[#004242] hover:bg-[#004242] hover:text-white  rounded-lg px-6"
           >
             View All Courses
           </Button>
@@ -70,14 +70,14 @@ const ExploreOtherCourses = () => {
                   fill
                   className="object-cover"
                 />
-                <Badge className="absolute top-4 left-4 bg-white/95 text-black hover:bg-white border-none px-3 py-1 font-bold text-[10px] tracking-widest">
+                <Badge className="absolute top-4 left-4 bg-white/95 text-black hover:bg-white border-none px-3 py-1  text-[10px] tracking-widest">
                   {course.category}
                 </Badge>
               </div>
 
               <div className="p-6 flex flex-col flex-grow">
                 <div className="flex items-center gap-5 mb-4">
-                  <span className="text-[13px] font-bold text-green-500 bg-green-50 px-2 py-0.5 rounded-full">
+                  <span className="text-[13px]  text-green-500 bg-green-50 px-2 py-0.5 rounded-full">
                     {course.level}
                   </span>
                   <div className="flex items-center gap-1.5 text-gray-400 text-[13px] font-medium">
@@ -94,7 +94,7 @@ const ExploreOtherCourses = () => {
                   {course.description}
                 </p>
 
-                <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg font-bold text-sm mt-auto">
+                <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg  text-sm mt-auto">
                   Explore Course
                 </Button>
               </div>

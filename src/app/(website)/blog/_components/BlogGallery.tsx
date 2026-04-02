@@ -139,7 +139,7 @@ const BlogCard = ({ post }: { post: BlogPost }) => {
           {post.description}
         </p>
 
-        <button className="flex items-center gap-2 text-[#5D8AA8] font-bold text-sm hover:gap-3 transition-all">
+        <button className="flex items-center gap-2 text-[#5D8AA8]  text-sm hover:gap-3 transition-all">
           Read More <MoveRight size={18} />
         </button>
       </div>

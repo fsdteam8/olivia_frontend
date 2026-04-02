@@ -70,21 +70,11 @@ const ComparePlans = () => {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="border-b border-[#F1F5F9]">
-                  <th className="p-6 text-lg font-bold text-[#064E4B] w-1/4">
-                    Feature
-                  </th>
-                  <th className="p-6 text-lg font-bold text-[#064E4B]">
-                    Non-Member
-                  </th>
-                  <th className="p-6 text-lg font-bold text-[#064E4B]">
-                    Beginner
-                  </th>
-                  <th className="p-6 text-lg font-bold text-[#064E4B]">
-                    Monthly
-                  </th>
-                  <th className="p-6 text-lg font-bold text-[#064E4B]">
-                    Yearly
-                  </th>
+                  <th className="p-6 text-lg  text-[#064E4B] w-1/4">Feature</th>
+                  <th className="p-6 text-lg  text-[#064E4B]">Non-Member</th>
+                  <th className="p-6 text-lg  text-[#064E4B]">Beginner</th>
+                  <th className="p-6 text-lg  text-[#064E4B]">Monthly</th>
+                  <th className="p-6 text-lg  text-[#064E4B]">Yearly</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#F1F5F9]">
@@ -103,12 +93,12 @@ const ComparePlans = () => {
                       {row.beginner}
                     </td>
                     <td
-                      className={`p-6 text-sm md:text-base font-bold ${row.isMonthlyHighlighted ? "text-[#064E4B]" : "text-[#528B8A]"}`}
+                      className={`p-6 text-sm md:text-base  ${row.isMonthlyHighlighted ? "text-[#064E4B]" : "text-[#528B8A]"}`}
                     >
                       {row.monthly}
                     </td>
                     <td
-                      className={`p-6 text-sm md:text-base font-bold ${row.isYearlyHighlighted || row.feature === "Yearly" ? "text-[#064E4B]" : "text-[#528B8A]"}`}
+                      className={`p-6 text-sm md:text-base  ${row.isYearlyHighlighted || row.feature === "Yearly" ? "text-[#064E4B]" : "text-[#528B8A]"}`}
                     >
                       {row.yearly}
                     </td>

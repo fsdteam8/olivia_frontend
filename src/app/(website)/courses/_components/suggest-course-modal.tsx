@@ -29,7 +29,7 @@ const SuggestCourseModal = ({ open, onOpenChange }: ModalProps) => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-3xl! max-h-[90vh] overflow-y-auto">
         <DialogHeader className="!text-center">
-          <DialogTitle className="text-3xl font-bold text-[#004242]">
+          <DialogTitle className="text-3xl  text-[#004242]">
             Suggest a Course Idea
           </DialogTitle>
           <DialogDescription className="text-gray-500 lg:max-w-lg mx-auto">

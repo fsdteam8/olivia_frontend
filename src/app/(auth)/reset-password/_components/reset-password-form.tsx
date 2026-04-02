@@ -196,10 +196,7 @@ const ResetPasswordForm = () => {
       <div className="text-center mt-8">
         <p className="text-[14px] text-gray-400">
           Already have an account?{" "}
-          <Link
-            href="/login"
-            className="text-[#053535] font-bold hover:underline ml-1"
-          >
+          <Link href="/login" className="text-[#053535]  hover:underline ml-1">
             Sign in
           </Link>
         </p>

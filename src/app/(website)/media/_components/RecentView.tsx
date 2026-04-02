@@ -72,7 +72,7 @@ const RecentView = () => {
               {/* Content Section */}
               <div className="p-5 flex flex-col flex-grow">
                 <div className="mb-3">
-                  <span className="bg-[#004242] text-white text-[10px] font-bold px-3 py-1 rounded-full">
+                  <span className="bg-[#004242] text-white text-[10px]  px-3 py-1 rounded-full">
                     {item.category}
                   </span>
                 </div>
@@ -87,7 +87,7 @@ const RecentView = () => {
 
                 {/* Footer Link */}
                 <div className="mt-auto pt-4 border-t border-slate-100">
-                  <button className="flex items-center gap-2 text-[#729094] text-xs font-bold hover:text-[#004242] transition-colors group">
+                  <button className="flex items-center gap-2 text-[#729094] text-xs  hover:text-[#004242] transition-colors group">
                     Watch Video
                     <ArrowRight
                       size={14}

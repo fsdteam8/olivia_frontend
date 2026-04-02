@@ -73,7 +73,7 @@ const ExploreEvents = () => {
                     />
                     {/* Date Badge */}
                     <div className="absolute top-3 left-3 bg-white rounded-lg p-1.5 min-w-[45px] text-center shadow-md">
-                      <p className="text-[10px] font-bold text-[#729094] uppercase leading-none mb-1">
+                      <p className="text-[10px]  text-[#729094] uppercase leading-none mb-1">
                         {event.month}
                       </p>
                       <p className="text-xl font-black text-[#004242] leading-none">
@@ -105,7 +105,7 @@ const ExploreEvents = () => {
                   </div>
 
                   {/* Button */}
-                  <button className="w-full py-2.5 rounded-lg border border-slate-200 text-[#004242] text-xs font-bold hover:bg-slate-50 transition-colors mt-auto">
+                  <button className="w-full py-2.5 rounded-lg border border-slate-200 text-[#004242] text-xs  hover:bg-slate-50 transition-colors mt-auto">
                     Register Now
                   </button>
                 </div>

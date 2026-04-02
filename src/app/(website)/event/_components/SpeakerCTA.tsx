@@ -31,7 +31,7 @@ const SpeakerCTA = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
 
           <button
             onClick={() => setOpen(true)}
-            className="bg-[#004242] hover:bg-[#003333] text-white px-8 py-3 rounded-lg font-bold text-sm transition-all active:scale-[0.98]"
+            className="bg-[#004242] hover:bg-[#003333] text-white px-8 py-3 rounded-lg  text-sm transition-all active:scale-[0.98]"
           >
             Apply to Speak
           </button>

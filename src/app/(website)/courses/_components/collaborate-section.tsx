@@ -30,7 +30,7 @@ const CollaborateSection = ({ setOpen }: CollaborateSectionProps) => {
             <div className="pt-2">
               <Button
                 onClick={() => setOpen(true)}
-                className="bg-[#004242] hover:bg-[#003333] text-white px-8 py-6 rounded-md font-bold text-sm"
+                className="bg-[#004242] hover:bg-[#003333] text-white px-8 py-6 rounded-md  text-sm"
               >
                 Submit Course Idea
               </Button>

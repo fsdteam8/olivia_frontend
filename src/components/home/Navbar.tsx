@@ -22,10 +22,10 @@
 
 //       {/* Auth Actions */}
 //       <div className="flex items-center gap-3">
-//         <Button className="bg-[#0D3B3F] hover:bg-[#164e53] text-white rounded-md px-6 text-xs font-bold">
+//         <Button className="bg-[#0D3B3F] hover:bg-[#164e53] text-white rounded-md px-6 text-xs ">
 //           Join Community
 //         </Button>
-//         <Button variant="outline" className="border-gray-300 text-gray-700 rounded-md px-6 text-xs font-bold">
+//         <Button variant="outline" className="border-gray-300 text-gray-700 rounded-md px-6 text-xs ">
 //           Login
 //         </Button>
 //       </div>
@@ -64,13 +64,13 @@ export const Navbar = () => {
 
         {/* Auth Actions */}
         <div className="flex items-center gap-3">
-          <Button className="bg-[#0D3B3F] hover:bg-[#164e53] text-white rounded-md px-6 text-xs font-bold">
+          <Button className="bg-[#0D3B3F] hover:bg-[#164e53] text-white rounded-md px-6 text-xs ">
             Join Community
           </Button>
 
           <Button
             variant="outline"
-            className="border-gray-300 text-gray-700 rounded-md px-6 text-xs font-bold"
+            className="border-gray-300 text-gray-700 rounded-md px-6 text-xs "
           >
             Login
           </Button>

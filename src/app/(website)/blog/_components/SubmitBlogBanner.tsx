@@ -43,7 +43,7 @@ const SubmitBlogBanner = () => {
           us on a whole range of climate topics.
         </p>
 
-        <button className="bg-[#004242] hover:bg-[#003333] text-white px-8 py-3 rounded-md font-bold text-sm transition-colors duration-200 mb-6">
+        <button className="bg-[#004242] hover:bg-[#003333] text-white px-8 py-3 rounded-md  text-sm transition-colors duration-200 mb-6">
           Submit here
         </button>
 

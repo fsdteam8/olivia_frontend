@@ -31,7 +31,7 @@ export const WhatWeOffer = () => {
     <section className="">
       <div className="container">
         {/* Section Header */}
-        <h2 className="text-4xl font-bold text-[#0D3B3F] text-center mb-16">
+        <h2 className="text-4xl  text-[#0D3B3F] text-center mb-16">
           What We Offer
         </h2>
 

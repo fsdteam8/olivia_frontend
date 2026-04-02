@@ -115,7 +115,7 @@ const CourseListSection = () => {
               placeholder="Enter Your Email"
               className="border-none focus-visible:ring-0 w-64 h-11 text-sm px-4"
             />
-            <Button className="bg-[#004242] hover:bg-[#003333] text-white h-11 px-6 rounded-none font-bold hero-font">
+            <Button className="bg-[#004242] hover:bg-[#003333] text-white h-11 px-6 rounded-none  hero-font">
               Subscribe
             </Button>
           </div>
@@ -136,7 +136,7 @@ const CourseListSection = () => {
                   fill
                   className="object-cover"
                 />
-                <Badge className="absolute top-4 left-4 bg-white/95 text-black hover:bg-white border-none px-3 py-1 font-bold text-[10px] tracking-widest shadow-sm">
+                <Badge className="absolute top-4 left-4 bg-white/95 text-black hover:bg-white border-none px-3 py-1  text-[10px] tracking-widest shadow-sm">
                   {course.category}
                 </Badge>
               </div>
@@ -145,7 +145,7 @@ const CourseListSection = () => {
               <div className="p-6 flex flex-col flex-grow">
                 <div className="flex items-center gap-5 mb-4">
                   <span
-                    className={`text-[13px] font-bold ${
+                    className={`text-[13px]  ${
                       course.level === "Beginner"
                         ? "text-green-500"
                         : course.level === "Intermediate"
@@ -170,7 +170,7 @@ const CourseListSection = () => {
                 </p>
 
                 <Link href={`/courses/adfasdfasf`}>
-                  <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg font-bold text-sm mt-auto">
+                  <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg  text-sm mt-auto">
                     Explore Course
                   </Button>
                 </Link>
@@ -193,7 +193,7 @@ const CourseListSection = () => {
                 <PaginationLink
                   href="#"
                   isActive
-                  className="bg-[#B4C7C7] text-[#004242] hover:bg-[#B4C7C7] border-none font-bold"
+                  className="bg-[#B4C7C7] text-[#004242] hover:bg-[#B4C7C7] border-none "
                 >
                   1
                 </PaginationLink>

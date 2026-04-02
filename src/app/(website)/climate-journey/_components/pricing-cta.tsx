@@ -25,7 +25,7 @@ const PricingCTA = () => {
           </p>
 
           <div className="pt-4">
-            <button className="bg-[#064E4B] text-white px-8 py-3.5 rounded-xl font-bold text-sm md:text-base hover:bg-[#043331] transition-all transform hover:scale-105">
+            <button className="bg-[#064E4B] text-white px-8 py-3.5 rounded-xl  text-sm md:text-base hover:bg-[#043331] transition-all transform hover:scale-105">
               View Pricing Guide (PDF)
             </button>
           </div>

@@ -47,7 +47,7 @@ const RecruitmentSection = () => {
             <button className="bg-[#064E4B] text-white px-8 py-3.5 rounded-xl hover:bg-[#043331] transition-all">
               Apply Here
             </button>
-            <button className="bg-white text-[#064E4B] border-2 border-[#064E4B] px-8 py-3.5 rounded-xl font-bold hover:bg-slate-50 transition-all">
+            <button className="bg-white text-[#064E4B] border-2 border-[#064E4B] px-8 py-3.5 rounded-xl  hover:bg-slate-50 transition-all">
               View All Mentors & Coaches
             </button>
           </div>
