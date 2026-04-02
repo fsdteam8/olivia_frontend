@@ -16,15 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { useEffect, useState } from "react";
-import {
-  Eye,
-  EyeOff,
-  Loader2,
-  Lock,
-  ShieldCheck,
-  ArrowRight,
-  BadgeCheck,
-} from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -103,145 +95,114 @@ const ResetPasswordForm = () => {
   }
 
   return (
-    <div className="w-full max-w-[500px] mx-auto p-4 flex flex-col items-center">
+    <div className="lg:max-w-[500px] bg-white rounded-[24px] p-8 md:p-10 shadow-2xl mx-4">
       {/* Header Section */}
-      <div className="text-center mb-10">
-        <h1 className="text-4xl font-serif font-medium text-[#1A2E35] mb-4">
+      <div className="mb-8">
+        <h1 className="text-[28px] text-[#053535] leading-tight">
           New Password
         </h1>
-        <p className="text-gray-500">Please create your new password</p>
-      </div>
-
-      {/* Card Section */}
-      <div className="w-full bg-white border border-[#F0F5F5] rounded-3xl p-8 shadow-sm">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <FormField
-              control={form.control}
-              name="newPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-[#1A2E35] font-semibold">
-                    Password
-                  </FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <Input
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Create a strong password"
-                        className="h-[52px] bg-[#F4F9F9] border-none rounded-xl pr-12 focus-visible:ring-1 focus-visible:ring-[#009688]"
-                        {...field}
-                      />
-                      <button
-                        type="button"
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
-                        onClick={() => setShowPassword(!showPassword)}
-                      >
-                        {showPassword ? (
-                          <EyeOff size={20} />
-                        ) : (
-                          <Eye size={20} />
-                        )}
-                      </button>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="confirmPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-[#1A2E35] font-semibold">
-                    Confirm Password
-                  </FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <Input
-                        type={showConfirmPassword ? "text" : "password"}
-                        placeholder="Confirm password"
-                        className="h-[52px] bg-[#F4F9F9] border-none rounded-xl pr-12 focus-visible:ring-1 focus-visible:ring-[#009688]"
-                        {...field}
-                      />
-                      <button
-                        type="button"
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
-                        onClick={() =>
-                          setShowConfirmPassword(!showConfirmPassword)
-                        }
-                      >
-                        {showConfirmPassword ? (
-                          <EyeOff size={20} />
-                        ) : (
-                          <Eye size={20} />
-                        )}
-                      </button>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <Button
-              disabled={isPending}
-              type="submit"
-              className="h-[52px] w-full bg-[#009688] hover:bg-[#00796B] text-white rounded-xl text-lg font-semibold transition-all"
-            >
-              {isPending ? (
-                <div className="flex items-center gap-2">
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                  Changing...
-                </div>
-              ) : (
-                "Change Password"
-              )}
-            </Button>
-          </form>
-        </Form>
-      </div>
-
-      {/* Footer Links */}
-      <div className="mt-8 text-center space-y-4">
-        <p className="text-gray-500 text-[15px]">
-          Don&apos;t have an account?{" "}
-          <Link
-            href="/sign-up"
-            className="text-[#009688] font-bold inline-flex items-center hover:underline"
-          >
-            Sign Up <ArrowRight size={16} className="ml-1" />
-          </Link>
-        </p>
-
-        <p className="text-sm text-gray-500">
-          Are you a wellness professional?{" "}
-          <Link
-            href="/create-customer"
-            className="text-[#1A2E35] font-bold hover:underline"
-          >
-            Create a customer account
-          </Link>
+        <p className="text-[#6B9096] text-[14px] mt-1 leading-relaxed">
+          Please create your new password
         </p>
       </div>
 
-      {/* Security Badges */}
-      <div className="mt-10 pt-6 border-t border-gray-100 w-full flex flex-col items-center gap-4">
-        <div className="flex gap-6 text-gray-400 text-sm font-medium">
-          <div className="flex items-center gap-2">
-            <Lock size={18} /> Secure & encrypted
-          </div>
-          <div className="flex items-center gap-2">
-            <ShieldCheck size={18} /> Privacy protected
-          </div>
-        </div>
+      {/* Form Section */}
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+          <FormField
+            control={form.control}
+            name="newPassword"
+            render={({ field }) => (
+              <FormItem className="space-y-1.5">
+                <FormLabel className="text-[#053535] text-sm font-medium">
+                  Password
+                </FormLabel>
+                <FormControl>
+                  <div className="relative">
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Create a password"
+                      className="h-11 border border-gray-100 bg-white rounded-lg pr-12 focus-visible:ring-1 focus-visible:ring-[#053535] placeholder:text-gray-300"
+                      {...field}
+                    />
+                    <button
+                      type="button"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <div className="flex items-center gap-2 text-gray-500 text-sm font-medium">
-          <BadgeCheck size={20} />
-          50,000+ users trust Bookersi
-        </div>
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem className="space-y-1.5">
+                <FormLabel className="text-[#053535] text-sm font-medium">
+                  Confirm Password
+                </FormLabel>
+                <FormControl>
+                  <div className="relative">
+                    <Input
+                      type={showConfirmPassword ? "text" : "password"}
+                      placeholder="Confirm password"
+                      className="h-11 border border-gray-100 bg-white rounded-lg pr-12 focus-visible:ring-1 focus-visible:ring-[#053535] placeholder:text-gray-300"
+                      {...field}
+                    />
+                    <button
+                      type="button"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
+                    >
+                      {showConfirmPassword ? (
+                        <EyeOff size={18} />
+                      ) : (
+                        <Eye size={18} />
+                      )}
+                    </button>
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button
+            disabled={isPending}
+            type="submit"
+            className="h-12 w-full bg-[#053535] hover:bg-[#042a2a] text-white rounded-lg text-base font-semibold transition-all active:scale-[0.98] mt-2"
+          >
+            {isPending ? (
+              <div className="flex items-center gap-2">
+                <Loader2 className="h-5 w-5 animate-spin" />
+                Changing...
+              </div>
+            ) : (
+              "Continue"
+            )}
+          </Button>
+        </form>
+      </Form>
+
+      {/* Footer */}
+      <div className="text-center mt-8">
+        <p className="text-[14px] text-gray-400">
+          Already have an account?{" "}
+          <Link
+            href="/login"
+            className="text-[#053535] font-bold hover:underline ml-1"
+          >
+            Sign in
+          </Link>
+        </p>
       </div>
     </div>
   );
