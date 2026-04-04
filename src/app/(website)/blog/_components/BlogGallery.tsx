@@ -5,7 +5,6 @@ import { MoveRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-
 interface BlogPost {
   id: number;
   category: string;

@@ -1,4 +1,4 @@
-import BlogDetails from "@/app/blog/_components/BlogDetails";
+import BlogDetails from "@/app/(website)/blog/_components/BlogDetails";
 import CommunitySection from "@/components/home/CommunitySection";
 import React from "react";
 
