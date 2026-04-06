@@ -69,7 +69,7 @@ export const MentorsGallery = () => {
       <div className="container">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
           <div>
-            <h2 className="text-4xl text-[#064E4B] mb-2 font-semibold">
+            <h2 className="text-4xl text-[#064E4B] mb-2">
               Meet Our Mentors & Coaches
             </h2>
             <p className="text-[#528B8A]">
@@ -88,7 +88,7 @@ export const MentorsGallery = () => {
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <Button className="bg-[#064E4B] hover:bg-[#043331] text-white rounded-full px-6 h-8 text-xs font-bold transition-all">
+                <Button className="bg-[#064E4B] hover:bg-[#043331] text-white rounded-full px-6 h-8 text-xs  transition-all">
                   Search
                 </Button>
               </div>
@@ -130,7 +130,7 @@ export const MentorsGallery = () => {
                     />
                   </div>
                   <div className="overflow-hidden">
-                    <h4 className="text-[#064E4B] font-bold truncate">
+                    <h4 className="text-[#064E4B]  truncate">
                       {mentor.firstName} {mentor.lastName}
                     </h4>
                     <p className="text-xs text-[#528B8A] truncate">
@@ -193,7 +193,7 @@ export const MentorsGallery = () => {
                 <button
                   key={i}
                   onClick={() => setPage(i + 1)}
-                  className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${
+                  className={`w-8 h-8 rounded-lg text-xs  transition-all ${
                     page === i + 1
                       ? "bg-[#064E4B] text-white"
                       : "text-[#528B8A] hover:bg-[#F1F7F6] border border-transparent"

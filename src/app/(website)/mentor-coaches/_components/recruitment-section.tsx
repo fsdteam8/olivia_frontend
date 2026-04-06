@@ -1,8 +1,13 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Image from "next/image";
 import { CheckCircle2 } from "lucide-react";
+import Link from "next/link";
+import { MentorApplyModal } from "../all/_components/mentor-apply-modal";
 
 const RecruitmentSection = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const requirements = [
     "2+ years of professional experience in any field",
     "Proven leadership and a meaningful record of mentorship or community engagement",
@@ -44,14 +49,22 @@ const RecruitmentSection = () => {
 
           {/* Action Buttons */}
           <div className="flex flex-wrap gap-4 pt-4">
-            <button className="bg-[#064E4B] text-white px-8 py-3.5 rounded-xl hover:bg-[#043331] transition-all">
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="bg-[#064E4B] text-white px-8 py-3.5 rounded-xl hover:bg-[#043331] transition-all cursor-pointer"
+            >
               Apply Here
             </button>
-            <button className="bg-white text-[#064E4B] border-2 border-[#064E4B] px-8 py-3.5 rounded-xl  hover:bg-slate-50 transition-all">
-              View All Mentors & Coaches
-            </button>
+            <Link href={`/mentor-coaches/all`}>
+              <button className="bg-white text-[#064E4B] border-2 border-[#064E4B] px-8 py-3.5 rounded-xl  hover:bg-slate-50 transition-all cursor-pointer">
+                View All Mentors & Coaches
+              </button>
+            </Link>
           </div>
         </div>
+
+        {/* Modal Component */}
+        <MentorApplyModal open={isModalOpen} setOpen={setIsModalOpen} />
       </div>
     </section>
   );
