@@ -37,6 +37,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 export const Navbar = () => {
   return (
@@ -68,12 +69,14 @@ export const Navbar = () => {
             Join Community
           </Button>
 
-          <Button
-            variant="outline"
-            className="border-gray-300 text-gray-700 rounded-md px-6 text-xs "
-          >
-            Login
-          </Button>
+          <Link href={`/login`}>
+            <Button
+              variant="outline"
+              className="border-gray-300 text-gray-700 rounded-md px-6 text-xs "
+            >
+              Login
+            </Button>
+          </Link>
         </div>
       </nav>
     </div>

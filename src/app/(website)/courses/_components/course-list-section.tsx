@@ -15,6 +15,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
 
 const categories = [
   "All Courses",
@@ -88,6 +89,15 @@ const courses = [
 ];
 
 const CourseListSection = () => {
+  const { data } = useQuery({
+    queryKey: ["courses"],
+    queryFn: async () => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/course/all`,
+      );
+    },
+  });
+
   return (
     <section>
       <div className="container">
