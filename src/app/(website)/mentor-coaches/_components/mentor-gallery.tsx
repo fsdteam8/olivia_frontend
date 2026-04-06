@@ -156,7 +156,7 @@ export const MentorsGallery = () => {
 
                 <div className="flex gap-2 mt-auto">
                   <Link
-                    href={`/mentor-caches/${mentor?._id}`}
+                    href={`/mentor-coaches/${mentor?._id}`}
                     className="w-full"
                   >
                     <Button
