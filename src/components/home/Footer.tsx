@@ -99,8 +99,8 @@ const Footer = () => {
               </div>
             </div>
             <div>
-              <h4 className="font-bold text-[#004242] mb-4">Contact us</h4>
-              <div className="bg-[#004242] text-white font-bold text-sm py-2  rounded-md text-center">
+              <h4 className=" text-[#004242] mb-4">Contact us</h4>
+              <div className="bg-[#004242] text-white  text-sm py-2  rounded-md text-center">
                 info@actonclimate.net
               </div>
             </div>

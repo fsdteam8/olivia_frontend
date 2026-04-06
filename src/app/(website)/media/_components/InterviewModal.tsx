@@ -40,18 +40,18 @@
 //           {/* Section 1: Basic Information */}
 //           <div className="bg-white border border-slate-100 rounded-2xl p-6 space-y-4 shadow-sm">
 //             <div className="space-y-1.5">
-//               <Label className="text-[#004242] font-bold text-[11px]">Name</Label>
+//               <Label className="text-[#004242]  text-[11px]">Name</Label>
 //               <Input placeholder="Enter your name" className="h-10 border-slate-200" />
 //             </div>
 
 //             <div className="space-y-1.5">
-//               <Label className="text-[#004242] font-bold text-[11px]">Email Address</Label>
+//               <Label className="text-[#004242]  text-[11px]">Email Address</Label>
 //               <Input placeholder="Your email address" type="email" className="h-10 border-slate-200" />
 //             </div>
 
 //             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 //               <div className="space-y-1.5">
-//                 <Label className="text-[#004242] font-bold text-[11px]">Climate Change Topics Specialization</Label>
+//                 <Label className="text-[#004242]  text-[11px]">Climate Change Topics Specialization</Label>
 //                 <Select>
 //                   <SelectTrigger className="h-10 border-slate-200 text-[#729094]">
 //                     <SelectValue placeholder="Renewable Energy" />
@@ -63,7 +63,7 @@
 //                 </Select>
 //               </div>
 //               <div className="space-y-1.5">
-//                 <Label className="text-[#004242] font-bold text-[11px]">Industry</Label>
+//                 <Label className="text-[#004242]  text-[11px]">Industry</Label>
 //                 <Select>
 //                   <SelectTrigger className="h-10 border-slate-200 text-[#729094]">
 //                     <SelectValue placeholder="Education" />
@@ -81,11 +81,11 @@
 //           <div className="bg-white border border-slate-100 rounded-2xl p-6 space-y-4 shadow-sm">
 //             <h3 className="text-[#004242] font-normal text-sm">About You</h3>
 //             <div className="space-y-1.5">
-//               <Label className="text-[#004242] font-bold text-[11px]">Professional Background</Label>
+//               <Label className="text-[#004242]  text-[11px]">Professional Background</Label>
 //               <Textarea placeholder="short bio or career summary" className="min-h-[80px] border-slate-200 italic placeholder:text-slate-300" />
 //             </div>
 //             <div className="space-y-1.5">
-//               <Label className="text-[#004242] font-bold text-[11px]">Podcast Focus Preference</Label>
+//               <Label className="text-[#004242]  text-[11px]">Podcast Focus Preference</Label>
 //               <Textarea placeholder="what they'd like the podcast to be about" className="min-h-[80px] border-slate-200 italic placeholder:text-slate-300" />
 //             </div>
 //           </div>
@@ -105,14 +105,14 @@
 
 //             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
 //               <div className="space-y-1.5">
-//                 <Label className="text-[#004242] font-bold text-[11px]">Date</Label>
+//                 <Label className="text-[#004242]  text-[11px]">Date</Label>
 //                 <div className="relative">
 //                   <Input placeholder="Pick a perfect date" className="pl-10 h-10 border-slate-200 italic" />
 //                   <CalendarIcon className="absolute left-3 top-2.5 text-slate-400" size={18} />
 //                 </div>
 //               </div>
 //               <div className="space-y-1.5">
-//                 <Label className="text-[#004242] font-bold text-[11px]">Time</Label>
+//                 <Label className="text-[#004242]  text-[11px]">Time</Label>
 //                 <div className="relative">
 //                   <Input placeholder="Set time" className="pl-10 h-10 border-slate-200 italic" />
 //                   <Clock className="absolute left-3 top-2.5 text-slate-400" size={18} />
@@ -122,7 +122,7 @@
 //           </div>
 
 //           {/* Submit Button */}
-//           <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg font-bold text-md transition-all active:scale-[0.98]">
+//           <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg  text-md transition-all active:scale-[0.98]">
 //             Submit
 //           </Button>
 //         </form>
@@ -236,9 +236,7 @@ const InterviewModal = ({
           {/* Basic Info */}
           <div className="bg-white border border-slate-100 rounded-2xl p-6 space-y-4 shadow-sm">
             <div className="space-y-1.5">
-              <Label className="text-[#004242] font-bold text-[11px]">
-                Name
-              </Label>
+              <Label className="text-[#004242]  text-[11px]">Name</Label>
               <Input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -248,7 +246,7 @@ const InterviewModal = ({
             </div>
 
             <div className="space-y-1.5">
-              <Label className="text-[#004242] font-bold text-[11px]">
+              <Label className="text-[#004242]  text-[11px]">
                 Email Address
               </Label>
               <Input
@@ -262,7 +260,7 @@ const InterviewModal = ({
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <Label className="text-[#004242] font-bold text-[11px]">
+                <Label className="text-[#004242]  text-[11px]">
                   Climate Change Topics Specialization
                 </Label>
                 <Select value={topic} onValueChange={setTopic}>
@@ -280,9 +278,7 @@ const InterviewModal = ({
               </div>
 
               <div className="space-y-1.5">
-                <Label className="text-[#004242] font-bold text-[11px]">
-                  Industry
-                </Label>
+                <Label className="text-[#004242]  text-[11px]">Industry</Label>
                 <Select value={industry} onValueChange={setIndustry}>
                   <SelectTrigger className="h-10  w-full border-slate-200 text-[#729094]">
                     <SelectValue placeholder="Select Industry" />
@@ -303,7 +299,7 @@ const InterviewModal = ({
           <div className="bg-white border border-slate-100 rounded-2xl p-6 space-y-4 shadow-sm">
             <h3 className="text-[#004242] font-normal text-sm">About You</h3>
             <div className="space-y-1.5">
-              <Label className="text-[#004242] font-bold text-[11px]">
+              <Label className="text-[#004242]  text-[11px]">
                 Professional Background
               </Label>
               <Textarea
@@ -314,7 +310,7 @@ const InterviewModal = ({
               />
             </div>
             <div className="space-y-1.5">
-              <Label className="text-[#004242] font-bold text-[11px]">
+              <Label className="text-[#004242]  text-[11px]">
                 Podcast Focus Preference
               </Label>
               <Textarea
@@ -360,9 +356,7 @@ const InterviewModal = ({
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
               <div className="space-y-1.5">
-                <Label className="text-[#004242] font-bold text-[11px]">
-                  Date
-                </Label>
+                <Label className="text-[#004242]  text-[11px]">Date</Label>
                 <div className="relative">
                   <Input
                     type="date"
@@ -377,9 +371,7 @@ const InterviewModal = ({
                 </div>
               </div>
               <div className="space-y-1.5">
-                <Label className="text-[#004242] font-bold text-[11px]">
-                  Time
-                </Label>
+                <Label className="text-[#004242]  text-[11px]">Time</Label>
                 <div className="relative">
                   <Input
                     type="time"
@@ -399,7 +391,7 @@ const InterviewModal = ({
           {/* Submit */}
           <Button
             type="submit"
-            className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg font-bold text-md transition-all active:scale-[0.98]"
+            className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg  text-md transition-all active:scale-[0.98]"
           >
             Submit
           </Button>

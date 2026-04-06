@@ -62,7 +62,7 @@ const PricingSection = () => {
             </ul>
           </div>
 
-          <button className="w-full mt-10 bg-[#064E4B] text-white py-3 rounded-xl font-bold hover:bg-[#085e5a] transition-colors">
+          <button className="w-full mt-10 bg-[#064E4B] text-white py-3 rounded-xl  hover:bg-[#085e5a] transition-colors">
             Choose Plan
           </button>
         </div>
@@ -70,7 +70,7 @@ const PricingSection = () => {
         {/* Community Members Card (Featured) */}
         <div className="bg-[#064E4B] rounded-3xl flex-1 flex flex-col relative overflow-hidden shadow-xl border border-[#064E4B]">
           {/* Best Value Badge */}
-          <div className="bg-[#043331] text-white text-center py-2 text-[10px] font-bold uppercase tracking-widest">
+          <div className="bg-[#043331] text-white text-center py-2 text-[10px]  uppercase tracking-widest">
             Best Value
           </div>
 
@@ -79,7 +79,7 @@ const PricingSection = () => {
               <h3 className="text-2xl text-white">Community Members</h3>
               <p className="text-xs text-slate-300 mt-4 leading-relaxed">
                 All career services included at{" "}
-                <span className="font-bold text-white">No Cost</span>
+                <span className=" text-white">No Cost</span>
               </p>
             </div>
 
@@ -97,7 +97,7 @@ const PricingSection = () => {
               </ul>
             </div>
 
-            <button className="w-full mt-10 bg-white text-[#064E4B] py-3 rounded-xl font-bold hover:bg-slate-100 transition-colors">
+            <button className="w-full mt-10 bg-white text-[#064E4B] py-3 rounded-xl  hover:bg-slate-100 transition-colors">
               Join the Community
             </button>
           </div>
@@ -106,7 +106,7 @@ const PricingSection = () => {
 
       {/* Bottom Button */}
       <Link href={"/climate-journey"}>
-        <button className="bg-[#064E4B] text-white px-8 py-3 rounded-lg font-bold text-sm hover:bg-[#085e5a] transition-colors cursor-pointer">
+        <button className="bg-[#064E4B] text-white px-8 py-3 rounded-lg  text-sm hover:bg-[#085e5a] transition-colors cursor-pointer">
           View Membership Plans
         </button>
       </Link>

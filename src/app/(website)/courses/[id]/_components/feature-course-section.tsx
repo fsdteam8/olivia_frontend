@@ -27,7 +27,7 @@ const FeaturedCourseSection = () => {
                     className="object-cover"
                   />
                 </div>
-                <p className="text-[#004242] font-bold text-sm">
+                <p className="text-[#004242]  text-sm">
                   Taught by Dr. Sarah Chen, Climate Policy Expert
                 </p>
               </div>
@@ -72,7 +72,7 @@ const FeaturedCourseSection = () => {
             </div>
 
             <Link href={`/courses/adfasdfasf/enroll-course`}>
-              <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-7 rounded-lg font-bold text-lg mt-8">
+              <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-7 rounded-lg  text-lg mt-8">
                 Enroll in Course
               </Button>
             </Link>

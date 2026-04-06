@@ -20,7 +20,7 @@ const AssistanceSection = () => {
 
         {/* Right: Content Container */}
         <div className="w-full lg:w-1/2 flex flex-col space-y-6">
-          <h2 className="text-[#004d4d] text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
+          <h2 className="text-[#004d4d] text-3xl md:text-4xl lg:text-5xl  tracking-tight">
             We’re Here to Assist
           </h2>
 
@@ -33,10 +33,10 @@ const AssistanceSection = () => {
           </p>
 
           <div className="flex flex-wrap gap-4 pt-2">
-            <button className="bg-[#004d4d] text-white px-8 py-3 rounded-lg font-bold hover:bg-[#003a3a] transition-colors border-2 border-[#004d4d]">
+            <button className="bg-[#004d4d] text-white px-8 py-3 rounded-lg  hover:bg-[#003a3a] transition-colors border-2 border-[#004d4d]">
               Apply Here
             </button>
-            <button className="bg-transparent text-[#004d4d] px-8 py-3 rounded-lg font-bold hover:bg-[#eef2f2] transition-colors border-2 border-[#004d4d]">
+            <button className="bg-transparent text-[#004d4d] px-8 py-3 rounded-lg  hover:bg-[#eef2f2] transition-colors border-2 border-[#004d4d]">
               View Pricing
             </button>
           </div>

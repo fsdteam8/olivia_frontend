@@ -132,7 +132,7 @@ const OtpForm = () => {
                         <InputOTPSlot
                           key={i}
                           index={i}
-                          className="h-[55px] w-[42px] sm:h-[65px] sm:w-[55px] bg-[#F4F9F9] border-none rounded-lg text-xl font-bold text-[#053535] focus:ring-1 focus:ring-[#053535]"
+                          className="h-[55px] w-[42px] sm:h-[65px] sm:w-[55px] bg-[#F4F9F9] border-none rounded-lg text-xl  text-[#053535] focus:ring-1 focus:ring-[#053535]"
                         />
                       ))}
                     </InputOTPGroup>
@@ -150,7 +150,7 @@ const OtpForm = () => {
                 type="button"
                 onClick={handleResendOTP}
                 disabled={isResending}
-                className="text-[#053535] font-bold hover:underline disabled:opacity-50"
+                className="text-[#053535]  hover:underline disabled:opacity-50"
               >
                 {isResending ? "Resending..." : "Resend OTP"}
               </button>
@@ -180,7 +180,7 @@ const OtpForm = () => {
           Don&apos;t have an account?{" "}
           <Link
             href="/sign-up"
-            className="text-[#053535] font-bold hover:underline ml-1"
+            className="text-[#053535]  hover:underline ml-1"
           >
             Sign up
           </Link>

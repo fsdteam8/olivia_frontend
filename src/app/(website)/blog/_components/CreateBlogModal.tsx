@@ -54,9 +54,7 @@ const CreateBlogModal = ({
           <div className="space-y-6 p-6 rounded-2xl border border-slate-100 bg-slate-50/30">
             <div className="grid grid-cols-1 gap-6">
               <div className="space-y-2">
-                <Label className="text-[#004242] font-bold text-xs">
-                  Blog Title
-                </Label>
+                <Label className="text-[#004242]  text-xs">Blog Title</Label>
                 <Input
                   placeholder="hello@example.com"
                   className="rounded-lg border-slate-200"
@@ -66,9 +64,7 @@ const CreateBlogModal = ({
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label className="text-[#004242] font-bold text-xs">
-                  Category
-                </Label>
+                <Label className="text-[#004242]  text-xs">Category</Label>
                 <Select>
                   <SelectTrigger className="rounded-lg w-full border-slate-200 text-[#729094]">
                     <SelectValue placeholder="Renewable Energy" />
@@ -82,11 +78,11 @@ const CreateBlogModal = ({
               </div>
 
               <div className="space-y-2">
-                <Label className="text-[#004242] font-bold text-xs">
+                <Label className="text-[#004242]  text-xs">
                   Blog Thumbnail Image
                 </Label>
                 <div className="flex items-center justify-center w-full h-10 border border-dashed border-slate-300 rounded-lg bg-slate-50 cursor-pointer hover:bg-slate-100 transition-colors">
-                  <div className="flex items-center gap-2 text-[#729094] text-xs font-bold">
+                  <div className="flex items-center gap-2 text-[#729094] text-xs ">
                     <Upload size={14} />
                     <span>Upload Logo</span>
                   </div>
@@ -143,12 +139,12 @@ const CreateBlogModal = ({
                   />
                 </div>
                 <div className="md:col-span-1 space-y-2">
-                  <Label className="text-[#004242] font-bold text-xs">
+                  <Label className="text-[#004242]  text-xs">
                     Profile Image
                   </Label>
                   <div className="flex flex-col items-center justify-center w-full h-[100px] border border-dashed border-slate-300 rounded-lg bg-slate-50 hover:bg-slate-100 cursor-pointer text-[#729094]">
                     <Upload size={20} className="mb-2" />
-                    <span className="text-[10px] font-bold">Upload</span>
+                    <span className="text-[10px] ">Upload</span>
                   </div>
                 </div>
               </div>
@@ -157,7 +153,7 @@ const CreateBlogModal = ({
 
           {/* Submit Button */}
           <div className="pt-4">
-            <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg font-bold text-md transition-all active:scale-[0.98]">
+            <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg  text-md transition-all active:scale-[0.98]">
               Submit Blog
             </Button>
           </div>

@@ -288,10 +288,7 @@ const SignUpForm = () => {
       <div className="text-center mt-3">
         <p className="text-[14px] text-gray-400">
           Already a Member?{" "}
-          <Link
-            href="/login"
-            className="text-[#053535] font-bold hover:underline ml-1"
-          >
+          <Link href="/login" className="text-[#053535]  hover:underline ml-1">
             Sign In
           </Link>
         </p>

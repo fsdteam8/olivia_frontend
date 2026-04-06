@@ -61,7 +61,7 @@ const CourseWatchPage = () => {
     <section className="bg-[#F8FAFA] py-16">
       <div className="container">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-extrabold text-[#004242]">
+          <h1 className="text-3xl  text-[#004242]">
             Introduction to Carbon Markets
           </h1>
           <div className="text-gray-400 font-medium text-sm hidden md:block">
@@ -88,11 +88,11 @@ const CourseWatchPage = () => {
                     } ${section.isLocked ? "cursor-not-allowed opacity-80" : "cursor-pointer"}`}
                   >
                     <div className="flex items-center gap-4">
-                      <span className="text-xl font-bold text-[#004242]">
+                      <span className="text-xl  text-[#004242]">
                         {section.id}
                       </span>
                       <div>
-                        <h4 className="text-sm font-bold text-[#004242] leading-tight">
+                        <h4 className="text-sm  text-[#004242] leading-tight">
                           {section.title}
                         </h4>
                         <p className="text-[11px] text-gray-400 font-medium">
@@ -135,7 +135,7 @@ const CourseWatchPage = () => {
                                 }
                               />
                               <span
-                                className={`text-sm font-medium ${activeLesson === lesson.id ? "font-bold" : ""}`}
+                                className={`text-sm font-medium ${activeLesson === lesson.id ? "" : ""}`}
                               >
                                 {lesson.title}
                               </span>
@@ -174,7 +174,7 @@ const CourseWatchPage = () => {
             </div>
 
             <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm">
-              <h2 className="text-3xl font-extrabold text-[#004242] mb-4">
+              <h2 className="text-3xl  text-[#004242] mb-4">
                 Sustainable Energy Transition
               </h2>
               <div className="flex items-center gap-3 mb-6">
@@ -186,14 +186,14 @@ const CourseWatchPage = () => {
                     className="object-cover"
                   />
                 </div>
-                <p className="text-sm font-bold text-[#004242]">
+                <p className="text-sm  text-[#004242]">
                   Taught by Dr. Sarah Chen
                 </p>
               </div>
 
               <div className="flex flex-wrap items-center gap-12 pt-6 border-t">
                 <div className="space-y-1">
-                  <p className="text-xs font-bold text-[#004242] uppercase tracking-wider">
+                  <p className="text-xs  text-[#004242] uppercase tracking-wider">
                     Duration
                   </p>
                   <div className="flex items-center gap-1.5 text-gray-400 text-xs font-medium">
@@ -201,7 +201,7 @@ const CourseWatchPage = () => {
                   </div>
                 </div>
                 <div className="space-y-1 border-x px-12 border-gray-100">
-                  <p className="text-xs font-bold text-[#004242] uppercase tracking-wider">
+                  <p className="text-xs  text-[#004242] uppercase tracking-wider">
                     Lessons
                   </p>
                   <div className="flex items-center gap-1.5 text-gray-400 text-xs font-medium">
@@ -209,7 +209,7 @@ const CourseWatchPage = () => {
                   </div>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-xs font-bold text-[#004242] uppercase tracking-wider">
+                  <p className="text-xs  text-[#004242] uppercase tracking-wider">
                     Skill Level
                   </p>
                   <div className="flex items-center gap-1.5 text-gray-400 text-xs font-medium">

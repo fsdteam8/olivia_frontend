@@ -37,7 +37,7 @@ const CourseBenefits = () => {
               >
                 <div className="space-y-4">
                   {/* Benefit Title */}
-                  <h3 className="text-[#004242] font-bold text-sm uppercase tracking-wide">
+                  <h3 className="text-[#004242]  text-sm uppercase tracking-wide">
                     {benefit.title}
                   </h3>
 

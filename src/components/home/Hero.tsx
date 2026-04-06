@@ -17,7 +17,7 @@ export const Hero = () => {
 
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto text-white">
-        <h4 className="text-5xl hero-font  md:text-6xl font-bold leading-tight mb-6">
+        <h4 className="text-5xl hero-font  md:text-6xl  leading-tight mb-6">
           Connecting People to Climate Careers & Opportunities
         </h4>
         <p className="text-lg md:text-xl opacity-90 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
@@ -26,12 +26,12 @@ export const Hero = () => {
           the climate space.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Button className="bg-[#004242] hover:bg-[#006668] text-white px-8 h-12 rounded-md font-bold text-sm min-w-[160px]">
+          <Button className="bg-[#004242] hover:bg-[#006668] text-white px-8 h-12 rounded-md  text-sm min-w-[160px]">
             Join Community
           </Button>
           <Button
             variant="outline"
-            className="border-white  text-white bg-transparent hover:text-white hover:bg-white/10 px-8 h-12 rounded-md font-bold text-sm min-w-[160px]"
+            className="border-white  text-white bg-transparent hover:text-white hover:bg-white/10 px-8 h-12 rounded-md  text-sm min-w-[160px]"
           >
             Learn more
           </Button>

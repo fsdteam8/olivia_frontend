@@ -25,7 +25,7 @@ export const Features = () => {
   return (
     <section className=" bg-white">
       <div className="container">
-        <h2 className="text-3xl font-bold text-[#004242] text-center mb-16">
+        <h2 className="text-3xl  text-[#004242] text-center mb-16">
           Why Join Our Platform
         </h2>
 
@@ -48,7 +48,7 @@ export const Features = () => {
         </div>
 
         <div className="flex justify-center">
-          <Button className="bg-[#0D3B3F] hover:bg-[#164e53] text-white px-10 h-12 rounded-md font-bold group">
+          <Button className="bg-[#0D3B3F] hover:bg-[#164e53] text-white px-10 h-12 rounded-md  group">
             Join Community
             <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Button>

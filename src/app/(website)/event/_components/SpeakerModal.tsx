@@ -133,7 +133,7 @@ const SpeakerModal = ({ isOpen, setOpen }: SpeakerModalProps) => {
 
           {/* Submit Button */}
           <div className="pt-4">
-            <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-5 rounded-xl font-bold text-md transition-all active:scale-[0.99]">
+            <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-5 rounded-xl  text-md transition-all active:scale-[0.99]">
               Submit
             </Button>
           </div>

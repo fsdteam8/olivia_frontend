@@ -40,14 +40,14 @@
 //                 <Play fill="white" size={28} className="ml-1" />
 //               </div>
 //             </div>
-//             <div className="absolute bottom-6 left-6 bg-[#004242] text-[10px] font-bold text-white px-3 py-1.5 rounded-full">
+//             <div className="absolute bottom-6 left-6 bg-[#004242] text-[10px]  text-white px-3 py-1.5 rounded-full">
 //               Expert Insights
 //             </div>
 //           </div>
 
 //           {/* Title & Metadata */}
 //           <div className="space-y-4">
-//             <div className="flex items-center gap-6 text-[#729094] text-[10px] font-bold uppercase tracking-widest">
+//             <div className="flex items-center gap-6 text-[#729094] text-[10px]  uppercase tracking-widest">
 //               <span className="text-[#004242]">Video</span>
 //               <div className="flex items-center gap-1.5">
 //                 <Calendar size={14} /> Oct 24, 2023
@@ -63,7 +63,7 @@
 
 //           {/* Description Section */}
 //           <div className="space-y-6 pt-6 border-t border-slate-200">
-//             <h3 className="text-[#004242] text-sm font-bold border-b-2 border-[#004242] w-fit pb-1">Description</h3>
+//             <h3 className="text-[#004242] text-sm  border-b-2 border-[#004242] w-fit pb-1">Description</h3>
 //             <p className="text-[#729094] text-sm leading-relaxed font-medium">
 //               In this comprehensive deep-dive, Dr. Aris Thorne explores the critical tipping points in our
 //               transition to a renewable-first power grid. We examine the latest breakthroughs in solar
@@ -88,7 +88,7 @@
 //               placeholder="Write a comment..."
 //               className="border-none bg-transparent focus-visible:ring-0 text-sm italic"
 //             />
-//             <Button size="sm" className="bg-[#004242] hover:bg-[#003333] px-6 font-bold rounded-lg">
+//             <Button size="sm" className="bg-[#004242] hover:bg-[#003333] px-6  rounded-lg">
 //               Comment
 //             </Button>
 //           </div>
@@ -98,7 +98,7 @@
 //         <div className="lg:col-span-4 space-y-10">
 //           {/* Recommended Next */}
 //           <div className="space-y-6">
-//             <div className="flex items-center gap-2 text-[#004242] font-bold text-sm">
+//             <div className="flex items-center gap-2 text-[#004242]  text-sm">
 //               <Share2 size={16} />
 //               Recommended Next
 //             </div>
@@ -116,7 +116,7 @@
 //                     <h5 className="text-[#004242] text-[11px] font-extrabold line-clamp-2 leading-tight uppercase">
 //                       {item.title}
 //                     </h5>
-//                     <p className="text-[#94a3b8] text-[9px] font-bold tracking-wider">
+//                     <p className="text-[#94a3b8] text-[9px]  tracking-wider">
 //                       {item.meta}
 //                     </p>
 //                   </div>
@@ -128,7 +128,7 @@
 //           {/* Join the Action Newsletter */}
 //           <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm space-y-4">
 //             <h4 className="text-[#004242] text-sm font-extrabold uppercase tracking-tight">Join the Action</h4>
-//             <p className="text-[#94a3b8] text-[10px] font-bold leading-normal">
+//             <p className="text-[#94a3b8] text-[10px]  leading-normal">
 //               Get weekly updates on climate solutions and upcoming live talks.
 //             </p>
 //             <div className="space-y-3">
@@ -136,7 +136,7 @@
 //                 placeholder="Your email"
 //                 className="bg-slate-50 border-slate-200 text-xs placeholder:text-slate-300 h-10"
 //               />
-//               <Button className="w-full bg-[#004242] hover:bg-[#003333] font-bold text-xs h-10">
+//               <Button className="w-full bg-[#004242] hover:bg-[#003333]  text-xs h-10">
 //                 Subscribe Now
 //               </Button>
 //             </div>
@@ -230,14 +230,14 @@ const VideoLessonDetail = () => {
                 </div>
               </div>
             )}
-            <div className="absolute bottom-6 left-6 bg-[#004242] text-[10px] font-bold text-white px-3 py-1.5 rounded-full">
+            <div className="absolute bottom-6 left-6 bg-[#004242] text-[10px]  text-white px-3 py-1.5 rounded-full">
               Expert Insights
             </div>
           </div>
 
           {/* Title & Metadata */}
           <div className="space-y-4">
-            <div className="flex items-center gap-6 text-[#729094] text-[10px] font-bold uppercase tracking-widest">
+            <div className="flex items-center gap-6 text-[#729094] text-[10px]  uppercase tracking-widest">
               <span className="text-[#004242]">Video</span>
               <div className="flex items-center gap-1.5">
                 <Calendar size={14} /> Oct 24, 2023
@@ -293,7 +293,7 @@ const VideoLessonDetail = () => {
               />
               <Button
                 size="sm"
-                className="bg-[#004242] hover:bg-[#003333] px-6 font-bold rounded-lg"
+                className="bg-[#004242] hover:bg-[#003333] px-6  rounded-lg"
                 onClick={handleAddComment}
               >
                 Comment
@@ -318,7 +318,7 @@ const VideoLessonDetail = () => {
         <div className="lg:col-span-4 space-y-10">
           {/* Recommended Next */}
           <div className="space-y-6">
-            <div className="flex items-center gap-2 text-[#004242] font-bold text-sm">
+            <div className="flex items-center gap-2 text-[#004242]  text-sm">
               <Share2 size={16} />
               Recommended Next
             </div>
@@ -344,7 +344,7 @@ const VideoLessonDetail = () => {
                     <h5 className="text-[#004242] text-[11px] font-extrabold line-clamp-2 leading-tight uppercase">
                       {item.title}
                     </h5>
-                    <p className="text-[#94a3b8] text-[9px] font-bold tracking-wider">
+                    <p className="text-[#94a3b8] text-[9px]  tracking-wider">
                       {item.meta}
                     </p>
                   </div>
@@ -358,7 +358,7 @@ const VideoLessonDetail = () => {
             <h4 className="text-[#004242] text-sm font-extrabold uppercase tracking-tight">
               Join the Action
             </h4>
-            <p className="text-[#94a3b8] text-[10px] font-bold leading-normal">
+            <p className="text-[#94a3b8] text-[10px]  leading-normal">
               Get weekly updates on climate solutions and upcoming live talks.
             </p>
             <div className="space-y-3">
@@ -369,7 +369,7 @@ const VideoLessonDetail = () => {
                 className="bg-slate-50 border-slate-200 text-xs placeholder:text-slate-300 h-10"
               />
               <Button
-                className="w-full bg-[#004242] hover:bg-[#003333] font-bold text-xs h-10"
+                className="w-full bg-[#004242] hover:bg-[#003333]  text-xs h-10"
                 onClick={handleSubscribe}
               >
                 Subscribe Now

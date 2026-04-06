@@ -35,7 +35,7 @@ const CareerServicesTiers = () => {
             {highlights.map((item, index) => (
               <li
                 key={index}
-                className="flex items-center gap-3 text-[#064E4B] font-bold"
+                className="flex items-center gap-3 text-[#064E4B] "
               >
                 <CheckCircle2 className="w-5 h-5 text-[#42B0A8]" />
                 {item}
@@ -54,19 +54,17 @@ const CareerServicesTiers = () => {
                 key={index}
                 className="bg-white rounded-xl p-5 flex justify-between items-center shadow-sm"
               >
-                <span className="font-bold text-[#064E4B] text-sm md:text-base">
+                <span className=" text-[#064E4B] text-sm md:text-base">
                   {row.label}
                 </span>
 
                 {row.isBadge ? (
-                  <span className="bg-[#E0F2F1] text-[#064E4B] px-4 py-1 rounded-full text-xs font-bold">
+                  <span className="bg-[#E0F2F1] text-[#064E4B] px-4 py-1 rounded-full text-xs ">
                     {row.value}
                   </span>
                 ) : (
                   <div className="text-right">
-                    <span className="font-bold text-[#064E4B]">
-                      {row.value}
-                    </span>
+                    <span className=" text-[#064E4B]">{row.value}</span>
                     {row.unit && (
                       <span className="text-[10px] text-[#94A3B8] ml-1 uppercase">
                         {row.unit}
@@ -79,9 +77,7 @@ const CareerServicesTiers = () => {
 
             {/* Featured Dark Row */}
             <div className="bg-[#064E4B] rounded-xl p-5 flex justify-between items-center text-white">
-              <span className="font-bold text-sm">
-                Monthly & Annual Members
-              </span>
+              <span className=" text-sm">Monthly & Annual Members</span>
               <span className="text-xs font-medium">
                 Free access to all career services
               </span>
@@ -89,7 +85,7 @@ const CareerServicesTiers = () => {
           </div>
 
           <div className="mt-10 flex justify-center">
-            <button className="bg-[#064E4B] text-white px-10 py-3 rounded-xl font-bold hover:bg-[#043331] transition-colors">
+            <button className="bg-[#064E4B] text-white px-10 py-3 rounded-xl  hover:bg-[#043331] transition-colors">
               Join Community
             </button>
           </div>

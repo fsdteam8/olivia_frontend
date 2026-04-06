@@ -133,7 +133,7 @@ const ForgotPasswordForm = () => {
           Don&apos;t have an account?{" "}
           <Link
             href="/sign-up"
-            className="text-[#053535] font-bold hover:underline ml-1"
+            className="text-[#053535]  hover:underline ml-1"
           >
             Sign up
           </Link>

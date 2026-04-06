@@ -4,6 +4,7 @@ import "./globals.css";
 import MainProviders from "@/Providers/MainProviders";
 import Provider from "@/Providers/Provider";
 import { Toaster } from "sonner";
+import NextTopLoader from "nextjs-toploader";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -46,6 +47,11 @@ export default function RootLayout({
       >
         <MainProviders>
           <Provider>
+            <NextTopLoader
+              color="#154242"
+              easing="ease-in"
+              showSpinner={false}
+            />
             <main className="min-h-[calc(100vh-200px)]">{children}</main>
           </Provider>
         </MainProviders>

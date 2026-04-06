@@ -57,7 +57,7 @@ const ClimateOpportunities = () => {
 
               {/* Card Content */}
               <div className="p-6">
-                <span className="inline-block bg-[#5D8AA8] bg-opacity-60 text-white text-[10px] font-bold px-3 py-1 rounded-full mb-4">
+                <span className="inline-block bg-[#5D8AA8] bg-opacity-60 text-white text-[10px]  px-3 py-1 rounded-full mb-4">
                   {item.category}
                 </span>
 
@@ -72,7 +72,7 @@ const ClimateOpportunities = () => {
                 <div className=" border-t border-slate-100">
                   <a
                     href="#"
-                    className="text-[#5D8AA8] text-xs font-bold flex items-center gap-2 hover:text-[#004242] transition-colors"
+                    className="text-[#5D8AA8] text-xs  flex items-center gap-2 hover:text-[#004242] transition-colors"
                   >
                     Read More <ArrowRight size={14} />
                   </a>

@@ -72,7 +72,7 @@ const PricingCards = () => {
             }`}
           >
             {plan.isPopular && (
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#064E4B] text-white text-[10px] font-bold uppercase tracking-widest py-1.5 px-4 rounded-full">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#064E4B] text-white text-[10px]  uppercase tracking-widest py-1.5 px-4 rounded-full">
                 Most Popular
               </div>
             )}
@@ -85,14 +85,12 @@ const PricingCards = () => {
             </div>
 
             <div className="mb-6">
-              <span className="text-3xl font-bold text-[#064E4B]">
-                {plan.price}
-              </span>
+              <span className="text-3xl  text-[#064E4B]">{plan.price}</span>
               <span className="text-sm text-[#528B8A]">{plan.duration}</span>
             </div>
 
             <button
-              className={`w-full py-3 rounded-lg font-bold text-sm mb-8 transition-colors border ${
+              className={`w-full py-3 rounded-lg  text-sm mb-8 transition-colors border ${
                 plan.isDarkButton
                   ? "bg-[#064E4B] text-white border-[#064E4B] hover:bg-[#043331]"
                   : "bg-white text-[#064E4B] border-[#064E4B] hover:bg-slate-50"
@@ -102,9 +100,7 @@ const PricingCards = () => {
             </button>
 
             <div className="flex-grow">
-              <p className="text-sm font-bold text-[#064E4B] mb-4">
-                What you get:
-              </p>
+              <p className="text-sm  text-[#064E4B] mb-4">What you get:</p>
               <ul className="space-y-4">
                 {plan.features.map((feature, idx) => (
                   <li

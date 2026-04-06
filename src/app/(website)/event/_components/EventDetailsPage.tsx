@@ -82,7 +82,7 @@ const EventDetailsPage = () => {
                   {/* Timeline Dot */}
                   <div className="absolute left-0 top-2 w-3 h-3 rounded-full bg-[#004242] border-2 border-white shadow-sm z-10" />
 
-                  <p className="text-[#729094] text-xs font-bold uppercase tracking-wider mb-1">
+                  <p className="text-[#729094] text-xs  uppercase tracking-wider mb-1">
                     {item.time}
                   </p>
                   <h4 className="text-[#004242] text-lg  mb-1">{item.title}</h4>
@@ -104,7 +104,7 @@ const EventDetailsPage = () => {
 
             <div className="space-y-6 mb-10">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3 text-[#729094] text-sm font-bold">
+                <div className="flex items-center gap-3 text-[#729094] text-sm ">
                   <Calendar size={18} className="opacity-60" />
                   <span>Date</span>
                 </div>
@@ -114,7 +114,7 @@ const EventDetailsPage = () => {
               </div>
 
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3 text-[#729094] text-sm font-bold">
+                <div className="flex items-center gap-3 text-[#729094] text-sm ">
                   <Clock size={18} className="opacity-60" />
                   <span>Time</span>
                 </div>
@@ -124,7 +124,7 @@ const EventDetailsPage = () => {
               </div>
 
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3 text-[#729094] text-sm font-bold">
+                <div className="flex items-center gap-3 text-[#729094] text-sm ">
                   <Tag size={18} className="opacity-60" />
                   <span>Price</span>
                 </div>
@@ -134,11 +134,11 @@ const EventDetailsPage = () => {
               </div>
             </div>
 
-            <button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-4 rounded-xl font-bold transition-all active:scale-[0.98] mb-4">
+            <button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-4 rounded-xl  transition-all active:scale-[0.98] mb-4">
               Register for Event
             </button>
 
-            <p className="text-center text-[#94a3b8] text-[10px] font-bold uppercase tracking-tighter">
+            <p className="text-center text-[#94a3b8] text-[10px]  uppercase tracking-tighter">
               Limited spots available for the live Q&A session.
             </p>
           </div>

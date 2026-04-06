@@ -34,7 +34,7 @@ const testimonials = [
 const TestimonialCard = ({ item }: { item: (typeof testimonials)[0] }) => (
   <div className="relative w-[350px] cursor-pointer overflow-hidden rounded-[24px] border border-slate-100 bg-white p-8 shadow-sm transition-all hover:shadow-md mx-2">
     <Quote className="absolute top-6 right-8 w-10 h-10 text-[#0D3B3F] opacity-5" />
-    <p className="text-[#0D3B3F] text-[15px] font-bold leading-relaxed mb-8 relative z-10">
+    <p className="text-[#0D3B3F] text-[15px]  leading-relaxed mb-8 relative z-10">
       After three months, I&apos;m proud to be at the helm of a regional
       campaign, all thanks to Act on Climate.
     </p>
@@ -50,7 +50,7 @@ const TestimonialCard = ({ item }: { item: (typeof testimonials)[0] }) => (
         <h4 className="text-sm font-black text-[#0D3B3F] tracking-tight">
           {item.name}
         </h4>
-        <p className="text-[11px] text-slate-400 font-bold uppercase tracking-wider">
+        <p className="text-[11px] text-slate-400  uppercase tracking-wider">
           {item.role}
         </p>
       </div>

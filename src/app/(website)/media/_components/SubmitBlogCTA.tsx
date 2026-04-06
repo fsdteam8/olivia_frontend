@@ -27,7 +27,7 @@ const SubmitBlogCTA = () => {
         </p>
 
         <div className="pt-4">
-          <Button className="bg-[#004242] hover:bg-[#003333] text-white px-10 py-6 rounded-lg font-bold text-sm transition-all active:scale-[0.98]">
+          <Button className="bg-[#004242] hover:bg-[#003333] text-white px-10 py-6 rounded-lg  text-sm transition-all active:scale-[0.98]">
             Submit here
           </Button>
         </div>

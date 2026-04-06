@@ -77,7 +77,7 @@ export const UpcomingEvents = () => {
                   className="w-full h-full object-cover rounded-lg"
                 />
                 <div className="absolute top-4 left-4 bg-white rounded-lg p-2 shadow-md text-center min-w-[50px]">
-                  <p className="text-[10px] font-bold text-blue-500 uppercase tracking-tighter">
+                  <p className="text-[10px]  text-blue-500 uppercase tracking-tighter">
                     Oct
                   </p>
                   <p className="text-xl font-black text-[#0D3B3F] leading-none">
