@@ -1,86 +1,56 @@
 "use client";
 
 import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { MoveRight } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
 
 interface BlogPost {
-  id: number;
-  category: string;
+  _id: string;
   title: string;
-  image: string;
-  description: string;
+  category: string;
+  summary: string;
+  featured_image: string;
+  read_time: string;
 }
+
+const fetchBlogs = async (): Promise<BlogPost[]> => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/blog/get-blogs`,
+  );
+  const data = await res.json();
+  if (!data.success) throw new Error(data.message || "Failed to fetch blogs");
+  return data.data;
+};
 
 const BlogGallery = () => {
   const categories = [
     "View All Posts",
-    "Expert Insights",
-    "Climate Careers",
-    "Research",
-    "Toolkit",
-    "Community",
+    "Environment",
+    "Wildlife",
+    "Urban Development",
   ];
 
   const [activeCategory, setActiveCategory] = useState("View All Posts");
 
-  const blogPosts: BlogPost[] = [
-    {
-      id: 1,
-      category: "Expert Insights",
-      title: "The Future of Carbon Markets in...",
-      image:
-        "https://images.unsplash.com/photo-1558449028-b53a39d100fc?q=80&w=800",
-      description: "45% improvement in space utilization with hot-desking...",
-    },
-    {
-      id: 2,
-      category: "Climate Careers",
-      title: "Breaking Into Climate Tech: A C...",
-      image:
-        "https://plus.unsplash.com/premium_photo-1681486500323-ad09c481fc67?q=80&w=800",
-      description: "45% improvement in space utilization with hot-desking...",
-    },
-    {
-      id: 3,
-      category: "Research",
-      title: "Ocean Acidification: New Findin...",
-      image:
-        "https://images.unsplash.com/photo-1615681666366-e8a35535fb72?q=80&w=800",
-      description: "45% improvement in space utilization with hot-desking...",
-    },
-    {
-      id: 4,
-      category: "Research",
-      title: "How Cities Are Adapting to Risi...",
-      image:
-        "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=800",
-      description: "45% improvement in space utilization with hot-desking...",
-    },
-    {
-      id: 5,
-      category: "Expert Insights",
-      title: "From Finance to Sustainability...",
-      image:
-        "https://images.unsplash.com/photo-1454165833767-02a698d5874c?q=80&w=800",
-      description: "45% improvement in space utilization with hot-desking...",
-    },
-    {
-      id: 6,
-      category: "Climate Careers",
-      title: "Biodiversity Loss and Its Impact...",
-      image:
-        "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=800",
-      description: "45% improvement in space utilization with hot-desking...",
-    },
-  ];
+  // TanStack Query
+  const {
+    data: blogPosts = [],
+    isLoading,
+    isError,
+  } = useQuery<BlogPost[]>({
+    queryKey: ["blogs"],
+    queryFn: fetchBlogs,
+  });
 
   const filteredPosts =
     activeCategory === "View All Posts"
       ? blogPosts
       : blogPosts.filter((post) => post.category === activeCategory);
 
+  if (isLoading) return <p className="text-center">Loading blogs...</p>;
+  if (isError)
+    return <p className="text-center text-red-500">Failed to load blogs.</p>;
+  console.log(blogPosts);
   return (
     <section className="bg-[#f0f7f7] py-20 px-6 md:px-20">
       <div className="container">
@@ -104,7 +74,7 @@ const BlogGallery = () => {
         {/* Blog Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredPosts.map((post) => (
-            <BlogCard key={post.id} post={post} />
+            <BlogCard key={post._id} post={post} />
           ))}
         </div>
       </div>
@@ -115,16 +85,17 @@ const BlogGallery = () => {
 /* Individual Card Component */
 const BlogCard = ({ post }: { post: BlogPost }) => {
   return (
-    <div className="bg-[#EEF4F5] rounded-2xl overflow-hidden border-2 border-[#E3ECEC]  flex flex-col h-full">
-      <div className="p-4">
+    <div className="bg-[#EEF4F5] rounded-2xl overflow-hidden border-2 border-[#E3ECEC] flex flex-col h-full">
+      {/* <div className="p-4">
         <Image
           width={800}
           height={400}
-          src={post.image}
+          quality={100}
+          src={post.featured_image}
           alt={post.title}
           className="w-full h-52 object-cover rounded-xl"
         />
-      </div>
+      </div> */}
 
       <div className="px-6 pb-6 flex flex-col flex-grow">
         <span className="inline-block bg-[#5D8AA8] text-white text-[10px] px-3 py-1 rounded-full mb-3 w-fit">
@@ -136,10 +107,10 @@ const BlogCard = ({ post }: { post: BlogPost }) => {
         </h3>
 
         <p className="text-[#5D8AA8] text-xs leading-relaxed mb-6 flex-grow">
-          {post.description}
+          {post.summary}
         </p>
 
-        <button className="flex items-center gap-2 text-[#5D8AA8]  text-sm hover:gap-3 transition-all">
+        <button className="flex items-center gap-2 text-[#5D8AA8] font-bold text-sm hover:gap-3 transition-all">
           Read More <MoveRight size={18} />
         </button>
       </div>

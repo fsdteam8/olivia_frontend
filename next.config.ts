@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
       "res.cloudinary.com",
       "api.dicebear.com",
       "unsplash.com",
+      "og.luma.com",
     ],
   },
 };
