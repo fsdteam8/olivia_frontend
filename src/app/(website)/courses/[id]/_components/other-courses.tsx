@@ -158,7 +158,7 @@ const ExploreOtherCourses = () => {
       <div className="container">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-10">
-          <h2 className="text-2xl md:text-3xl font-extrabold text-[#004242] tracking-tight">
+          <h2 className="text-2xl md:text-3xl text-[#004242] tracking-tight">
             Explore Other Courses
           </h2>
           <Link href="/courses">
@@ -207,7 +207,7 @@ const ExploreOtherCourses = () => {
                     </div>
                   </div>
 
-                  <h3 className="text-xl font-extrabold text-[#004242] mb-3 leading-snug line-clamp-2">
+                  <h3 className="text-xl text-[#004242] mb-3 leading-snug line-clamp-2">
                     {course.title}
                   </h3>
 
