@@ -62,9 +62,11 @@ const PricingSection = () => {
             </ul>
           </div>
 
-          <button className="w-full mt-10 bg-[#064E4B] text-white py-3 rounded-xl  hover:bg-[#085e5a] transition-colors">
-            Choose Plan
-          </button>
+          <Link href={`/climate-journey#pricing`}>
+            <button className="w-full mt-10 bg-[#064E4B] text-white py-3 rounded-xl  hover:bg-[#085e5a] transition-colors cursor-pointer">
+              Choose Plan
+            </button>
+          </Link>
         </div>
 
         {/* Community Members Card (Featured) */}
@@ -97,7 +99,7 @@ const PricingSection = () => {
               </ul>
             </div>
 
-            <button className="w-full mt-10 bg-white text-[#064E4B] py-3 rounded-xl  hover:bg-slate-100 transition-colors">
+            <button className="w-full mt-10 bg-white text-[#064E4B] py-3 rounded-xl  hover:bg-slate-100 transition-colors cursor-pointer">
               Join the Community
             </button>
           </div>
