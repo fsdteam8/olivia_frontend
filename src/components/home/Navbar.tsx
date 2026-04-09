@@ -22,8 +22,8 @@ export const Navbar = () => {
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
     { name: "Courses", href: "/courses" },
-    { name: "Membership", href: "/membership" },
-    { name: "Mentors & Coaches", href: "/mentors" },
+    { name: "Membership", href: "#" },
+    { name: "Mentors & Coaches", href: "/mentor-coaches/all" },
   ];
 
   const handleLogout = async () => {
