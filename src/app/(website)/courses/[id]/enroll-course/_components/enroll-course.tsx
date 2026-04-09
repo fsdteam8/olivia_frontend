@@ -1,6 +1,4 @@
 import CourseWatchPage from "./course-watch-page";
-// import WhatYouWillLearn from "../../_components/what-you-will-learn";
-// import CourseBenefits from "../../_components/course-benefits";
 import ExploreOtherCourses from "../../_components/other-courses";
 import CommunitySection from "@/components/home/CommunitySection";
 
