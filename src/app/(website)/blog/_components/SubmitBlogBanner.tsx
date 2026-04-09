@@ -1,7 +1,10 @@
 // components/SubmitBlogBanner.tsx
 import React from "react";
+import CreateBlogModal from "./CreateBlogModal";
 
 const SubmitBlogBanner = () => {
+  const [isCreateBlogOpen, setIsCreateBlogOpen] = React.useState(false);
+
   return (
     <section className="relative w-full bg-white py-20 px-6 overflow-hidden flex flex-col items-center justify-center text-center min-h-[400px]">
       {/* Background Decorative Rings - Left */}
@@ -43,13 +46,20 @@ const SubmitBlogBanner = () => {
           us on a whole range of climate topics.
         </p>
 
-        <button className="bg-[#004242] hover:bg-[#003333] text-white px-8 py-3 rounded-md  text-sm transition-colors duration-200 mb-6">
+        <button
+          onClick={() => setIsCreateBlogOpen(true)}
+          className="bg-[#004242] hover:bg-[#003333] text-white px-8 py-3 rounded-md  text-sm transition-colors duration-200 mb-6"
+        >
           Submit here
         </button>
 
         <p className="text-[#94a3b8] text-sm md:text-base font-medium">
           Share your expertise. Inspire climate action.
         </p>
+        <CreateBlogModal
+          isOpen={isCreateBlogOpen}
+          setOpen={setIsCreateBlogOpen}
+        />
       </div>
     </section>
   );

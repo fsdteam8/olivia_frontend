@@ -1,138 +1,3 @@
-// "use client"
-
-// import React from "react"
-// import { Calendar as CalendarIcon, Clock, Plus } from "lucide-react"
-// import {
-//   Dialog,
-//   DialogContent,
-//   DialogTitle,
-//   DialogDescription,
-// } from "@/components/ui/dialog"
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select"
-// import { Input } from "@/components/ui/input"
-// import { Textarea } from "@/components/ui/textarea"
-// import { Button } from "@/components/ui/button"
-// import { Label } from "@/components/ui/label"
-
-// const InterviewModal = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: (open: boolean) => void }) => {
-//   return (
-//     <Dialog open={isOpen} onOpenChange={setOpen}>
-//       <DialogContent className="!max-w-5xl max-h-[90vh] overflow-y-auto bg-white rounded-3xl p-0 border-none">
-
-//         {/* Header Section */}
-//         <div className="pt-10 pb-6 text-center border-b border-slate-50">
-//           <DialogTitle className="text-[#004242] text-3xl  font-normal mb-2">
-//             Apply to do an Interview with Us
-//           </DialogTitle>
-//           <DialogDescription className="text-[#729094] text-xs font-medium max-w-lg mx-auto">
-//             Act on Climate is looking for experts who want to do in-depth interviews with us on a whole range of climate topics.
-//           </DialogDescription>
-//         </div>
-
-//         <form className="p-8 space-y-6">
-
-//           {/* Section 1: Basic Information */}
-//           <div className="bg-white border border-slate-100 rounded-2xl p-6 space-y-4 shadow-sm">
-//             <div className="space-y-1.5">
-//               <Label className="text-[#004242]  text-[11px]">Name</Label>
-//               <Input placeholder="Enter your name" className="h-10 border-slate-200" />
-//             </div>
-
-//             <div className="space-y-1.5">
-//               <Label className="text-[#004242]  text-[11px]">Email Address</Label>
-//               <Input placeholder="Your email address" type="email" className="h-10 border-slate-200" />
-//             </div>
-
-//             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-//               <div className="space-y-1.5">
-//                 <Label className="text-[#004242]  text-[11px]">Climate Change Topics Specialization</Label>
-//                 <Select>
-//                   <SelectTrigger className="h-10 border-slate-200 text-[#729094]">
-//                     <SelectValue placeholder="Renewable Energy" />
-//                   </SelectTrigger>
-//                   <SelectContent>
-//                     <SelectItem value="energy">Renewable Energy</SelectItem>
-//                     <SelectItem value="policy">Climate Policy</SelectItem>
-//                   </SelectContent>
-//                 </Select>
-//               </div>
-//               <div className="space-y-1.5">
-//                 <Label className="text-[#004242]  text-[11px]">Industry</Label>
-//                 <Select>
-//                   <SelectTrigger className="h-10 border-slate-200 text-[#729094]">
-//                     <SelectValue placeholder="Education" />
-//                   </SelectTrigger>
-//                   <SelectContent>
-//                     <SelectItem value="edu">Education</SelectItem>
-//                     <SelectItem value="tech">Technology</SelectItem>
-//                   </SelectContent>
-//                 </Select>
-//               </div>
-//             </div>
-//           </div>
-
-//           {/* Section 2: About & Focus */}
-//           <div className="bg-white border border-slate-100 rounded-2xl p-6 space-y-4 shadow-sm">
-//             <h3 className="text-[#004242] font-normal text-sm">About You</h3>
-//             <div className="space-y-1.5">
-//               <Label className="text-[#004242]  text-[11px]">Professional Background</Label>
-//               <Textarea placeholder="short bio or career summary" className="min-h-[80px] border-slate-200 italic placeholder:text-slate-300" />
-//             </div>
-//             <div className="space-y-1.5">
-//               <Label className="text-[#004242]  text-[11px]">Podcast Focus Preference</Label>
-//               <Textarea placeholder="what they'd like the podcast to be about" className="min-h-[80px] border-slate-200 italic placeholder:text-slate-300" />
-//             </div>
-//           </div>
-
-//           {/* Section 3: Questions & Schedule */}
-//           <div className="bg-white border border-slate-100 rounded-2xl p-6 space-y-4 shadow-sm">
-//             <h3 className="text-[#004242] font-normal text-sm">Preferred Questions</h3>
-//             <div className="space-y-1.5">
-//               <Label className="text-[#004242] font-normal text-[11px]">Preferred Questions</Label>
-//               <div className="flex gap-2">
-//                 <Input placeholder="List the questions you'd like us to ask during the interview" className="h-10 border-slate-200 italic placeholder:text-slate-300" />
-//                 <Button type="button" variant="outline" className="px-3 border-slate-200 text-[#004242]">
-//                   <Plus size={18} />
-//                 </Button>
-//               </div>
-//             </div>
-
-//             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-//               <div className="space-y-1.5">
-//                 <Label className="text-[#004242]  text-[11px]">Date</Label>
-//                 <div className="relative">
-//                   <Input placeholder="Pick a perfect date" className="pl-10 h-10 border-slate-200 italic" />
-//                   <CalendarIcon className="absolute left-3 top-2.5 text-slate-400" size={18} />
-//                 </div>
-//               </div>
-//               <div className="space-y-1.5">
-//                 <Label className="text-[#004242]  text-[11px]">Time</Label>
-//                 <div className="relative">
-//                   <Input placeholder="Set time" className="pl-10 h-10 border-slate-200 italic" />
-//                   <Clock className="absolute left-3 top-2.5 text-slate-400" size={18} />
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-
-//           {/* Submit Button */}
-//           <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg  text-md transition-all active:scale-[0.98]">
-//             Submit
-//           </Button>
-//         </form>
-//       </DialogContent>
-//     </Dialog>
-//   )
-// }
-
-// export default InterviewModal
-
 "use client";
 
 import React, { useState } from "react";
@@ -154,6 +19,8 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+import { useSession } from "next-auth/react";
+import { toast } from "sonner";
 
 const climateTopics = [
   "Climate Science",
@@ -193,6 +60,9 @@ const InterviewModal = ({
   const [currentQuestion, setCurrentQuestion] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+  const [loading, setLoading] = useState(false);
+  const sessionToken = useSession();
+  const token = sessionToken.data?.user?.accessToken;
 
   const addQuestion = () => {
     if (currentQuestion.trim() === "") return;
@@ -200,22 +70,62 @@ const InterviewModal = ({
     setCurrentQuestion("");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const formData = {
+
+    const payload = {
       name,
       email,
       topic,
       industry,
-      bio,
+      professionalBackground: bio,
       focus,
-      questions,
+      preferredQuestions: questions,
       date,
       time,
     };
-    console.log("Interview Form Data:", formData);
-    alert("Form submitted! Check console for data.");
-    setOpen(false);
+
+    try {
+      setLoading(true);
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/Interview/create`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(payload),
+        },
+      );
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Failed to submit interview");
+      }
+
+      const data = await res.json();
+
+      toast.success(data.message || "Interview submitted successfully");
+
+      setOpen(false);
+
+      setName("");
+      setEmail("");
+      setTopic("");
+      setIndustry("");
+      setBio("");
+      setFocus("");
+      setQuestions([]);
+      setCurrentQuestion("");
+      setDate("");
+      setTime("");
+    } catch (err) {
+      console.error("Error submitting interview:", err);
+      toast.error("Failed to submit interview");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -388,12 +298,12 @@ const InterviewModal = ({
             </div>
           </div>
 
-          {/* Submit */}
           <Button
             type="submit"
-            className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg  text-md transition-all active:scale-[0.98]"
+            className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg text-md transition-all active:scale-[0.98]"
+            disabled={loading}
           >
-            Submit
+            {loading ? "Submitting..." : "Submit"}
           </Button>
         </form>
       </DialogContent>

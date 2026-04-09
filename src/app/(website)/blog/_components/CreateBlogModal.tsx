@@ -41,6 +41,7 @@ import { Label } from "@/components/ui/label";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 interface Props {
   isOpen: boolean;
@@ -54,7 +55,7 @@ interface BlogPayload {
 
 const createBlog = async ({ formData, token }: BlogPayload) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/blog/create-blog`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/apply-blog/submit-blog-idea`,
     {
       method: "POST",
       headers: {
@@ -73,7 +74,7 @@ const createBlog = async ({ formData, token }: BlogPayload) => {
   return data;
 };
 
-// ─── Toolbar Button ────────────────────────────────────────────────────────────
+// ─── Toolbar ────────────────────────────────────────────────────────────────
 const ToolbarButton = ({
   onClick,
   title,
@@ -100,12 +101,11 @@ const ToolbarButton = ({
   </button>
 );
 
-// ─── Divider ───────────────────────────────────────────────────────────────────
 const ToolbarDivider = () => (
   <div className="w-px h-5 bg-slate-200 mx-1 self-center" />
 );
 
-// ─── Rich Text Editor ──────────────────────────────────────────────────────────
+// ─── Rich Text Editor ───────────────────────────────────────────────────────
 interface RichEditorProps {
   onChange: (html: string) => void;
   onImageFilesChange: (files: File[]) => void;
@@ -136,19 +136,14 @@ const RichTextEditor = ({ onChange, onImageFilesChange }: RichEditorProps) => {
     const reader = new FileReader();
     reader.onload = (ev) => {
       const base64 = ev.target?.result as string;
-      // Insert image into editor as base64 preview
       exec(
         "insertHTML",
         `<img src="${base64}" alt="blog-image" class="max-w-full rounded-lg my-2" data-filename="${file.name}" />`,
       );
     };
     reader.readAsDataURL(file);
-
-    // Track the file for FormData submission
     imageFilesRef.current = [...imageFilesRef.current, file];
     onImageFilesChange(imageFilesRef.current);
-
-    // Reset input so same file can be re-selected
     e.target.value = "";
   };
 
@@ -163,7 +158,6 @@ const RichTextEditor = ({ onChange, onImageFilesChange }: RichEditorProps) => {
 
   return (
     <div className="border border-slate-200 rounded-xl overflow-hidden bg-white">
-      {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-0.5 p-2 bg-slate-50 border-b border-slate-200">
         {/* Text style */}
         <ToolbarButton onClick={() => exec("bold")} title="Bold">
@@ -258,7 +252,6 @@ const RichTextEditor = ({ onChange, onImageFilesChange }: RichEditorProps) => {
         />
       </div>
 
-      {/* Editable Area */}
       <div
         ref={editorRef}
         contentEditable
@@ -275,11 +268,6 @@ const RichTextEditor = ({ onChange, onImageFilesChange }: RichEditorProps) => {
           [&_img]:max-w-full [&_img]:rounded-lg [&_img]:my-2
         "
         data-placeholder="Write your blog content here..."
-        style={
-          {
-            // Placeholder via CSS
-          }
-        }
       />
 
       <style>{`
@@ -293,7 +281,7 @@ const RichTextEditor = ({ onChange, onImageFilesChange }: RichEditorProps) => {
   );
 };
 
-// ─── Main Modal ────────────────────────────────────────────────────────────────
+// ─── CreateBlogModal ─────────────────────────────────────────────────────────
 const CreateBlogModal = ({ isOpen, setOpen }: Props) => {
   const { data: session } = useSession();
   const token = session?.user?.accessToken;
@@ -310,7 +298,6 @@ const CreateBlogModal = ({ isOpen, setOpen }: Props) => {
     onSuccess: (data) => {
       toast.success(data.message || "Blog created successfully");
       setOpen(false);
-      // Reset
       setTitle("");
       setCategory("");
       setContent("");
@@ -354,15 +341,11 @@ const CreateBlogModal = ({ isOpen, setOpen }: Props) => {
     }
 
     const formData = new FormData();
-    formData.append(
-      "data",
-      JSON.stringify({
-        title,
-        category,
-        content,
-        isPublished: true,
-      }),
-    );
+
+    formData.append("title", title);
+    formData.append("category", category);
+    formData.append("content", content);
+    formData.append("isPublished", "true");
 
     if (thumbnail) {
       formData.append("thumbnailImage", thumbnail);
@@ -374,7 +357,6 @@ const CreateBlogModal = ({ isOpen, setOpen }: Props) => {
   return (
     <Dialog open={isOpen} onOpenChange={setOpen}>
       <DialogContent className="!max-w-4xl max-h-[90vh] overflow-y-auto bg-white rounded-3xl p-0 border-none">
-        {/* Header */}
         <div className="p-8 text-center border-b border-slate-50">
           <DialogTitle className="text-[#004242] text-3xl font-normal mb-2">
             Create a Blog
@@ -386,7 +368,6 @@ const CreateBlogModal = ({ isOpen, setOpen }: Props) => {
         </div>
 
         <form onSubmit={handleSubmit} className="p-8 space-y-8">
-          {/* General Info */}
           <div className="space-y-6 p-6 rounded-2xl border border-slate-100 bg-slate-50/30">
             {/* Title */}
             <div className="space-y-2">
@@ -445,7 +426,9 @@ const CreateBlogModal = ({ isOpen, setOpen }: Props) => {
                     />
                   </label>
                   {thumbnailPreview && (
-                    <img
+                    <Image
+                      width={40}
+                      height={40}
                       src={thumbnailPreview}
                       alt="thumbnail preview"
                       className="w-10 h-10 rounded-lg object-cover border border-slate-200"
@@ -456,7 +439,7 @@ const CreateBlogModal = ({ isOpen, setOpen }: Props) => {
             </div>
           </div>
 
-          {/* Rich Text Content */}
+          {/* Rich Text Editor */}
           <div className="space-y-4 p-6 rounded-2xl border border-slate-100">
             <div className="flex items-center justify-between">
               <h3 className="text-[#004242] text-sm font-medium">
@@ -473,7 +456,6 @@ const CreateBlogModal = ({ isOpen, setOpen }: Props) => {
             />
           </div>
 
-          {/* Submit */}
           <div className="pt-2">
             <Button
               type="submit"
