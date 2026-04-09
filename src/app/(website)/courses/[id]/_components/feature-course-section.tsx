@@ -1,13 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import Image from "next/image";
 import { Clock, BookOpen, BarChart, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import Link from "next/link";
-import { useParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useParams, useRouter } from "next/navigation";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
+import { toast } from "sonner";
 
 interface Lesson {
   title: string;
@@ -43,8 +45,42 @@ interface ApiResponse {
   data: Course;
 }
 
+interface EnrollmentResponse {
+  success: boolean;
+  message: string;
+  statusCode: number;
+  data: {
+    result: {
+      userId: string;
+      courseId: string;
+      transactionId: string;
+      paymentStatus: string;
+      _id: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    checkoutUrl: string;
+  };
+}
+
+interface ErrorResponse {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  errorSource?: Array<{
+    path: string;
+    message: string;
+  }>;
+  error?: any;
+  stack?: string;
+}
+
 const FeaturedCourseSection = () => {
   const { id } = useParams();
+  const router = useRouter();
+  const { data: session } = useSession();
+  const token = session?.user?.accessToken;
+  const [isEnrolling, setIsEnrolling] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
 
   const { data, isLoading, error } = useQuery<ApiResponse>({
@@ -58,8 +94,77 @@ const FeaturedCourseSection = () => {
       }
       return res.json();
     },
-    enabled: !!id, // Only fetch if id exists
+    enabled: !!id,
   });
+
+  const enrollmentMutation = useMutation<EnrollmentResponse, Error, void>({
+    mutationFn: async () => {
+      if (!token) {
+        throw new Error("Please login to enroll in this course");
+      }
+
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/enrollment/create`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            courseId: id,
+          }),
+        },
+      );
+
+      const responseData = await res.json();
+
+      if (!res.ok) {
+        throw responseData;
+      }
+
+      return responseData;
+    },
+    onSuccess: (data) => {
+      if (data.success && data.data?.checkoutUrl) {
+        window.location.href = data.data.checkoutUrl;
+      } else if (data.success && !data.data?.checkoutUrl) {
+        toast.success("Successfully enrolled in course!");
+        setTimeout(() => {
+          router.push(`/courses/${id}/watch`);
+        }, 2000);
+      }
+    },
+    onError: (error: any) => {
+      let errorMessage = "Failed to enroll in course. Please try again.";
+
+      if (error?.message) {
+        errorMessage = error.message;
+      } else if (typeof error === "string") {
+        errorMessage = error;
+      } else if (error?.errorSource && error.errorSource.length > 0) {
+        errorMessage = error.errorSource[0].message;
+      }
+
+      toast.error(errorMessage);
+    },
+  });
+
+  const handleEnroll = async () => {
+    if (!session) {
+      toast.error("Please login to enroll in this course");
+      router.push("/login");
+      return;
+    }
+
+    if (!token) {
+      toast.error("Authentication error. Please login again.");
+      router.push("/login");
+      return;
+    }
+
+    enrollmentMutation.mutate();
+  };
 
   const course = data?.data;
 
@@ -117,13 +222,9 @@ const FeaturedCourseSection = () => {
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch py-16">
             {/* Left Content Skeleton */}
-            <div className="bg-white/40 border border-white/60 rounded-2xl p-8 md:p-12 flex flex-col justify-between">
+            <div className="bg-white/40 border border-white/60 rounded-2xl p-5 md:p-8 flex flex-col justify-between">
               <div className="space-y-6">
                 <Skeleton className="h-24 w-3/4" />
-                <div className="flex items-center gap-3">
-                  <Skeleton className="w-10 h-10 rounded-full" />
-                  <Skeleton className="h-5 w-48" />
-                </div>
                 <Skeleton className="h-24 w-full" />
                 <div className="grid grid-cols-3 bg-white rounded-xl p-4 shadow-sm">
                   <div className="space-y-2">
@@ -169,6 +270,7 @@ const FeaturedCourseSection = () => {
   const formattedDuration = getTotalDurationInHours(course.totalDuration);
   const firstLesson = course.lessons[0];
   const videoUrl = firstLesson?.videoUrl;
+  const isEnrollingLoading = enrollmentMutation.isPending || isEnrolling;
 
   return (
     <section className="bg-[#EDF2F2]">
@@ -232,13 +334,33 @@ const FeaturedCourseSection = () => {
                   </span>
                 </div>
               )}
+
+              {/* Show message for free courses */}
+              {course.price === 0 && (
+                <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                  <p className="text-green-700 text-sm">
+                    🎉 This is a free course! Enroll now and start learning.
+                  </p>
+                </div>
+              )}
             </div>
 
-            <Link href={`/courses/${course._id}/enroll-course`}>
-              <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-7 rounded-lg text-lg mt-8">
-                Enroll in Course
-              </Button>
-            </Link>
+            <Button
+              onClick={handleEnroll}
+              disabled={isEnrollingLoading}
+              className="w-full bg-[#004242] hover:bg-[#003333] text-white py-7 rounded-lg text-lg mt-8 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isEnrollingLoading ? (
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <span>Processing...</span>
+                </div>
+              ) : course.price === 0 ? (
+                "Enroll for Free"
+              ) : (
+                `Enroll in Course - ${course.currency} ${course.price}`
+              )}
+            </Button>
           </div>
 
           {/* Right Video/Image Preview */}
@@ -260,6 +382,16 @@ const FeaturedCourseSection = () => {
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
+                  {videoUrl && (
+                    <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
+                      <button
+                        onClick={() => setShowVideo(true)}
+                        className="w-16 h-16 bg-[#004242] text-white rounded-full flex items-center justify-center transition-transform hover:scale-110 shadow-xl border-4 border-white/20"
+                      >
+                        <Play size={32} className="ml-1" fill="currentColor" />
+                      </button>
+                    </div>
+                  )}
                 </>
               )}
             </div>
