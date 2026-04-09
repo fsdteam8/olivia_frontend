@@ -1,5 +1,6 @@
-import React from "react";
+"use client";
 import { CheckCircle2 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 
 interface PricingPlan {
   name: string;
@@ -59,8 +60,19 @@ const plans: PricingPlan[] = [
 ];
 
 const PricingCards = () => {
+  const {} = useQuery({
+    queryKey: ["subscription-plans"],
+    queryFn: async () => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/subscription-plans`,
+      );
+      const data = await res.json();
+      return data;
+    },
+  });
+
   return (
-    <section className="bg-[#EDF5F4] py-20">
+    <section id="pricing" className="bg-[#EDF5F4] py-20">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
         {plans.map((plan, index) => (
           <div
