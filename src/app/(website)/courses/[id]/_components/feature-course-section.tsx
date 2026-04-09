@@ -334,15 +334,6 @@ const FeaturedCourseSection = () => {
                   </span>
                 </div>
               )}
-
-              {/* Show message for free courses */}
-              {course.price === 0 && (
-                <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-                  <p className="text-green-700 text-sm">
-                    🎉 This is a free course! Enroll now and start learning.
-                  </p>
-                </div>
-              )}
             </div>
 
             <Button
@@ -355,8 +346,6 @@ const FeaturedCourseSection = () => {
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                   <span>Processing...</span>
                 </div>
-              ) : course.price === 0 ? (
-                "Enroll for Free"
               ) : (
                 `Enroll in Course - ${course.currency} ${course.price}`
               )}
@@ -382,16 +371,6 @@ const FeaturedCourseSection = () => {
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  {videoUrl && (
-                    <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
-                      <button
-                        onClick={() => setShowVideo(true)}
-                        className="w-16 h-16 bg-[#004242] text-white rounded-full flex items-center justify-center transition-transform hover:scale-110 shadow-xl border-4 border-white/20"
-                      >
-                        <Play size={32} className="ml-1" fill="currentColor" />
-                      </button>
-                    </div>
-                  )}
                 </>
               )}
             </div>
