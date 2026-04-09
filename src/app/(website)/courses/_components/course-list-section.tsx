@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Clock } from "lucide-react";
+import { Clock, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -17,7 +17,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useDeferredValue, useEffect } from "react";
 
 interface Course {
   _id: string;
@@ -83,7 +83,9 @@ const CategorySkeleton = () => (
 const CourseListSection = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState("All Courses");
-  const [email, setEmail] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearchTerm = useDeferredValue(searchTerm);
+  const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
 
   // Fetch all courses first to get categories
   const { data: allCoursesData, isLoading: isLoadingCategories } =
@@ -114,7 +116,7 @@ const CourseListSection = () => {
   }, [allCoursesData]);
 
   // Fetch paginated courses with category filter
-  const { data, isLoading, error } = useQuery<ApiResponse>({
+  const { data, isLoading, error, refetch } = useQuery<ApiResponse>({
     queryKey: ["courses", currentPage, selectedCategory],
     queryFn: async () => {
       const categoryParam =
@@ -122,7 +124,7 @@ const CourseListSection = () => {
           ? `&category=${encodeURIComponent(selectedCategory)}`
           : "";
 
-      const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/course/all?page=${currentPage}&limit=6${categoryParam}`;
+      const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/course/all?page=${currentPage}&limit=100${categoryParam}`;
       console.log("Fetching:", url);
 
       const res = await fetch(url);
@@ -131,9 +133,40 @@ const CourseListSection = () => {
     },
   });
 
-  const courses = data?.data || [];
+  const allCourses = data?.data || [];
   const meta = data?.meta;
   const totalPages = meta?.totalPage || 1;
+
+  // Filter courses based on search term
+  useEffect(() => {
+    if (!allCourses.length) {
+      setFilteredCourses([]);
+      return;
+    }
+
+    if (!debouncedSearchTerm.trim()) {
+      setFilteredCourses(allCourses);
+    } else {
+      const filtered = allCourses.filter((course) =>
+        course.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase()),
+      );
+      setFilteredCourses(filtered);
+    }
+  }, [allCourses, debouncedSearchTerm]);
+
+  // Reset to page 1 when search term changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [debouncedSearchTerm, selectedCategory]);
+
+  // Paginate filtered courses
+  const paginatedCourses = useMemo(() => {
+    const startIndex = (currentPage - 1) * 6;
+    const endIndex = startIndex + 6;
+    return filteredCourses.slice(startIndex, endIndex);
+  }, [filteredCourses, currentPage]);
+
+  const totalFilteredPages = Math.ceil(filteredCourses.length / 6);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -143,12 +176,15 @@ const CourseListSection = () => {
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
     setCurrentPage(1);
+    setSearchTerm(""); // Clear search when changing category
   };
 
-  const handleSubscribe = async () => {
-    if (!email) return;
-    console.log("Subscribing email:", email);
-    setEmail("");
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleClearSearch = () => {
+    setSearchTerm("");
   };
 
   const getLevelFromLessons = (lessons: Course["lessons"]) => {
@@ -184,9 +220,10 @@ const CourseListSection = () => {
   const renderPaginationItems = () => {
     const items = [];
     const maxVisible = 5;
+    const pagesToShow = totalFilteredPages;
 
-    if (totalPages <= maxVisible) {
-      for (let i = 1; i <= totalPages; i++) {
+    if (pagesToShow <= maxVisible) {
+      for (let i = 1; i <= pagesToShow; i++) {
         items.push(
           <PaginationItem key={i}>
             <PaginationLink
@@ -237,10 +274,10 @@ const CourseListSection = () => {
       }
 
       const start = Math.max(2, currentPage - 1);
-      const end = Math.min(totalPages - 1, currentPage + 1);
+      const end = Math.min(pagesToShow - 1, currentPage + 1);
 
       for (let i = start; i <= end; i++) {
-        if (i === 1 || i === totalPages) continue;
+        if (i === 1 || i === pagesToShow) continue;
         items.push(
           <PaginationItem key={i}>
             <PaginationLink
@@ -262,7 +299,7 @@ const CourseListSection = () => {
         );
       }
 
-      if (currentPage < totalPages - 2) {
+      if (currentPage < pagesToShow - 2) {
         items.push(
           <PaginationItem key="ellipsis2">
             <PaginationEllipsis />
@@ -271,21 +308,21 @@ const CourseListSection = () => {
       }
 
       items.push(
-        <PaginationItem key={totalPages}>
+        <PaginationItem key={pagesToShow}>
           <PaginationLink
             href="#"
             onClick={(e) => {
               e.preventDefault();
-              handlePageChange(totalPages);
+              handlePageChange(pagesToShow);
             }}
-            isActive={currentPage === totalPages}
+            isActive={currentPage === pagesToShow}
             className={
-              currentPage === totalPages
+              currentPage === pagesToShow
                 ? "bg-[#B4C7C7] text-[#004242] hover:bg-[#B4C7C7] border-none"
                 : "border-none hover:bg-gray-100"
             }
           >
-            {totalPages}
+            {pagesToShow}
           </PaginationLink>
         </PaginationItem>,
       );
@@ -314,10 +351,13 @@ const CourseListSection = () => {
     );
   }
 
+  const showNoResults =
+    !isLoading && filteredCourses.length === 0 && searchTerm;
+
   return (
     <section>
       <div className="container">
-        {/* Filter Bar & Newsletter Subscription */}
+        {/* Filter Bar & Search */}
         <div className="flex flex-col lg:flex-row items-center justify-between mb-5 gap-5">
           <div className="flex flex-wrap gap-3">
             {isLoadingCategories
@@ -340,150 +380,188 @@ const CourseListSection = () => {
                 ))}
           </div>
 
-          <div className="flex items-center bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+          {/* Search Input */}
+          <div className="relative flex items-center bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+            <Search className="absolute left-3 text-gray-400" size={18} />
             <Input
-              type="email"
-              placeholder="Enter Your Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="border-none focus-visible:ring-0 w-64 h-11 text-sm px-4"
+              type="text"
+              placeholder="Search courses by title..."
+              value={searchTerm}
+              onChange={handleSearch}
+              className="border-none focus-visible:ring-0 w-64 h-11 text-sm px-10"
             />
+            {searchTerm && (
+              <button
+                onClick={handleClearSearch}
+                className="absolute right-3 text-gray-400 hover:text-gray-600"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Search Results Info */}
+        {!isLoading && searchTerm && (
+          <div className="mb-6 text-sm text-gray-600">
+            Found {filteredCourses.length} course
+            {filteredCourses.length !== 1 ? "s" : ""} for &quot;{searchTerm}
+            &quot;
+          </div>
+        )}
+
+        {/* No Results Found */}
+        {showNoResults && (
+          <div className="text-center py-16 bg-gray-50 rounded-2xl mb-16">
+            <Search size={48} className="mx-auto text-gray-400 mb-4" />
+            <h3 className="text-xl font-semibold text-gray-700 mb-2">
+              No courses found
+            </h3>
+            <p className="text-gray-500">
+              We couldn&apos;t find any courses matching &quot;{searchTerm}
+              &quot;
+            </p>
             <Button
-              onClick={handleSubscribe}
-              className="bg-[#004242] hover:bg-[#003333] text-white h-11 px-6 rounded-none hero-font"
+              onClick={handleClearSearch}
+              className="mt-4 bg-[#004242] hover:bg-[#003333]"
             >
-              Subscribe
+              Clear Search
             </Button>
           </div>
-        </div>
+        )}
 
         {/* Course Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {isLoading
-            ? Array.from({ length: 6 }).map((_, index) => (
-                <CourseCardSkeleton key={`skeleton-${index}`} />
-              ))
-            : courses.map((course) => {
-                const level = getLevelFromLessons(course.lessons);
-                const levelColor = getLevelColor(level);
-                const formattedPrice = formatPrice(
-                  course.price,
-                  course.currency,
-                );
-                const isFree = course.price === 0;
+        {!showNoResults && (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+              {isLoading
+                ? Array.from({ length: 6 }).map((_, index) => (
+                    <CourseCardSkeleton key={`skeleton-${index}`} />
+                  ))
+                : paginatedCourses.map((course) => {
+                    const level = getLevelFromLessons(course.lessons);
+                    const levelColor = getLevelColor(level);
+                    const formattedPrice = formatPrice(
+                      course.price,
+                      course.currency,
+                    );
+                    const isFree = course.price === 0;
 
-                return (
-                  <div
-                    key={course._id}
-                    className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col h-full group"
-                  >
-                    {/* Card Header Image */}
-                    <div className="relative aspect-[16/10] w-full overflow-hidden">
-                      <Image
-                        src={getImageUrl(course.image.url)}
-                        alt={course.title}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <Badge className="absolute top-4 left-4 bg-white/95 text-black hover:bg-white border-none px-3 py-1 text-[10px] tracking-widest shadow-sm">
-                        {course.category}
-                      </Badge>
-                      {/* Price Badge */}
+                    return (
                       <div
-                        className={`absolute top-4 right-4 px-3 py-1 rounded-md text-xs font-bold shadow-sm bg-[#004242] text-white`}
+                        key={course._id}
+                        className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col h-full group"
                       >
-                        {formattedPrice}
-                      </div>
-                    </div>
+                        {/* Card Header Image */}
+                        <div className="relative aspect-[16/10] w-full overflow-hidden">
+                          <Image
+                            src={getImageUrl(course.image.url)}
+                            alt={course.title}
+                            fill
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                          <Badge className="absolute top-4 left-4 bg-white/95 text-black hover:bg-white border-none px-3 py-1 text-[10px] tracking-widest shadow-sm">
+                            {course.category}
+                          </Badge>
+                          {/* Price Badge */}
+                          <div
+                            className={`absolute top-4 right-4 px-3 py-1 rounded-md text-xs font-bold shadow-sm bg-[#004242] text-white`}
+                          >
+                            {formattedPrice}
+                          </div>
+                        </div>
 
-                    {/* Card Content */}
-                    <div className="p-6 flex flex-col flex-grow">
-                      <div className="flex items-center justify-between mb-4">
-                        <span
-                          className={`text-[13px] font-medium px-2 py-0.5 rounded-full ${levelColor}`}
-                        >
-                          {level}
-                        </span>
-                        <div className="flex items-center gap-1.5 text-gray-400 text-[13px] font-medium">
-                          <Clock size={15} className="text-[#004242]" />
-                          {course.totalDuration}
+                        {/* Card Content */}
+                        <div className="p-6 flex flex-col flex-grow">
+                          <div className="flex items-center justify-between mb-4">
+                            <span
+                              className={`text-[13px] font-medium px-2 py-0.5 rounded-full ${levelColor}`}
+                            >
+                              {level}
+                            </span>
+                            <div className="flex items-center gap-1.5 text-gray-400 text-[13px] font-medium">
+                              <Clock size={15} className="text-[#004242]" />
+                              {course.totalDuration}
+                            </div>
+                          </div>
+
+                          <h3 className="text-xl font-extrabold text-[#004242] mb-3 leading-snug line-clamp-2">
+                            {course.title}
+                          </h3>
+
+                          <p className="text-gray-500 text-[14px] leading-relaxed line-clamp-2 mb-4">
+                            {course.lessonCount} lessons •{" "}
+                            {course.totalEnrolled} enrolled
+                          </p>
+
+                          {/* Price and Button Section */}
+                          <div className="mt-auto space-y-3">
+                            {!isFree && (
+                              <div className="flex items-baseline gap-2">
+                                <span className="text-2xl font-bold text-[#004242]">
+                                  {formattedPrice}
+                                </span>
+                                <span className="text-gray-400 text-xs">
+                                  one-time payment
+                                </span>
+                              </div>
+                            )}
+
+                            <Link href={`/courses/${course._id}`}>
+                              <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg text-sm transition-colors">
+                                Enroll Now
+                              </Button>
+                            </Link>
+                          </div>
                         </div>
                       </div>
+                    );
+                  })}
+            </div>
 
-                      <h3 className="text-xl font-extrabold text-[#004242] mb-3 leading-snug line-clamp-2">
-                        {course.title}
-                      </h3>
+            {/* Pagination Section */}
+            {!isLoading && totalFilteredPages > 1 && (
+              <div className="flex justify-center">
+                <Pagination>
+                  <PaginationContent className="bg-white border border-gray-200 rounded-lg p-1 shadow-sm">
+                    <PaginationItem>
+                      <PaginationPrevious
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          if (currentPage > 1)
+                            handlePageChange(currentPage - 1);
+                        }}
+                        className={
+                          currentPage === 1
+                            ? "pointer-events-none opacity-50 border-none hover:bg-gray-100"
+                            : "border-none hover:bg-gray-100"
+                        }
+                      />
+                    </PaginationItem>
 
-                      <p className="text-gray-500 text-[14px] leading-relaxed line-clamp-2 mb-4">
-                        {course.lessonCount} lessons • {course.totalEnrolled}{" "}
-                        enrolled
-                      </p>
+                    {renderPaginationItems()}
 
-                      {/* Price and Button Section */}
-                      <div className="mt-auto space-y-3">
-                        {!isFree && (
-                          <div className="flex items-baseline gap-2">
-                            <span className="text-2xl font-bold text-[#004242]">
-                              {formattedPrice}
-                            </span>
-                            <span className="text-gray-400 text-xs">
-                              one-time payment
-                            </span>
-                          </div>
-                        )}
-
-                        <Link href={`/courses/${course._id}`}>
-                          <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg text-sm transition-colors">
-                            Enroll Now
-                          </Button>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-        </div>
-
-        {/* Pagination Section */}
-        {!isLoading && totalPages > 1 && (
-          <div className="flex justify-center">
-            <Pagination>
-              <PaginationContent className="bg-white border border-gray-200 rounded-lg p-1 shadow-sm">
-                <PaginationItem>
-                  <PaginationPrevious
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      if (currentPage > 1) handlePageChange(currentPage - 1);
-                    }}
-                    className={
-                      currentPage === 1
-                        ? "pointer-events-none opacity-50 border-none hover:bg-gray-100"
-                        : "border-none hover:bg-gray-100"
-                    }
-                  />
-                </PaginationItem>
-
-                {renderPaginationItems()}
-
-                <PaginationItem>
-                  <PaginationNext
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      if (currentPage < totalPages)
-                        handlePageChange(currentPage + 1);
-                    }}
-                    className={
-                      currentPage === totalPages
-                        ? "pointer-events-none opacity-50 border-none hover:bg-gray-100"
-                        : "border-none hover:bg-gray-100"
-                    }
-                  />
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
-          </div>
+                    <PaginationItem>
+                      <PaginationNext
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          if (currentPage < totalFilteredPages)
+                            handlePageChange(currentPage + 1);
+                        }}
+                        className={
+                          currentPage === totalFilteredPages
+                            ? "pointer-events-none opacity-50 border-none hover:bg-gray-100"
+                            : "border-none hover:bg-gray-100"
+                        }
+                      />
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+              </div>
+            )}
+          </>
         )}
       </div>
     </section>
