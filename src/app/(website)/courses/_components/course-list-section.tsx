@@ -162,19 +162,23 @@ const CourseListSection = () => {
   const getLevelColor = (level: string) => {
     switch (level) {
       case "Beginner":
-        return "text-green-500";
+        return "text-green-500 bg-green-50";
       case "Intermediate":
-        return "text-blue-500";
+        return "text-blue-500 bg-blue-50";
       case "Advanced":
-        return "text-purple-500";
+        return "text-purple-500 bg-purple-50";
       default:
-        return "text-green-500";
+        return "text-green-500 bg-green-50";
     }
   };
 
   const getImageUrl = (imageUrl: string) => {
     if (imageUrl.startsWith("http")) return imageUrl;
     return `${process.env.NEXT_PUBLIC_BACKEND_URL}${imageUrl}`;
+  };
+
+  const formatPrice = (price: number, currency: string) => {
+    return `${currency} ${price.toLocaleString()}`;
   };
 
   const renderPaginationItems = () => {
@@ -362,30 +366,41 @@ const CourseListSection = () => {
             : courses.map((course) => {
                 const level = getLevelFromLessons(course.lessons);
                 const levelColor = getLevelColor(level);
+                const formattedPrice = formatPrice(
+                  course.price,
+                  course.currency,
+                );
+                const isFree = course.price === 0;
 
                 return (
                   <div
                     key={course._id}
-                    className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col h-full"
+                    className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col h-full group"
                   >
                     {/* Card Header Image */}
-                    <div className="relative aspect-[16/10] w-full">
+                    <div className="relative aspect-[16/10] w-full overflow-hidden">
                       <Image
                         src={getImageUrl(course.image.url)}
                         alt={course.title}
                         fill
-                        className="object-cover"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <Badge className="absolute top-4 left-4 bg-white/95 text-black hover:bg-white border-none px-3 py-1 text-[10px] tracking-widest shadow-sm">
                         {course.category}
                       </Badge>
+                      {/* Price Badge */}
+                      <div
+                        className={`absolute top-4 right-4 px-3 py-1 rounded-md text-xs font-bold shadow-sm bg-[#004242] text-white`}
+                      >
+                        {formattedPrice}
+                      </div>
                     </div>
 
                     {/* Card Content */}
                     <div className="p-6 flex flex-col flex-grow">
-                      <div className="flex items-center gap-5 mb-4">
+                      <div className="flex items-center justify-between mb-4">
                         <span
-                          className={`text-[13px] font-medium ${levelColor}`}
+                          className={`text-[13px] font-medium px-2 py-0.5 rounded-full ${levelColor}`}
                         >
                           {level}
                         </span>
@@ -395,20 +410,34 @@ const CourseListSection = () => {
                         </div>
                       </div>
 
-                      <h3 className="text-xl text-[#004242] mb-3 leading-snug line-clamp-2">
+                      <h3 className="text-xl font-extrabold text-[#004242] mb-3 leading-snug line-clamp-2">
                         {course.title}
                       </h3>
 
-                      <p className="text-gray-500 text-[14px] leading-relaxed line-clamp-3 mb-6">
+                      <p className="text-gray-500 text-[14px] leading-relaxed line-clamp-2 mb-4">
                         {course.lessonCount} lessons • {course.totalEnrolled}{" "}
                         enrolled
                       </p>
 
-                      <Link href={`/courses/${course._id}`}>
-                        <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg text-sm mt-auto">
-                          Explore Course
-                        </Button>
-                      </Link>
+                      {/* Price and Button Section */}
+                      <div className="mt-auto space-y-3">
+                        {!isFree && (
+                          <div className="flex items-baseline gap-2">
+                            <span className="text-2xl font-bold text-[#004242]">
+                              {formattedPrice}
+                            </span>
+                            <span className="text-gray-400 text-xs">
+                              one-time payment
+                            </span>
+                          </div>
+                        )}
+
+                        <Link href={`/courses/${course._id}`}>
+                          <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg text-sm transition-colors">
+                            {isFree ? "Start Free Course" : "Enroll Now"}
+                          </Button>
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 );

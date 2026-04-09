@@ -114,6 +114,10 @@ const ExploreOtherCourses = () => {
     return `${process.env.NEXT_PUBLIC_BACKEND_URL}${imageUrl}`;
   };
 
+  const formatPrice = (price: number, currency: string) => {
+    return `${currency} ${price.toLocaleString()}`;
+  };
+
   if (error) {
     return (
       <section>
@@ -158,7 +162,7 @@ const ExploreOtherCourses = () => {
       <div className="container">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-10">
-          <h2 className="text-2xl md:text-3xl text-[#004242] tracking-tight">
+          <h2 className="text-2xl md:text-3xl font-extrabold text-[#004242] tracking-tight">
             Explore Other Courses
           </h2>
           <Link href="/courses">
@@ -176,6 +180,8 @@ const ExploreOtherCourses = () => {
           {otherCourses.map((course) => {
             const level = getLevelFromLessons(course.lessons);
             const levelColor = getLevelColor(level);
+            const formattedPrice = formatPrice(course.price, course.currency);
+            const isFree = course.price === 0;
 
             return (
               <div
@@ -192,10 +198,16 @@ const ExploreOtherCourses = () => {
                   <Badge className="absolute top-4 left-4 bg-white/95 text-black hover:bg-white border-none px-3 py-1 text-[10px] tracking-widest shadow-sm">
                     {course.category}
                   </Badge>
+                  {/* Price Badge */}
+                  <div
+                    className={`absolute top-4 right-4 px-3 py-1 rounded-md text-xs font-bold shadow-sm bg-[#004242] text-white`}
+                  >
+                    {formattedPrice}
+                  </div>
                 </div>
 
                 <div className="p-6 flex flex-col flex-grow">
-                  <div className="flex items-center gap-5 mb-4">
+                  <div className="flex items-center justify-between mb-4">
                     <span
                       className={`text-[13px] font-medium px-2 py-0.5 rounded-full ${levelColor}`}
                     >
@@ -207,7 +219,7 @@ const ExploreOtherCourses = () => {
                     </div>
                   </div>
 
-                  <h3 className="text-xl text-[#004242] mb-3 leading-snug line-clamp-2">
+                  <h3 className="text-xl font-extrabold text-[#004242] mb-3 leading-snug line-clamp-2">
                     {course.title}
                   </h3>
 
@@ -216,17 +228,25 @@ const ExploreOtherCourses = () => {
                     enrolled
                   </p>
 
-                  {course.price > 0 && (
-                    <p className="text-[#004242] font-bold text-lg mb-4">
-                      {course.currency} {course.price}
-                    </p>
-                  )}
+                  {/* Price and Button Section */}
+                  <div className="mt-auto space-y-3">
+                    {!isFree && (
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-2xl font-bold text-[#004242]">
+                          {formattedPrice}
+                        </span>
+                        <span className="text-gray-400 text-xs">
+                          one-time payment
+                        </span>
+                      </div>
+                    )}
 
-                  <Link href={`/courses/${course._id}`}>
-                    <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg text-sm mt-auto transition-colors">
-                      Explore Course
-                    </Button>
-                  </Link>
+                    <Link href={`/courses/${course._id}`}>
+                      <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg text-sm transition-colors">
+                        Enroll Now
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             );
