@@ -434,7 +434,7 @@ const CourseListSection = () => {
 
                         <Link href={`/courses/${course._id}`}>
                           <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg text-sm transition-colors">
-                            {isFree ? "Start Free Course" : "Enroll Now"}
+                            Enroll Now
                           </Button>
                         </Link>
                       </div>
