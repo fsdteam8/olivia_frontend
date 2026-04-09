@@ -1,4 +1,4 @@
-import React from "react";
+"use client";
 import FeaturedCourseSection from "./feature-course-section";
 import WhatYouWillLearn from "./what-you-will-learn";
 import CourseBenefits from "./course-benefits";
