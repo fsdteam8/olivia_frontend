@@ -1,0 +1,260 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+
+import React from "react";
+import Image from "next/image";
+import { useParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import {
+  MapPin,
+  Briefcase,
+  Calendar,
+  Building2,
+  ExternalLink,
+  Clock,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
+
+interface JobData {
+  _id: string;
+  title: string;
+  category: string;
+  jobType: string;
+  location: string;
+  description: string;
+  responsibility: string;
+  requirement: string;
+  skill: string;
+  companyName: string;
+  companyURL: string;
+  companyLogo?: { url: string };
+  media: {
+    images: { url: string }[];
+  };
+  postedDate: string;
+}
+
+const JobDetails = () => {
+  const { id } = useParams();
+
+  const { data, isLoading, error } = useQuery<{ data: JobData }>({
+    queryKey: ["job-single", id],
+    queryFn: async () => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/jobs/single/${id}`,
+      );
+      if (!res.ok) throw new Error("Failed to fetch job details");
+      return res.json();
+    },
+  });
+
+  if (isLoading) return <JobDetailsSkeleton />;
+  if (error || !data)
+    return (
+      <div className="text-center py-20 text-red-500 ">
+        Error loading job details.
+      </div>
+    );
+
+  const job = data.data;
+
+  // Fallback image jodi media array empty thake
+  const heroImage =
+    job.media?.images?.[0]?.url ||
+    "https://images.unsplash.com/photo-1501854140801-50d01698950b?q=80&w=2000&auto=format&fit=crop";
+
+  return (
+    <div className="min-h-screen ] pb-20 mt-20">
+      {/* Hero Header Section */}
+      <div className="relative w-full h-[300px] md:h-[400px] overflow-hidden container bg-[#eef4f5] rounded-b-4xl">
+        <Image
+          src={heroImage}
+          alt={job.title}
+          fill
+          priority
+          className="object-cover brightness-75 transition-all duration-700"
+        />
+        <div className="absolute inset-0 bg-black/20" />
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-full  px-6">
+          <div className="flex gap-3 mb-4">
+            <Badge className="bg-[#004D4D] text-white border-none px-4 py-1.5 rounded-lg  uppercase text-[10px] tracking-wider">
+              {job.category}
+            </Badge>
+            <Badge className="bg-white text-slate-800 border-none px-4 py-1.5 rounded-lg  shadow-md text-[10px] tracking-wider">
+              POSTED {new Date(job.postedDate).toLocaleDateString()}
+            </Badge>
+          </div>
+        </div>
+      </div>
+
+      <div className="container !mt-8 relative z-10">
+        <div className="mb-10">
+          <div>
+            <p className="text-[#004D4D]  text-sm mb-2 flex items-center gap-2">
+              {job.companyName} • {job.location}
+            </p>
+            <h1 className="text-4xl md:text-5xl font-black text-[#004D4D] tracking-tight">
+              {job.title}
+            </h1>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 space-y-8">
+            <section className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm prose prose-slate max-w-none">
+              <h2 className="text-xl  text-[#004D4D] mb-4">Job Description</h2>
+              <div
+                className="text-slate-600 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: job.description }}
+              />
+
+              <h2 className="text-xl  text-[#004D4D] mt-8 mb-4">
+                Responsibilities
+              </h2>
+              <div
+                className="text-slate-600 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: job.responsibility }}
+              />
+
+              <h2 className="text-xl  text-[#004D4D] mt-8 mb-4">
+                Requirements
+              </h2>
+              <div
+                className="text-slate-600 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: job.requirement }}
+              />
+
+              <h2 className="text-xl  text-[#004D4D] mt-8 mb-4">Core Skills</h2>
+              <div className="flex flex-wrap gap-2">
+                {job.skill.split(",").map((s, idx) => (
+                  <Badge
+                    key={idx}
+                    variant="secondary"
+                    className="bg-slate-50 text-slate-600 px-4 py-1.5 rounded-lg border border-slate-100  text-[11px] uppercase tracking-wide"
+                  >
+                    {s.trim()}
+                  </Badge>
+                ))}
+              </div>
+            </section>
+
+            <section className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+              <h2 className="text-xl  text-[#004D4D] mb-6">
+                Company Information
+              </h2>
+              <div className="flex items-center gap-6">
+                <div className="relative w-20 h-20 rounded-2xl overflow-hidden border border-slate-100 p-2 bg-white flex items-center justify-center shrink-0 shadow-inner">
+                  <Image
+                    src={job?.companyLogo?.url || "/placeholder.png"}
+                    alt={job?.companyName || "Logo"}
+                    fill
+                    className="object-contain p-2"
+                  />
+                </div>
+                <div>
+                  <p className="text-[10px] uppercase tracking-widest text-slate-400 font-black mb-1">
+                    Company Name
+                  </p>
+                  <h3 className="text-xl  text-[#004D4D]">{job.companyName}</h3>
+                  <div className="mt-3 space-y-1">
+                    <p className="text-[10px] uppercase tracking-widest text-slate-400 font-black">
+                      Website
+                    </p>
+                    <a
+                      href={
+                        job.companyURL.startsWith("http")
+                          ? job.companyURL
+                          : `https://${job.companyURL}`
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-teal-600  text-sm flex items-center gap-1 hover:underline underline-offset-4"
+                    >
+                      {job.companyURL.replace(/(^\w+:|^)\/\//, "")}{" "}
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <div className="space-y-6">
+            <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm sticky top-24">
+              <h2 className="text-xl  text-[#004D4D] mb-6">Job Summary</h2>
+              <div className="space-y-6">
+                <SummaryItem
+                  icon={<Building2 />}
+                  label="Company"
+                  value={job.companyName}
+                />
+                <SummaryItem
+                  icon={<MapPin />}
+                  label="Location"
+                  value={job.location}
+                />
+                <SummaryItem
+                  icon={<Briefcase />}
+                  label="Job Type"
+                  value={job.jobType}
+                />
+                <SummaryItem
+                  icon={<Clock />}
+                  label="Category"
+                  value={job.category}
+                />
+                <SummaryItem
+                  icon={<Calendar />}
+                  label="Date Posted"
+                  value={new Date(job.postedDate).toLocaleDateString()}
+                />
+              </div>
+              <Button className="w-full bg-[#004D4D] hover:bg-[#003D3D] text-white py-6 rounded-xl  mt-8 shadow-md transition-all active:scale-95">
+                Apply Now
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const SummaryItem = ({
+  icon,
+  label,
+  value,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+}) => (
+  <div className="flex items-start gap-4">
+    <div className="p-2.5 bg-slate-50 rounded-xl text-[#004D4D] border border-slate-100 shrink-0 shadow-sm">
+      {React.cloneElement(icon as React.ReactElement, { size: 18 } as any)}
+    </div>
+    <div>
+      <p className="text-[10px] uppercase tracking-widest text-slate-400 font-black mb-0.5">
+        {label}
+      </p>
+      <p className="text-sm  text-slate-700 capitalize">{value}</p>
+    </div>
+  </div>
+);
+
+const JobDetailsSkeleton = () => (
+  <div className="max-w-7xl mx-auto px-6 py-20 space-y-10 animate-pulse">
+    <Skeleton className="h-[400px] w-full rounded-3xl bg-slate-200" />
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="lg:col-span-2 space-y-6">
+        <Skeleton className="h-40 w-full rounded-2xl bg-slate-200" />
+        <Skeleton className="h-60 w-full rounded-2xl bg-slate-200" />
+      </div>
+      <Skeleton className="h-[500px] w-full rounded-2xl bg-slate-200" />
+    </div>
+  </div>
+);
+
+export default JobDetails;

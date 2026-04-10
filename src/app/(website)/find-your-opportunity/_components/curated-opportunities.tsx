@@ -221,7 +221,10 @@ const CuratedOpportunities = () => {
                       "Building future-proof solutions for the climate ecosystem through modern technology."}
                   </p>
 
-                  <Link href={`/jobs/${job._id}`} className="mt-auto">
+                  <Link
+                    href={`/find-your-opportunity/${job._id}`}
+                    className="mt-auto"
+                  >
                     <Button className="w-full bg-[#004D4D] hover:bg-[#003D3D] text-white py-6 rounded-xl  transition-all shadow-sm">
                       Explore Opportunity
                     </Button>
