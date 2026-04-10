@@ -1,6 +1,7 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 import { CheckCircle2 } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton"; // Adjust import path as needed
 
 interface PricingPlan {
   title: string;
@@ -16,7 +17,7 @@ interface PricingPlan {
 }
 
 const PricingCards = () => {
-  const { data: plans } = useQuery({
+  const { data: plans, isLoading } = useQuery({
     queryKey: ["subscription-plans"],
     queryFn: async () => {
       const res = await fetch(
@@ -28,6 +29,46 @@ const PricingCards = () => {
   });
 
   const subscriptionPlans = plans?.data;
+
+  // Skeleton loading state
+  if (isLoading) {
+    return (
+      <section id="pricing" className="bg-[#eef4f5] py-20">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+          {[1, 2, 3].map((_, index) => (
+            <div
+              key={index}
+              className="relative bg-white rounded-2xl p-8 flex flex-col border-2 border-transparent"
+            >
+              <div className="mb-6">
+                <Skeleton className="h-8 w-32 mb-2" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-3/4 mt-1" />
+              </div>
+
+              <div className="mb-6">
+                <Skeleton className="h-10 w-40" />
+              </div>
+
+              <Skeleton className="w-full h-12 rounded-lg mb-8" />
+
+              <div className="flex-grow">
+                <Skeleton className="h-4 w-24 mb-4" />
+                <ul className="space-y-4">
+                  {[1, 2, 3, 4].map((_, idx) => (
+                    <li key={idx} className="flex items-start gap-3">
+                      <Skeleton className="w-4 h-4 rounded-full shrink-0 mt-0.5" />
+                      <Skeleton className="h-4 w-full" />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="pricing" className="bg-[#eef4f5] py-20">
@@ -42,7 +83,7 @@ const PricingCards = () => {
             }`}
           >
             {plan.isHighlighted && (
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#064E4B] text-white text-[10px]  uppercase tracking-widest py-1.5 px-4 rounded-full">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#064E4B] text-white text-[10px] uppercase tracking-widest py-1.5 px-4 rounded-full">
                 Most Popular
               </div>
             )}
@@ -55,8 +96,7 @@ const PricingCards = () => {
             </div>
 
             <div className="mb-6">
-              <span className="text-3xl font-bold  text-[#064E4B]">
-                {" "}
+              <span className="text-3xl font-bold text-[#064E4B]">
                 ${plan?.price}/
               </span>
               <span className="text-sm">{plan?.billingType}</span>
@@ -66,7 +106,7 @@ const PricingCards = () => {
             <button
               className={`w-full py-3 rounded-lg cursor-pointer font-semibold text-sm mb-8 transition-colors border ${
                 plan?.hasTrial === true
-                  ? "bg-[#064E4B] text-white  border-[#064E4B] hover:bg-[#043331]"
+                  ? "bg-[#064E4B] text-white border-[#064E4B] hover:bg-[#043331]"
                   : "bg-white text-[#064E4B] border-2 border-[#064E4B] hover:bg-slate-50"
               }`}
             >
@@ -74,7 +114,7 @@ const PricingCards = () => {
             </button>
 
             <div className="flex-grow">
-              <p className="text-sm  text-[#064E4B] mb-4">What you get:</p>
+              <p className="text-sm text-[#064E4B] mb-4">What you get:</p>
               <ul className="space-y-4">
                 {plan.features.map((feature, idx) => (
                   <li
