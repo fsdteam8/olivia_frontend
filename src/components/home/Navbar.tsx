@@ -24,6 +24,7 @@ export const Navbar = () => {
     { name: "Courses", href: "/courses" },
     { name: "Membership", href: "#" },
     { name: "Mentors & Coaches", href: "/mentor-coaches/all" },
+    { name: "Support Us", href: "/career-services" },
   ];
 
   const handleLogout = async () => {
