@@ -14,16 +14,16 @@ export const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const token = session?.user?.accessToken;
   const isLoggedIn = !!session;
 
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
     { name: "Courses", href: "/courses" },
-    { name: "Membership", href: "#" },
+    { name: "Membership", href: "/membership" },
     { name: "Mentors & Coaches", href: "/mentor-coaches/all" },
+    { name: "Support Us", href: "/career-services" },
+    { name: "Find Your Opportunity", href: "/find-your-opportunity" },
   ];
 
   const handleLogout = async () => {
@@ -73,8 +73,8 @@ export const Navbar = () => {
           {isLoggedIn ? (
             <>
               <Link
-                href="/join-community"
-                onClick={() => setIsMobileMenuOpen(false)}
+                href={`https://5sovtpfwgg0.typeform.com/intake?typeform-source=workonclimate.org`}
+                target="_blank"
               >
                 <Button className="w-full bg-[#0D3B3F] hover:bg-[#164e53] text-white rounded-md text-xs">
                   Join Community
@@ -90,7 +90,10 @@ export const Navbar = () => {
             </>
           ) : (
             <>
-              <Link href="/join-community">
+              <Link
+                href={`https://5sovtpfwgg0.typeform.com/intake?typeform-source=workonclimate.org`}
+                target="_blank"
+              >
                 <Button className="bg-[#0D3B3F] hover:bg-[#164e53] text-white rounded-md px-6 text-xs">
                   Join Community
                 </Button>
