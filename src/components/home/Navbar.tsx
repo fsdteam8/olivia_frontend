@@ -14,8 +14,6 @@ export const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const token = session?.user?.accessToken;
   const isLoggedIn = !!session;
 
   const navLinks = [
@@ -25,6 +23,7 @@ export const Navbar = () => {
     { name: "Membership", href: "#" },
     { name: "Mentors & Coaches", href: "/mentor-coaches/all" },
     { name: "Support Us", href: "/career-services" },
+    { name: "Find Your Opportunity", href: "/find-your-opportunity" },
   ];
 
   const handleLogout = async () => {
