@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
-import { LogOut, User, Menu, X } from "lucide-react";
+import { LogOut, Menu, X } from "lucide-react";
 import { useState } from "react";
 
 export const Navbar = () => {
@@ -14,8 +14,6 @@ export const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const token = session?.user?.accessToken;
   const isLoggedIn = !!session;
 
   const navLinks = [

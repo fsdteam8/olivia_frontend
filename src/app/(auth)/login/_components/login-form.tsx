@@ -17,9 +17,10 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -34,6 +35,7 @@ type FormType = z.infer<typeof formSchema>;
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const form = useForm<FormType>({
     resolver: zodResolver(formSchema),
@@ -52,12 +54,18 @@ const LoginForm = () => {
         password: payload.password,
         redirect: false,
       });
-
       if (res?.error) {
         toast.error(res.error);
+        return;
+      }
+
+      toast.success("Login successful!");
+      const session = await getSession();
+
+      if (session?.user?.isSurvey === false) {
+        router.push("/survey");
       } else {
-        toast.success("Login successful!");
-        window.location.href = "/";
+        router.push("/");
       }
     } catch (error) {
       console.error(`login error : ${error}`);
@@ -165,38 +173,6 @@ const LoginForm = () => {
           </Button>
         </form>
       </Form>
-
-      {/* Divider */}
-      {/* <div className="relative my-8">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t border-gray-100"></span>
-        </div>
-        <div className="relative flex justify-center text-[12px]">
-          <span className="bg-white px-3 text-gray-400">
-            Or continue with email
-          </span>
-        </div>
-      </div> */}
-
-      {/* Social Buttons */}
-      {/* <div className="grid grid-cols-4 gap-3 mb-8">
-        {["google", "facebook", "linkedin", "apple"].map((social) => (
-          <Button
-            key={social}
-            variant="outline"
-            className="h-12 w-full rounded-lg border-gray-100 p-0 hover:bg-gray-50 flex items-center justify-center transition-colors"
-          >
-            <Image
-              src={`/icons/${social}.svg`} 
-              width={20}
-              height={20}
-              alt={social}
-              className="opacity-80"
-            />
-          </Button>
-        ))}
-      </div> */}
-
       {/* Footer */}
       <div className="text-center mt-5">
         <p className="text-[14px] text-gray-400">
