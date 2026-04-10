@@ -24,7 +24,7 @@ const ClimateJourneyBanner = () => {
           of your advocacy.
         </p>
 
-        {/* Reusable Button - Careful with margins to avoid "messing" layout */}
+        {/* Reusable Button  */}
         <div className="space-x-5">
           <Button>Start Free Trial</Button>
           <Button className="bg-inherit border border-white hover:border-primary">
