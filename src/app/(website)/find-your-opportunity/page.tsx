@@ -1,4 +1,5 @@
 import ClimateCareerGuide from "./_components/climate-career-guide";
+import CuratedOpportunities from "./_components/curated-opportunities";
 import PageHeader from "./_components/page-header";
 
 const page = () => {
@@ -8,6 +9,7 @@ const page = () => {
         <PageHeader />
         <ClimateCareerGuide />
       </div>
+      <CuratedOpportunities />
     </div>
   );
 };
