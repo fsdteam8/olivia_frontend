@@ -376,7 +376,7 @@ const SummaryItem = ({
 );
 
 const JobDetailsSkeleton = () => (
-  <div className="max-w-7xl mx-auto px-6 py-20 space-y-10 animate-pulse mt-20">
+  <div className="container py-20 space-y-10 animate-pulse mt-20">
     <Skeleton className="h-[400px] w-full rounded-3xl bg-slate-200" />
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <div className="lg:col-span-2 space-y-6">
