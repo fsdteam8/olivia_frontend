@@ -3,6 +3,7 @@ import { Newsletter } from "@/components/home/Newsletter";
 import PageHero from "@/components/home/PageHero";
 import React from "react";
 import HowItWorks from "./_components/how-it-works";
+import BenefitsSection from "./_components/benefits-section";
 
 const page = () => {
   return (
@@ -17,7 +18,7 @@ const page = () => {
         />
         <HowItWorks />
       </div>
-
+      <BenefitsSection />
       <div>
         <Newsletter />
         <CommunitySection />
