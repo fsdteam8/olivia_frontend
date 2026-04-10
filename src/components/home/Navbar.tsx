@@ -73,8 +73,8 @@ export const Navbar = () => {
           {isLoggedIn ? (
             <>
               <Link
-                href="/join-community"
-                onClick={() => setIsMobileMenuOpen(false)}
+                href={`https://5sovtpfwgg0.typeform.com/intake?typeform-source=workonclimate.org`}
+                target="_blank"
               >
                 <Button className="w-full bg-[#0D3B3F] hover:bg-[#164e53] text-white rounded-md text-xs">
                   Join Community
@@ -90,7 +90,10 @@ export const Navbar = () => {
             </>
           ) : (
             <>
-              <Link href="/join-community">
+              <Link
+                href={`https://5sovtpfwgg0.typeform.com/intake?typeform-source=workonclimate.org`}
+                target="_blank"
+              >
                 <Button className="bg-[#0D3B3F] hover:bg-[#164e53] text-white rounded-md px-6 text-xs">
                   Join Community
                 </Button>

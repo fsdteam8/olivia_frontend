@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export const CommunityCTA = () => {
   return (
@@ -22,9 +23,14 @@ export const CommunityCTA = () => {
           meaningful opportunities, and accelerate your impact in building a
           more sustainable future.
         </p>
-        <Button className="bg-[#0D3B3F] hover:bg-[#164e53] text-white px-10 h-10 rounded-md text-sm transition-all">
-          Join Community
-        </Button>
+        <Link
+          href={`https://5sovtpfwgg0.typeform.com/intake?typeform-source=workonclimate.org`}
+          target="_blank"
+        >
+          <Button className="bg-[#0D3B3F] hover:bg-[#164e53] text-white px-10 h-10 rounded-md text-sm transition-all">
+            Join Community
+          </Button>
+        </Link>
       </div>
     </section>
   );

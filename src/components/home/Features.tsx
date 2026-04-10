@@ -2,6 +2,7 @@ import React from "react";
 import { Users, TrendingUp, Heart, ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const features = [
   {
@@ -48,10 +49,15 @@ export const Features = () => {
         </div>
 
         <div className="flex justify-center">
-          <Button className="bg-[#0D3B3F] hover:bg-[#164e53] text-white px-10 h-12 rounded-md  group">
-            Join Community
-            <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Button>
+          <Link
+            href={`https://5sovtpfwgg0.typeform.com/intake?typeform-source=workonclimate.org`}
+            target="_blank"
+          >
+            <Button className="bg-[#0D3B3F] hover:bg-[#164e53] text-white px-10 h-12 rounded-md  group">
+              Join Community
+              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
