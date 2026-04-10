@@ -1,11 +1,9 @@
 import Image from "next/image";
-import React from "react";
 
 const CommunitySection = () => {
   return (
     <section className="bg-[#EEF4F5] md:px-20">
       <div className="container grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        {/* Left Side: Map Graphic */}
         <div className="flex justify-center">
           <Image
             width={500}
