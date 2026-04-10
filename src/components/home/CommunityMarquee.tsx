@@ -217,11 +217,11 @@ export default function CommunityFeedback() {
             ))}
           </Marquee>
 
-          {/* <Marquee reverse pauseOnHover className="[--duration:45s]">
+          <Marquee reverse pauseOnHover className="[--duration:45s]">
             {secondRow.map((t) => (
               <TestimonialCard key={t._id} item={t} />
             ))}
-          </Marquee> */}
+          </Marquee>
 
           {/* Gradient Fades */}
           <div className="pointer-events-none absolute inset-y-0 left-0 w-1/12 bg-gradient-to-r from-white"></div>
