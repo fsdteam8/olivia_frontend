@@ -1,9 +1,9 @@
 import CommunitySection from "@/components/home/CommunitySection";
 import { Newsletter } from "@/components/home/Newsletter";
 import PageHero from "@/components/home/PageHero";
-import React from "react";
 import HowItWorks from "./_components/how-it-works";
 import BenefitsSection from "./_components/benefits-section";
+import LearnMoreSection from "./_components/learn-more-section";
 
 const page = () => {
   return (
@@ -20,6 +20,7 @@ const page = () => {
       </div>
       <BenefitsSection />
       <div>
+        <LearnMoreSection />
         <Newsletter />
         <CommunitySection />
       </div>
