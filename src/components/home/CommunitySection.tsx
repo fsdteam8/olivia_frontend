@@ -1,8 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const CommunitySection = () => {
   return (
-    <section className="bg-[#EEF4F5] md:px-20">
+    <section className="bg-[#EEF4F5] md:px-20 py-16">
       <div className="container grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div className="flex justify-center">
           <Image
@@ -25,9 +26,14 @@ const CommunitySection = () => {
             Learn more about the experts who will be helping you harness the
             power of AI.
           </p>
-          <button className="bg-[#003d3d] text-white px-8 py-3 rounded-md font-semibold hover:bg-[#002b2b] transition-colors">
-            Join Community
-          </button>
+          <Link
+            href={`https://5sovtpfwgg0.typeform.com/intake?typeform-source=workonclimate.org`}
+            target="_blank"
+          >
+            <button className="bg-[#003d3d] text-white px-8 py-3 rounded-md font-semibold hover:bg-[#002b2b] transition-colors">
+              Join Community
+            </button>
+          </Link>
         </div>
       </div>
     </section>
