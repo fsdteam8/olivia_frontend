@@ -1,17 +1,18 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+const nextConfig = {
   images: {
-    domains: [
-      "img.freepik.com",
-      "images.unsplash.com",
-      "plus.unsplash.com",
-      "res.cloudinary.com",
-      "api.dicebear.com",
-      "unsplash.com",
-      "og.luma.com",
+    domains: ["example.com", "res.cloudinary.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+      {
+        protocol: "http",
+        hostname: "**",
+      },
     ],
   },
+  reactStrictMode: true,
 };
 
 export default nextConfig;
