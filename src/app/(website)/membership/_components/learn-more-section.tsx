@@ -9,7 +9,8 @@ const LearnMoreSection = () => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   // logic: Youtube link ba local file source ekhane thakbe
-  const videoSource = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"; // Example stream link
+  const videoSource =
+    "https://www.youtube.com/embed/NDXrU6abj54?si=54hUGpv395WYil4K"; // Example stream link
 
   return (
     <section className="bg-[#eff6f6] py-20 px-4 min-h-screen">
@@ -42,7 +43,7 @@ const LearnMoreSection = () => {
               {/* Thumbnail Image */}
               <div className="relative w-full h-full rounded-2xl md:rounded-3xl overflow-hidden">
                 <Image
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2000&auto=format&fit=crop" // Image matching image_10.png content
+                  src="/thumbnail.png" // Image matching image_10.png content
                   alt="Act on Climate Platform Overview Video Thumbnail"
                   fill
                   className="object-cover brightness-75 transition-all duration-500 hover:scale-105"

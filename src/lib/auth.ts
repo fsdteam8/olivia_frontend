@@ -8,6 +8,7 @@ declare module "next-auth" {
     name: string;
     email: string;
     role: string;
+    isSurvey: boolean;
     profileImage: string | undefined;
     accessToken: string;
     refreshToken: string;
@@ -19,6 +20,7 @@ declare module "next-auth" {
       name: string;
       email: string;
       role: string;
+      isSurvey: boolean;
       profileImage: string | undefined;
       accessToken: string;
       refreshToken: string;
@@ -32,6 +34,7 @@ declare module "next-auth/jwt" {
     name: string;
     email: string;
     role: string;
+    isSurvey: boolean;
     profileImage: string | undefined;
     accessToken: string;
     refreshToken: string;
@@ -74,11 +77,9 @@ export const authOptions: NextAuthOptions = {
 
           // Access the nested data structure based on your response
           const { accessToken, refreshToken, user } = response?.data || {};
-
           if (!user?.id || !accessToken) {
             throw new Error("Invalid server response");
           }
-
           // Construct full name from firstName and lastName
           const fullName =
             `${user.firstName || ""} ${user.lastName || ""}`.trim();
@@ -98,6 +99,7 @@ export const authOptions: NextAuthOptions = {
             name: fullName || user.email, // Fallback to email if no name
             email: user.email,
             role: user.role,
+            isSurvey: user.isSurvey,
             profileImage: profileImage,
             accessToken: accessToken,
             refreshToken: refreshToken,
@@ -123,6 +125,7 @@ export const authOptions: NextAuthOptions = {
         token.name = user.name;
         token.email = user.email;
         token.role = user.role;
+        token.isSurvey = user.isSurvey;
         token.profileImage = user.profileImage;
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
@@ -136,6 +139,7 @@ export const authOptions: NextAuthOptions = {
         name: token.name as string,
         email: token.email as string,
         role: token.role as string,
+        isSurvey: token.isSurvey as boolean,
         profileImage: token.profileImage as string | undefined,
         accessToken: token.accessToken as string,
         refreshToken: token.refreshToken as string,
