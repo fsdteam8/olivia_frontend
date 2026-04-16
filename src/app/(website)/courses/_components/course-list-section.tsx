@@ -455,7 +455,7 @@ const CourseListSection = () => {
                         {/* Card Header Image */}
                         <div className="relative aspect-[16/10] w-full overflow-hidden">
                           <Image
-                            src={getImageUrl(course.image.url)}
+                            src={getImageUrl(course?.image.url)}
                             alt={course.title}
                             fill
                             className="object-cover transition-transform duration-500 group-hover:scale-105"
