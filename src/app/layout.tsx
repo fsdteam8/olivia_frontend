@@ -27,7 +27,7 @@ const archivo = Archivo_Black({
 });
 
 export const metadata: Metadata = {
-  title: "sktch Labs",
+  title: "Actonclimate",
   description:
     "Design amazing digital experiences that create more happy in the world.",
   icons: {

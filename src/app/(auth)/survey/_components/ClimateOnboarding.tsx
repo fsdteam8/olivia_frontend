@@ -34,6 +34,7 @@ import {
 } from "@/components/ui/select";
 import { createSurvey } from "@/hooks/Surveyapi";
 import { useSession } from "next-auth/react";
+import { toast } from "sonner";
 
 const HubCard = ({ icon: Icon, label, selected = false, onClick }: any) => (
   <div
@@ -114,15 +115,34 @@ export default function ClimateOnboarding() {
     tellAbout: formData.tellAbout,
   });
 
-  const nextStep = () => {
+  // const nextStep = () => {
+  //   if (currentStep < STEPS.length - 1) {
+  //     setCurrentStep(currentStep + 1);
+  //   } else {
+  //     const payload = buildPayload();
+  //     if (token) {
+  //    const res =   createSurvey(payload, token);
+
+  //   }
+  //     alert("Submitted! Check the browser console for the final payload.");
+  //   }
+  // };
+
+  const nextStep = async () => {
     if (currentStep < STEPS.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
       const payload = buildPayload();
-      if (token) {
-        createSurvey(payload, token);
+
+      try {
+        if (token) {
+          const res = await createSurvey(payload, token);
+          toast.success(res.message);
+        }
+      } catch (error: any) {
+        toast.error(error.message);
+        console.error(error);
       }
-      alert("Submitted! Check the browser console for the final payload.");
     }
   };
 
