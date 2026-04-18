@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -27,10 +26,7 @@ export const Hero = () => {
           the climate space.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link
-            href={`https://5sovtpfwgg0.typeform.com/intake?typeform-source=workonclimate.org`}
-            target="_blank"
-          >
+          <Link href={"/survey"}>
             <Button className="bg-[#004242] hover:bg-[#006668] text-white px-8 h-12 rounded-md  text-sm min-w-[160px]">
               Join Community
             </Button>

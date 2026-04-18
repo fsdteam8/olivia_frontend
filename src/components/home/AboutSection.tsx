@@ -22,17 +22,13 @@ export const AboutSection = () => {
             What We Are About
           </h2>
           <p className="text-[14px] leading-[1.8] text-slate-500 font-medium text-justify">
-            Act on Climate is a climate focused platform that connects people to
-            jobs, events, and resources within the climate sector. It helps
-            individuals build skills, expand their network, and take meaningful
-            action toward climate solutions. Act on Climate is a climate focused
-            platform that connects people to jobs, events, and resources within
-            the climate sector. It helps individuals build skills, expand their
-            network, and take meaningful action toward climate solutions. Act on
-            Climate is a climate focused platform that connects people to jobs,
-            events, and resources within the climate sector. It helps
-            individuals build skills, expand their network, and take meaningful
-            action toward climate solutions.
+            Act on Climate is a climate-focused platform that connects
+            individuals to jobs, events, and valuable resources within the
+            climate sector. It empowers people to build relevant skills, expand
+            their professional network, and discover meaningful opportunities to
+            contribute to climate solutions. Through its growing community, Act
+            on Climate supports collaboration, learning, and real-world impact
+            in addressing global environmental challenges.
           </p>
         </div>
       </div>

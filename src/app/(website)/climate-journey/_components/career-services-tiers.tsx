@@ -86,10 +86,7 @@ const CareerServicesTiers = () => {
           </div>
 
           <div className="mt-10 flex justify-center">
-            <Link
-              href={`https://5sovtpfwgg0.typeform.com/intake?typeform-source=workonclimate.org`}
-              target="_blank"
-            >
+            <Link href={"/survey"}>
               <button className="bg-[#064E4B] text-white px-10 py-3 rounded-xl  hover:bg-[#043331] transition-colors">
                 Join Community
               </button>

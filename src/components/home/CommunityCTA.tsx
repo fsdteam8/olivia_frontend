@@ -23,10 +23,7 @@ export const CommunityCTA = () => {
           meaningful opportunities, and accelerate your impact in building a
           more sustainable future.
         </p>
-        <Link
-          href={`https://5sovtpfwgg0.typeform.com/intake?typeform-source=workonclimate.org`}
-          target="_blank"
-        >
+        <Link href={"/survey"}>
           <Button className="bg-[#0D3B3F] hover:bg-[#164e53] text-white px-10 h-10 rounded-md text-sm transition-all">
             Join Community
           </Button>

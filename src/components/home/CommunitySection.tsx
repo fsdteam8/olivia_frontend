@@ -20,16 +20,13 @@ const CommunitySection = () => {
           <h2 className="text-4xl md:text-5xl  text-[#004242] leading-tight">
             Join the Community <br /> Connecting Climate Careers
           </h2>
-          <p className="text-[#5D8AA8] text-[18px leading-relaxed">
+          {/* <p className="text-[#5D8AA8] text-[18px leading-relaxed">
             Our team of AI specialists brings a wealth of experience in
             developing and implementing AI solutions across various industries.
             Learn more about the experts who will be helping you harness the
             power of AI.
-          </p>
-          <Link
-            href={`https://5sovtpfwgg0.typeform.com/intake?typeform-source=workonclimate.org`}
-            target="_blank"
-          >
+          </p> */}
+          <Link href={"/survey"}>
             <button className="bg-[#003d3d] text-white px-8 py-3 rounded-md font-semibold hover:bg-[#002b2b] transition-colors">
               Join Community
             </button>
