@@ -1,5 +1,5 @@
 import React from "react";
-import { Linkedin, Twitter, Instagram } from "lucide-react"; // Using lucide-react for icons
+import { Linkedin, Twitter, Instagram } from "lucide-react";
 import Image from "next/image";
 
 const Footer = () => {
@@ -18,8 +18,8 @@ const Footer = () => {
               />
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
-              We Must Explain to you how all this mistaken idea of denouncing
-              pleasure... (repeated placeholder text as per design)
+              Access opportunities, expand your network, and drive change in the
+              climate space.
             </p>
           </div>
 
@@ -29,7 +29,7 @@ const Footer = () => {
             <ul className="space-y-4 text-gray-500 text-sm">
               <li>
                 <a href="#" className="text-[#004242] hover:text-green-600">
-                  Use Cases
+                  Membership
                 </a>
               </li>
               <li>
@@ -67,16 +67,6 @@ const Footer = () => {
               <li>
                 <a href="#" className="text-[#004242] hover:text-green-600">
                   Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-[#004242] hover:text-green-600">
-                  Affiliate Program
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-[#004242] hover:text-green-600">
-                  Investors
                 </a>
               </li>
             </ul>

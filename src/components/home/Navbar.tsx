@@ -72,10 +72,7 @@ export const Navbar = () => {
         <div className="hidden md:flex items-center gap-3">
           {isLoggedIn ? (
             <>
-              <Link
-                href={`https://5sovtpfwgg0.typeform.com/intake?typeform-source=workonclimate.org`}
-                target="_blank"
-              >
+              <Link href={"/survey"}>
                 <Button className="w-full bg-[#0D3B3F] hover:bg-[#164e53] text-white rounded-md text-xs">
                   Join Community
                 </Button>
@@ -90,10 +87,7 @@ export const Navbar = () => {
             </>
           ) : (
             <>
-              <Link
-                href={`https://5sovtpfwgg0.typeform.com/intake?typeform-source=workonclimate.org`}
-                target="_blank"
-              >
+              <Link href={`/survey`}>
                 <Button className="bg-[#0D3B3F] hover:bg-[#164e53] text-white rounded-md px-6 text-xs">
                   Join Community
                 </Button>
@@ -145,7 +139,7 @@ export const Navbar = () => {
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <Link
-                      href="/join-community"
+                      href="/survey"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       <Button className="w-full bg-[#0D3B3F] hover:bg-[#164e53] text-white rounded-md text-xs">
@@ -167,7 +161,7 @@ export const Navbar = () => {
               ) : (
                 <>
                   <Link
-                    href="/join-community"
+                    href="/survey"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <Button className="w-full bg-[#0D3B3F] hover:bg-[#164e53] text-white rounded-md text-xs">

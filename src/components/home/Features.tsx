@@ -49,10 +49,7 @@ export const Features = () => {
         </div>
 
         <div className="flex justify-center">
-          <Link
-            href={`https://5sovtpfwgg0.typeform.com/intake?typeform-source=workonclimate.org`}
-            target="_blank"
-          >
+          <Link href={"/survey"}>
             <Button className="bg-[#0D3B3F] hover:bg-[#164e53] text-white px-10 h-12 rounded-md  group">
               Join Community
               <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />

@@ -13,19 +13,8 @@ const SpeakerCTA = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
 
           <div className="text-[#729094] text-sm md:text-base leading-relaxed font-medium space-y-4">
             <p>
-              Ready to spark the next wave of climate action or know someone who
-              is? We&apos;re looking for inspiring voices to share insights,
-              tools, strategies, and success stories with our growing community
-              of climate professionals.
-            </p>
-            <p>
-              Complete our speaker form and help transform individual impact
-              into collective momentum. Ready to spark the next wave of climate
-              action or know someone who is? We&apos;re looking for inspiring
-              voices to share insights, tools, strategies, and success stories
-              with our growing community of climate professionals. Complete our
-              speaker form and help transform individual impact into collective
-              momentum.
+              Act on Climate is looking for speakers to talk on a whole range of
+              climate topics. If you are interested apply today!
             </p>
           </div>
 
