@@ -30,23 +30,6 @@ const WhyEventsMatter = () => {
               meaningful collaborations. From expert panels to hands-on
               workshops, every event is built to move climate work forward.
             </p>
-            <p>
-              Act on Climate events are designed to connect mission-driven
-              professionals with practical insights, career opportunities, and
-              meaningful collaborations. From expert panels to hands-on
-              workshops, every event is built to move climate work forward.
-            </p>
-            <p>
-              Act on Climate events are designed to connect mission-driven
-              professionals with practical insights, career opportunities, and
-              meaningful collaborations. From expert panels to hands-on
-              workshops, every event is built to move climate work forward.
-            </p>
-            <p>
-              Act on Climate events are designed to connect mission-driven
-              professionals with practical insights, career opportunities, and
-              meaningful collaborations.
-            </p>
           </div>
         </div>
       </div>
