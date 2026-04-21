@@ -60,6 +60,22 @@ const Footer = () => {
             <h4 className=" text-[#004242] mb-6">Company</h4>
             <ul className="space-y-4 text-gray-500 text-sm">
               <li>
+                <a
+                  href="/career-services"
+                  className="text-[#004242] hover:text-green-600"
+                >
+                  We can Help
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/membership"
+                  className="text-[#004242] hover:text-green-600"
+                >
+                  Become a Member
+                </a>
+              </li>
+              <li>
                 <a href="#" className="text-[#004242] hover:text-green-600">
                   Terms of Service
                 </a>

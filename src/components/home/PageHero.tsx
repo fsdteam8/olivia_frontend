@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import PrimaryButton from "./PrimaryButton";
 
 const PageHero = ({
@@ -7,10 +8,12 @@ const PageHero = ({
   bgImage = "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&q=80&w=1920",
   buttonTitle,
   isHide,
+  buttonLink,
   setOpen,
 }: {
   title?: string;
   subtitle?: string;
+  buttonLink?: string;
   bgImage?: string;
   buttonTitle?: string;
   isHide?: boolean;
@@ -38,10 +41,20 @@ const PageHero = ({
 
         {/* Reusable Button - Careful with margins to avoid "messing" layout */}
         <div className={`${isHide === true ? "hidden" : "block pt-4"}`}>
-          <PrimaryButton
-            text={buttonTitle as string}
-            onClick={() => setOpen?.(true)}
-          />
+          {buttonLink ? (
+            <Link href={buttonLink}>
+              <button
+                className={`bg-[#004242] hover:bg-[#004444] text-white font-semibold py-3 px-8 rounded-md transition-all duration-300 shadow-lg`}
+              >
+                {buttonTitle as string}
+              </button>
+            </Link>
+          ) : (
+            <PrimaryButton
+              text={buttonTitle as string}
+              onClick={() => setOpen?.(true)}
+            />
+          )}
         </div>
       </div>
     </section>
