@@ -10,8 +10,7 @@ const page = () => {
         bgImage="/supportourwork.jpg"
         subtitle="Partner with Act on Climate to strengthen climate leadership,
 expand access to green careers,and drive meaningful community impact."
-        buttonTitle="Submit an Inquiry"
-        buttonLink="/support-our-work/inquiry"
+        isHide={true}
       />
       <ActOnClimateSponsorship />
     </div>
