@@ -1,6 +1,7 @@
 import React from "react";
 import { Linkedin, Twitter, Instagram } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -25,32 +26,39 @@ const Footer = () => {
 
           {/* Column 2: Products */}
           <div>
-            <h4 className=" text-[#004242] mb-6">Products</h4>
+            <h4 className=" text-[#004242] mb-6">Resources</h4>
             <ul className="space-y-4 text-gray-500 text-sm">
               <li>
-                <a href="#" className="text-[#004242] hover:text-green-600">
-                  Membership
-                </a>
+                <Link
+                  href="/event"
+                  className="text-[#004242] hover:text-green-600"
+                >
+                  Event
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-[#004242] hover:text-green-600">
-                  Resources
-                </a>
+                <Link
+                  href="/courses"
+                  className="text-[#004242] hover:text-green-600"
+                >
+                  Courses
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-[#004242] hover:text-green-600">
-                  How it works
-                </a>
+                <Link
+                  href="/media"
+                  className="text-[#004242] hover:text-green-600"
+                >
+                  Media
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-[#004242] hover:text-green-600">
-                  FAQ&apos;s
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-[#004242] hover:text-green-600">
+                <Link
+                  href="/blog"
+                  className="text-[#004242] hover:text-green-600"
+                >
                   Blogs
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -61,10 +69,10 @@ const Footer = () => {
             <ul className="space-y-4 text-gray-500 text-sm">
               <li>
                 <a
-                  href="/career-services"
+                  href="/support-our-work"
                   className="text-[#004242] hover:text-green-600"
                 >
-                  We can Help
+                  Support Our Work
                 </a>
               </li>
               <li>
@@ -114,7 +122,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-300 pt-8 flex flex-col md:row justify-between items-center text-xs text-gray-400">
+        <div className="border-t  border-gray-300 pt-8 flex md:row justify-between items-center text-[16px] text-gray-400">
           <p>© Copyright 2024. All Rights Reserved</p>
           <div className="flex gap-4 mt-4 md:mt-0">
             <a href="#">Privacy policy</a>

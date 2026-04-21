@@ -22,18 +22,17 @@ export const Newsletter = () => {
         },
       );
 
-      if (!res.ok) {
-        throw new Error("Subscription failed");
-      }
+      const data = await res.json();
 
-      return res.json();
+      if (!res.ok) throw new Error(data?.message || "Something went wrong");
+      return data;
     },
     onSuccess: () => {
       toast.success("Subscribed successfully 🎉");
       setEmail("");
     },
-    onError: () => {
-      toast.error("Something went wrong");
+    onError: (error) => {
+      toast.error(error.message || "Something went wrong");
     },
   });
 

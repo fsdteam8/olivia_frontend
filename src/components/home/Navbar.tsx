@@ -19,11 +19,11 @@ export const Navbar = () => {
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
-    { name: "Courses", href: "/courses" },
+    // { name: "Courses", href: "/courses" },
     // { name: "Membership", href: "/membership" },
-    { name: "Media", href: "/media" },
+    { name: "Blogs", href: "/blog" },
     { name: "Mentors & Coaches", href: "/mentor-coaches/all" },
-    { name: "Support Us", href: "/support-our-work" },
+    { name: "Support Us", href: "/career-services" },
     { name: "Find Your Opportunity", href: "/find-your-opportunity" },
   ];
 

@@ -203,7 +203,7 @@ const ActOnClimateSponsorship = () => {
                 We look forward to exploring how we can work together to
                 strengthen climate <br /> action across our community.
               </p>
-              <div className="flex flex-wrap items-center gap-4">
+              {/* <div className="flex flex-wrap items-center gap-4">
                 <Button className="bg-[#004242] hover:bg-[#06423d] text-white px-8 py-6 rounded-lg text-sm font-bold shadow-md">
                   Submit an Inquiry
                 </Button>
@@ -213,7 +213,7 @@ const ActOnClimateSponsorship = () => {
                   </span>
                   <span>We typically respond within 3-5 business days.</span>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 
