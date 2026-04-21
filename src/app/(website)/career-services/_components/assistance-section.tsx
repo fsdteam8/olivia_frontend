@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const AssistanceSection = () => {
   return (
@@ -33,12 +34,17 @@ const AssistanceSection = () => {
           </p>
 
           <div className="flex flex-wrap gap-4 pt-2">
-            <button className="bg-[#004d4d] text-white px-8 py-3 rounded-lg  hover:bg-[#003a3a] transition-colors border-2 border-[#004d4d]">
-              Apply Here
-            </button>
-            <button className="bg-transparent text-[#004d4d] px-8 py-3 rounded-lg  hover:bg-[#eef2f2] transition-colors border-2 border-[#004d4d]">
-              View Pricing
-            </button>
+            <Link href={"/survey"}>
+              {" "}
+              <button className="bg-[#004d4d] text-white px-8 py-3 rounded-lg  hover:bg-[#003a3a] transition-colors border-2 border-[#004d4d] cursor-pointer">
+                Apply Here
+              </button>
+            </Link>
+            <Link href={"/climate-journey#pricing"}>
+              <button className="bg-transparent text-[#004d4d] px-8 py-3 rounded-lg  hover:bg-[#eef2f2] transition-colors border-2 border-[#004d4d] cursor-pointer">
+                View Pricing
+              </button>
+            </Link>
           </div>
         </div>
       </div>
