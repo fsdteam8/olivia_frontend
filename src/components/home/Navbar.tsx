@@ -20,9 +20,10 @@ export const Navbar = () => {
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
     { name: "Courses", href: "/courses" },
-    { name: "Membership", href: "/membership" },
+    // { name: "Membership", href: "/membership" },
+    { name: "Media", href: "/media" },
     { name: "Mentors & Coaches", href: "/mentor-coaches/all" },
-    { name: "Support Us", href: "/career-services" },
+    { name: "Support Us", href: "/support-our-work" },
     { name: "Find Your Opportunity", href: "/find-your-opportunity" },
   ];
 

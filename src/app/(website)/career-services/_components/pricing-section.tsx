@@ -62,9 +62,11 @@ const PricingSection = () => {
             </ul>
           </div>
 
-          <Link href={`/climate-journey#pricing`}>
+          <Link
+            href={`/https://calendly.com/actonclimate-Info/30min?month=2026-04`}
+          >
             <button className="w-full mt-10 bg-[#064E4B] text-white py-3 rounded-xl  hover:bg-[#085e5a] transition-colors cursor-pointer">
-              Choose Plan
+              Book a Call
             </button>
           </Link>
         </div>
