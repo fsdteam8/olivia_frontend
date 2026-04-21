@@ -163,7 +163,7 @@ export default function CommunityFeedback() {
         {/* Review Submission Trigger */}
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-[#0D3B3F] hover:bg-[#082a2d] text-white rounded-full px-8 py-6 shadow-lg transition-all active:scale-95 gap-2">
+            <Button className="bg-[#0D3B3F]  hover:bg-[#082a2d] text-white rounded-full !px-5  py-6 shadow-lg transition-all active:scale-95 gap-2">
               <MessageSquarePlus className="w-5 h-5" />
               Share Your Experience
             </Button>

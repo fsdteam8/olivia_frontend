@@ -20,7 +20,7 @@ export const Hero = () => {
         <h4 className="text-5xl hero-font  md:text-6xl  leading-tight mb-6">
           Connecting People to Climate Careers & Opportunities
         </h4>
-        <p className="text-lg md:text-xl opacity-90 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+        <p className="text-lg md:text-xl opacity-90 max-w-3xl mx-auto mb-10 leading-relaxed font-light">
           Act on Climate is a global platform dedicated to connecting
           individuals with meaningful careers, resources, and opportunities in
           the climate space.
