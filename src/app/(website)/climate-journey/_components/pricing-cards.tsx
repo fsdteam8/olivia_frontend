@@ -5,6 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 interface PricingPlan {
   _id: string;
@@ -19,12 +20,13 @@ interface PricingPlan {
   hasTrial?: boolean;
   billingType: string;
   currency?: string;
+  link: string;
 }
 
 const PricingCards = () => {
   const [loadingPlanId, setLoadingPlanId] = useState<string | null>(null);
   const session = useSession();
-  const token = session?.data?.user?.accessToken;
+  // const token = session?.data?.user?.accessToken;
 
   const { data: plans, isLoading } = useQuery({
     queryKey: ["subscription-plans"],
@@ -39,43 +41,43 @@ const PricingCards = () => {
 
   const subscriptionPlans = plans?.data;
 
-  const handlePurchase = async (planId: string) => {
-    try {
-      setLoadingPlanId(planId);
+  // const handlePurchase = async (planId: string) => {
+  //   try {
+  //     setLoadingPlanId(planId);
 
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/payment/purchase`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            subscriptionPlanId: planId,
-          }),
-        },
-      );
+  //     const response = await fetch(
+  //       `${process.env.NEXT_PUBLIC_BACKEND_URL}/payment/purchase`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //         body: JSON.stringify({
+  //           subscriptionPlanId: planId,
+  //         }),
+  //       },
+  //     );
 
-      const result = await response.json();
+  //     const result = await response.json();
 
-      if (result.success && result.data?.checkoutUrl) {
-        // Redirect to Stripe checkout page
-        window.location.href = result.data.checkoutUrl;
-      } else {
-        console.error("Payment initialization failed:", result.message);
-        // You can add a toast notification here
-        toast.error(
-          result.message || "Something went wrong. Please try again.",
-        );
-      }
-    } catch (error) {
-      console.error("Error during purchase:", error);
-      toast.error("Failed to initialize payment. Please try again.");
-    } finally {
-      setLoadingPlanId(null);
-    }
-  };
+  //     if (result.success && result.data?.checkoutUrl) {
+  //       // Redirect to Stripe checkout page
+  //       window.location.href = result.data.checkoutUrl;
+  //     } else {
+  //       console.error("Payment initialization failed:", result.message);
+  //       // You can add a toast notification here
+  //       toast.error(
+  //         result.message || "Something went wrong. Please try again.",
+  //       );
+  //     }
+  //   } catch (error) {
+  //     console.error("Error during purchase:", error);
+  //     toast.error("Failed to initialize payment. Please try again.");
+  //   } finally {
+  //     setLoadingPlanId(null);
+  //   }
+  // };
 
   // Skeleton loading state
   if (isLoading) {
@@ -153,26 +155,26 @@ const PricingCards = () => {
               </span>
             </div>
 
-            <button
-              onClick={() => handlePurchase(plan._id)}
-              disabled={loadingPlanId === plan._id}
-              className={`w-full py-3 rounded-lg cursor-pointer font-semibold text-sm mb-8 transition-all duration-300 ${
-                plan?.hasTrial === true
-                  ? "bg-[#064E4B] text-white border-[#064E4B] hover:bg-[#043331] disabled:bg-[#064E4B]/70"
-                  : "bg-white text-[#064E4B] border-2 border-[#064E4B] hover:bg-slate-50 disabled:opacity-70 disabled:cursor-not-allowed"
-              }`}
-            >
-              {loadingPlanId === plan._id ? (
-                <div className="flex items-center justify-center gap-2">
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  <span>Processing...</span>
-                </div>
-              ) : plan.hasTrial === true ? (
-                "Start Free Trial"
-              ) : (
-                "Get Started"
-              )}
-            </button>
+            <Link href={`${plan?.link}`} target="_blank">
+              <button
+                className={`w-full py-3 rounded-lg cursor-pointer font-semibold text-sm mb-8 transition-all duration-300 ${
+                  plan?.hasTrial === true
+                    ? "bg-[#064E4B] text-white border-[#064E4B] hover:bg-[#043331] disabled:bg-[#064E4B]/70"
+                    : "bg-white text-[#064E4B] border-2 border-[#064E4B] hover:bg-slate-50 disabled:opacity-70 disabled:cursor-not-allowed"
+                }`}
+              >
+                {loadingPlanId === plan._id ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <span>Processing...</span>
+                  </div>
+                ) : plan.hasTrial === true ? (
+                  "Start Free Trial"
+                ) : (
+                  "Get Started"
+                )}
+              </button>
+            </Link>
 
             <div className="flex-grow">
               <p className="text-sm text-[#064E4B] mb-4 font-semibold">
@@ -193,6 +195,10 @@ const PricingCards = () => {
           </div>
         ))}
       </div>
+
+      <p className="text-center mt-16 text-xl opacity-75">
+        Jump in and enjoy week one for free when joining our membership.
+      </p>
     </section>
   );
 };
