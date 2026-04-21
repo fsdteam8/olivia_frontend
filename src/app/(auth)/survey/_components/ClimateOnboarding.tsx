@@ -2,6 +2,7 @@
 "use client";
 
 import { useState } from "react";
+import z from "zod";
 import {
   ChevronLeft,
   ChevronRight,
@@ -35,6 +36,7 @@ import {
 import { createSurvey } from "@/hooks/Surveyapi";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const HubCard = ({ icon: Icon, label, selected = false, onClick }: any) => (
   <div
@@ -61,10 +63,61 @@ const STEPS = [
   "Connect",
 ];
 
+const identitySchema = z.object({
+  name: z.string().trim().min(1, "Full name is required"),
+  email: z
+    .string()
+    .trim()
+    .min(1, "Email address is required")
+    .email("Enter a valid email address"),
+  city: z.string().trim().min(1, "City is required"),
+  country: z.string().trim().min(1, "Country is required"),
+  link: z.string().trim().min(1, "LinkedIn / Website is required"),
+});
+
+const journeySchema = z.object({
+  climateJourney: z
+    .string()
+    .trim()
+    .min(1, "Please select where you are in your climate journey"),
+  message: z.string().trim().min(1, "This field is required"),
+});
+
+const interestsSchema = z.object({
+  interest: z.array(z.string()).min(1, "Please select at least one interest"),
+  goals: z.array(z.string()).min(1, "Please select at least one goal"),
+  successMessage: z.string().trim().min(1, "This field is required"),
+});
+
+const careerSchema = z.object({
+  whatLooking: z.array(z.string()).min(1, "Please select at least one option"),
+  engagementPreference: z
+    .string()
+    .trim()
+    .min(1, "Please select your engagement preference"),
+  opportunity: z.string().trim().min(1, "Please select an opportunity"),
+});
+
+const connectSchema = z.object({
+  hubs: z.string().trim().min(1, "Please select a hub"),
+  region: z.string().trim().min(1, "Please select your region"),
+  updateFrequency: z.string().trim().min(1, "Please select update frequency"),
+  tellAbout: z.string().trim().min(150, "Please enter at least 150 characters"),
+});
+
+const stepSchemas = {
+  1: identitySchema,
+  2: journeySchema,
+  3: interestsSchema,
+  4: careerSchema,
+  5: connectSchema,
+} as const;
+
 export default function ClimateOnboarding() {
   const [currentStep, setCurrentStep] = useState(0);
   const session = useSession();
   const token = session?.data?.user?.accessToken;
+  const router = useRouter();
 
   const [formData, setFormData] = useState({
     // Step 1 - Identity
@@ -92,6 +145,9 @@ export default function ClimateOnboarding() {
     updateFrequency: "Weekly",
     tellAbout: "",
   });
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof typeof formData, string>>
+  >({});
 
   const buildPayload = () => ({
     name: formData.name,
@@ -115,29 +171,58 @@ export default function ClimateOnboarding() {
     tellAbout: formData.tellAbout,
   });
 
-  // const nextStep = () => {
-  //   if (currentStep < STEPS.length - 1) {
-  //     setCurrentStep(currentStep + 1);
-  //   } else {
-  //     const payload = buildPayload();
-  //     if (token) {
-  //    const res =   createSurvey(payload, token);
+  const validateCurrentStep = () => {
+    const schema = stepSchemas[currentStep as keyof typeof stepSchemas];
+    if (!schema) return true;
 
-  //   }
-  //     alert("Submitted! Check the browser console for the final payload.");
-  //   }
-  // };
+    const result = schema.safeParse(formData);
+
+    if (result.success) {
+      setErrors((prev) => {
+        const nextErrors = { ...prev };
+        Object.keys(result.data).forEach((key) => {
+          delete nextErrors[key as keyof typeof formData];
+        });
+        return nextErrors;
+      });
+      return true;
+    }
+
+    const fieldErrors = result.error.flatten().fieldErrors;
+
+    setErrors((prev) => {
+      const nextErrors = { ...prev };
+
+      Object.keys(schema.shape).forEach((key) => {
+        const message = fieldErrors[key as keyof typeof fieldErrors]?.[0];
+        if (message) {
+          nextErrors[key as keyof typeof formData] = message;
+        } else {
+          delete nextErrors[key as keyof typeof formData];
+        }
+      });
+
+      return nextErrors;
+    });
+
+    return false;
+  };
 
   const nextStep = async () => {
+    if (!validateCurrentStep()) return;
+
     if (currentStep < STEPS.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
       const payload = buildPayload();
-
       try {
         if (token) {
           const res = await createSurvey(payload, token);
           toast.success(res.message);
+
+          if (res.success) {
+            router.push("/survey/success");
+          }
         }
       } catch (error: any) {
         toast.error(error.message);
@@ -149,6 +234,7 @@ export default function ClimateOnboarding() {
   const prevStep = () => setCurrentStep(Math.max(0, currentStep - 1));
 
   const updateField = (field: string, value: any) => {
+    setErrors((prev) => ({ ...prev, [field]: undefined }));
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -157,6 +243,7 @@ export default function ClimateOnboarding() {
     field: "interest" | "goals" | "whatLooking",
     item: string,
   ) => {
+    setErrors((prev) => ({ ...prev, [field]: undefined }));
     setFormData((prev) => ({
       ...prev,
       [field]: prev[field].includes(item)
@@ -164,6 +251,11 @@ export default function ClimateOnboarding() {
         : [...prev[field], item],
     }));
   };
+
+  const renderError = (field: keyof typeof formData) =>
+    errors[field] ? (
+      <p className="mt-1 text-xs font-medium text-red-500">{errors[field]}</p>
+    ) : null;
 
   return (
     <div className="min-h-screen !max-w-2xl flex flex-col items-center justify-center py-10 font-sans text-[#003D3D]">
@@ -241,6 +333,7 @@ export default function ClimateOnboarding() {
                   placeholder="Your full name"
                   className="bg-[#F1F4F4] border-none h-12 rounded-xl focus-visible:ring-1 focus-visible:ring-[#004D4D]"
                 />
+                {renderError("name")}
               </div>
               <div className="space-y-1">
                 <Label className="uppercase text-[10px] font-bold tracking-widest text-[#004242]">
@@ -252,6 +345,7 @@ export default function ClimateOnboarding() {
                   placeholder="you@example.com"
                   className="bg-[#F1F4F4] border-none h-12 rounded-xl"
                 />
+                {renderError("email")}
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
@@ -264,6 +358,7 @@ export default function ClimateOnboarding() {
                     placeholder="Dhaka"
                     className="bg-[#F1F4F4] border-none h-12 rounded-xl"
                   />
+                  {renderError("city")}
                 </div>
                 <div className="space-y-1">
                   <Label className="uppercase text-[10px] font-bold tracking-widest text-[#004242]">
@@ -275,6 +370,7 @@ export default function ClimateOnboarding() {
                     placeholder="Bangladesh"
                     className="bg-[#F1F4F4] border-none h-12 rounded-xl"
                   />
+                  {renderError("country")}
                 </div>
               </div>
               <div className="space-y-1">
@@ -287,6 +383,7 @@ export default function ClimateOnboarding() {
                   placeholder="https://linkedin.com/in/yourname"
                   className="bg-[#F1F4F4] border-none h-12 rounded-xl"
                 />
+                {renderError("link")}
               </div>
             </div>
           </div>
@@ -320,6 +417,7 @@ export default function ClimateOnboarding() {
                 </div>
               ))}
             </div>
+            {renderError("climateJourney")}
             {/* maps to: message */}
             <div className="mt-6">
               <Label className="font-bold mb-2 text-[#002A2A] text-[20px] hero-font block">
@@ -331,6 +429,7 @@ export default function ClimateOnboarding() {
                 value={formData.message}
                 onChange={(e) => updateField("message", e.target.value)}
               />
+              {renderError("message")}
             </div>
           </div>
         )}
@@ -376,6 +475,7 @@ export default function ClimateOnboarding() {
                 </div>
               ))}
             </div>
+            {renderError("interest")}
 
             {/* maps to: goals[] */}
             <div>
@@ -407,6 +507,7 @@ export default function ClimateOnboarding() {
                   </button>
                 ))}
               </div>
+              {renderError("goals")}
             </div>
 
             {/* maps to: successMessage */}
@@ -420,6 +521,7 @@ export default function ClimateOnboarding() {
                 placeholder="Imagine your climate impact journey..."
                 className="bg-[#F1F4F4] min-h-[100px] border-none rounded-xl"
               />
+              {renderError("successMessage")}
             </div>
           </div>
         )}
@@ -473,6 +575,7 @@ export default function ClimateOnboarding() {
                   </div>
                 ))}
               </div>
+              {renderError("whatLooking")}
             </div>
 
             {/* maps to: engagementPreference */}
@@ -480,7 +583,7 @@ export default function ClimateOnboarding() {
               <Label className="font-bold text-xl hero-font text-[#246679] block mb-3">
                 Engagement preference
               </Label>
-              <div className="flex rounded-lg p-1">
+              <div className="flex rounded-lg p-1 gap-3.5 border ">
                 {[
                   "Mostly read",
                   "Occasionally contribute",
@@ -490,16 +593,17 @@ export default function ClimateOnboarding() {
                   <button
                     key={pref}
                     onClick={() => updateField("engagementPreference", pref)}
-                    className={`flex-1  text-[10px] py-2 px-1 rounded-md font-bold uppercase transition-all ${
+                    className={`flex-1  text-[10px] py-2 px-1  rounded-md font-bold uppercase transition-all ${
                       formData.engagementPreference === pref
                         ? "bg-white border border-[#003D3D] shadow-sm text-[#003D3D]"
-                        : "text-gray-400"
+                        : "text-gray-400 border "
                     }`}
                   >
                     {pref}
                   </button>
                 ))}
               </div>
+              {renderError("engagementPreference")}
             </div>
 
             {/* maps to: opportunity (single string) */}
@@ -535,6 +639,7 @@ export default function ClimateOnboarding() {
                   </button>
                 ))}
               </div>
+              {renderError("opportunity")}
             </div>
           </div>
         )}
@@ -587,6 +692,7 @@ export default function ClimateOnboarding() {
                   />
                 </div>
               </div>
+              {renderError("hubs")}
             </section>
 
             {/* maps to: region */}
@@ -610,6 +716,7 @@ export default function ClimateOnboarding() {
                   <SelectItem value="Oceania">Oceania</SelectItem>
                 </SelectContent>
               </Select>
+              {renderError("region")}
             </section>
 
             {/* maps to: impactNewsletter, localNotification */}
@@ -668,6 +775,7 @@ export default function ClimateOnboarding() {
                   <SelectItem value="Monthly">Monthly</SelectItem>
                 </SelectContent>
               </Select>
+              {renderError("updateFrequency")}
             </section>
 
             {/* maps to: tellAbout */}
@@ -681,6 +789,7 @@ export default function ClimateOnboarding() {
                 placeholder="How did you find us? What drives you?"
                 className="bg-[#F1F4F4] border-none rounded-2xl min-h-[100px]"
               />
+              {renderError("tellAbout")}
             </section>
           </div>
         )}
