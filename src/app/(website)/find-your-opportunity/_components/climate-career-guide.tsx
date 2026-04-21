@@ -633,19 +633,6 @@ export default function ClimateCareerGuide() {
           </div>
         </div>
       </main>
-
-      {/* Footer CTA */}
-      <div className="mt-12 text-center">
-        <button
-          onClick={() => {
-            const inputElement = document.querySelector("input");
-            inputElement?.focus();
-          }}
-          className="bg-[#003D3D] text-white px-8 py-4 rounded-xl text-lg hover:bg-[#002D2D] shadow-lg transition-all transform hover:-translate-y-1 cursor-pointer"
-        >
-          Start with AI Assistant
-        </button>
-      </div>
     </div>
   );
 }
