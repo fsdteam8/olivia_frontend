@@ -5,6 +5,7 @@ import PageHero from "@/components/home/PageHero";
 import CommunitySection from "@/components/home/CommunitySection";
 import { MentorsGallery } from "../../_components/mentor-gallery";
 import { MentorApplyModal } from "./mentor-apply-modal";
+import ClimateCareerGuide from "@/app/(website)/find-your-opportunity/_components/climate-career-guide";
 
 const AllMentors = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,6 +24,7 @@ const AllMentors = () => {
       <MentorsGallery />
 
       <div>
+        <ClimateCareerGuide />
         <PageHero
           bgImage="/apply-mentor.jpg"
           subtitle="Join our growing roster of climate leaders and help guide the next generation of changemakers."
