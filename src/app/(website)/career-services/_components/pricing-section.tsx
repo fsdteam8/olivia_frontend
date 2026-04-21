@@ -63,7 +63,8 @@ const PricingSection = () => {
           </div>
 
           <Link
-            href={`/https://calendly.com/actonclimate-Info/30min?month=2026-04`}
+            href={`https://calendly.com/actonclimate-Info/30min?month=2026-04`}
+            target="_blank"
           >
             <button className="w-full mt-10 bg-[#064E4B] text-white py-3 rounded-xl  hover:bg-[#085e5a] transition-colors cursor-pointer">
               Book a Call
@@ -101,9 +102,11 @@ const PricingSection = () => {
               </ul>
             </div>
 
-            <button className="w-full mt-10 bg-white text-[#064E4B] py-3 rounded-xl  hover:bg-slate-100 transition-colors cursor-pointer">
-              Join the Community
-            </button>
+            <Link href={`/survey`}>
+              <button className="w-full mt-10 bg-white text-[#064E4B] py-3 rounded-xl  hover:bg-slate-100 transition-colors cursor-pointer">
+                Join the Community
+              </button>
+            </Link>
           </div>
         </div>
       </div>

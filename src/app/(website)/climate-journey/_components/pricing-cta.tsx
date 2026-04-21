@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const PricingCTA = () => {
   return (
     <section className="flex justify-center">
@@ -22,9 +24,14 @@ const PricingCTA = () => {
           </p>
 
           <div className="pt-4">
-            <button className="bg-[#064E4B] cursor-pointer text-white px-8 py-3.5 rounded-xl  text-sm md:text-base hover:bg-[#043331] transition-all transform hover:scale-105">
-              View Pricing Guide (PDF)
-            </button>
+            <Link
+              href={`https://drive.google.com/file/d/1OiHVvisJQrODYaN-9UUuOZeO8tituqk9/view?usp=sharing`}
+              target="_blank"
+            >
+              <button className="bg-[#064E4B] cursor-pointer text-white px-8 py-3.5 rounded-xl  text-sm md:text-base hover:bg-[#043331] transition-all transform hover:scale-105">
+                View Pricing Guide (PDF)
+              </button>
+            </Link>
           </div>
         </div>
       </div>

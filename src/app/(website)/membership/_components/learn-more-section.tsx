@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const LearnMoreSection = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -72,6 +73,14 @@ const LearnMoreSection = () => {
           <p className="text-sm uppercase tracking-widest text-[#004D4D] font-black">
             Platform overview · 1 min watch
           </p>
+        </div>
+
+        <div className="text-center mt-12">
+          <Link href={`/climate-journey#pricing`}>
+            <Button className="h-[48px] font-bold">
+              View our Membership Pricing
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
