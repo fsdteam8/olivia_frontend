@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Play, Headphones, ArrowRight } from "lucide-react";
+import { Play, Headphones, ArrowRight, FileText } from "lucide-react";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
@@ -11,10 +11,12 @@ import Link from "next/link";
 interface MediaItem {
   _id: string;
   title: string;
-  mediaType: "video" | "audio" | "article";
+  mediaType: "url" | "audio" | "files";
+  category: string;
   description: string;
   contentUrl: string;
   thumbnailImage: string;
+  createdAt?: string;
 }
 
 interface ApiResponse {
@@ -23,12 +25,32 @@ interface ApiResponse {
   data: MediaItem[];
 }
 
+const MEDIA_CATEGORIES = [
+  "All",
+  "video",
+  "podcast",
+  "event-recording",
+  "expert-interview",
+  "insight",
+  "blog",
+  "resource",
+] as const;
+
 // ---------------- API FETCH ----------------
 
-const fetchMedia = async (): Promise<MediaItem[]> => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/media/get-media`,
-  );
+const fetchMedia = async (category?: string): Promise<MediaItem[]> => {
+  const params = new URLSearchParams();
+
+  if (category && category !== "All") {
+    params.set("category", category);
+  }
+
+  const queryString = params.toString();
+  const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/media/get-media${
+    queryString ? `?${queryString}` : ""
+  }`;
+
+  const res = await fetch(url);
 
   if (!res.ok) {
     throw new Error("Failed to fetch media");
@@ -40,24 +62,24 @@ const fetchMedia = async (): Promise<MediaItem[]> => {
 
 // ---------------- FILTER BAR ----------------
 
-const FilterBar = () => {
-  const categories = [
-    "All",
-    "Videos",
-    "Interested in Being a Speaker",
-    "Event Recordings",
-    "Expert Interviews",
-    "Insights",
-    "Community",
-  ];
-
+const FilterBar = ({
+  categories,
+  activeCategory,
+  onCategoryChange,
+}: {
+  categories: string[];
+  activeCategory: string;
+  onCategoryChange: (category: string) => void;
+}) => {
   return (
     <div className="flex flex-wrap justify-center gap-2 mb-12">
-      {categories.map((cat, idx) => (
+      {categories.map((cat) => (
         <button
           key={cat}
+          type="button"
+          onClick={() => onCategoryChange(cat)}
           className={`px-4 py-2 rounded-lg text-xs font-bold transition-all border ${
-            idx === 0
+            activeCategory === cat
               ? "bg-[#00473e] text-white border-[#00473e]"
               : "bg-white text-[#00473e] border-gray-100 shadow-sm hover:shadow-md"
           }`}
@@ -87,10 +109,12 @@ const ResourceCard = ({ resource }: { resource: MediaItem }) => {
         {/* Overlay icon */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="bg-[#00473e]/80 p-3 rounded-full text-white backdrop-blur-sm border border-white/20">
-            {resource.mediaType === "video" ? (
+            {resource.mediaType === "url" ? (
               <Play size={24} fill="currentColor" />
-            ) : (
+            ) : resource.mediaType === "audio" ? (
               <Headphones size={24} />
+            ) : (
+              <FileText size={24} />
             )}
           </div>
         </div>
@@ -99,7 +123,11 @@ const ResourceCard = ({ resource }: { resource: MediaItem }) => {
       {/* Content */}
       <div className="flex-1 px-1">
         <span className="inline-block px-4 py-1.5 rounded-full bg-[#00473e] text-white text-[10px] font-bold uppercase tracking-wider mb-4">
-          {resource.mediaType}
+          {resource.mediaType === "url"
+            ? "Video"
+            : resource.mediaType === "audio"
+              ? "Audio"
+              : "File"}
         </span>
 
         <h3 className="text-[#00473e] text-xl font-extrabold leading-[1.2] mb-3 line-clamp-2">
@@ -133,9 +161,11 @@ const ResourceCard = ({ resource }: { resource: MediaItem }) => {
 // ---------------- MAIN PAGE ----------------
 
 export default function ResourceGridPage() {
+  const [selectedCategory, setSelectedCategory] = React.useState("All");
+
   const { data, isLoading, error } = useQuery({
-    queryKey: ["media-posts"],
-    queryFn: fetchMedia,
+    queryKey: ["media-posts", selectedCategory],
+    queryFn: () => fetchMedia(selectedCategory),
   });
 
   if (isLoading) {
@@ -155,13 +185,28 @@ export default function ResourceGridPage() {
   return (
     <div className="min-h-screen bg-[#f8fafc] py-20 px-4 sm:px-8">
       <div className="container mx-auto">
-        <FilterBar />
+        <FilterBar
+          categories={[...MEDIA_CATEGORIES]}
+          activeCategory={selectedCategory}
+          onCategoryChange={setSelectedCategory}
+        />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {data?.map((item) => (
-            <ResourceCard key={item._id} resource={item} />
-          ))}
-        </div>
+        {data?.length ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {data.map((item) => (
+              <ResourceCard key={item._id} resource={item} />
+            ))}
+          </div>
+        ) : (
+          <div className="rounded-[2rem] border border-dashed border-[#00473e]/20 bg-white px-6 py-16 text-center">
+            <h3 className="text-2xl font-bold text-[#00473e]">Not Found</h3>
+            <p className="mt-3 text-sm text-slate-500">
+              {selectedCategory === "All"
+                ? "No media available right now."
+                : `No media found in the ${selectedCategory} category.`}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
