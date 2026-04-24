@@ -31,12 +31,14 @@ export const Hero = () => {
               Join Community
             </Button>
           </Link>
-          <Button
-            variant="outline"
-            className="border-white  text-white bg-transparent hover:text-white hover:bg-white/10 px-8 h-12 rounded-md  text-sm min-w-[160px]"
-          >
-            Learn more
-          </Button>
+          <Link href={"/membership"}>
+            <Button
+              variant="outline"
+              className="border-white  text-white bg-transparent hover:text-white hover:bg-white/10 px-8 h-12 rounded-md  text-sm min-w-[160px]"
+            >
+              Learn more
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

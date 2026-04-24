@@ -32,7 +32,7 @@ const services: Service[] = [
 
 const SpecificServicePricing = () => {
   return (
-    <section className="bg-[#EDF5F4] py-16">
+    <section>
       <div className="container mx-auto">
         {/* Section Heading */}
         <h2 className="text-4xl md:text-5xl text-[#064E4B] text-center mb-16">
@@ -44,7 +44,7 @@ const SpecificServicePricing = () => {
           {services.map((service, index) => (
             <div
               key={index}
-              className="bg-white p-8 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col items-start hover:translate-y-[-4px] transition-all duration-300"
+              className="bg-white border  p-8 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col items-start hover:translate-y-[-4px] transition-all duration-300"
             >
               {/* Icon Container */}
               <div className="w-12 h-12 bg-[#E6F2F1] rounded-full flex items-center justify-center mb-6">
