@@ -290,7 +290,7 @@ const ComparePlans = () => {
         </div>
 
         {/* Pricing Summary */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-4">
+        {/* <div className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="bg-white rounded-xl p-4 text-center border border-[#E2E8F0]">
             <p className="text-sm text-[#528B8A]">Non-Member</p>
             <p className="text-xl font-bold text-[#064E4B]">Free</p>
@@ -332,7 +332,7 @@ const ComparePlans = () => {
               {plansToShow.yearly?.billingType === "yearly" ? "yr" : "mo"}
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

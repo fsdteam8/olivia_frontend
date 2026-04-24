@@ -4,6 +4,8 @@ import PageHero from "@/components/home/PageHero";
 import HowItWorks from "./_components/how-it-works";
 import BenefitsSection from "./_components/benefits-section";
 import LearnMoreSection from "./_components/learn-more-section";
+import MembershipSection from "./_components/Our-membership";
+import MembershipOffers from "./_components/MembershipOffers";
 
 const page = () => {
   return (
@@ -19,6 +21,8 @@ const page = () => {
         <HowItWorks />
       </div>
       <BenefitsSection />
+      <MembershipSection />
+      <MembershipOffers />
       <div>
         <LearnMoreSection />
         <Newsletter />
