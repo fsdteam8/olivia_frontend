@@ -212,22 +212,24 @@ const JobDetails = () => {
                   <p className="text-[10px] uppercase tracking-widest text-slate-400 font-black mb-1">
                     Company Name
                   </p>
-                  <h3 className="text-xl text-[#004D4D] ">{job.companyName}</h3>
+                  <h3 className="text-xl text-[#004D4D] ">
+                    {job?.companyName}
+                  </h3>
                   <div className="mt-3 space-y-1">
                     <p className="text-[10px] uppercase tracking-widest text-slate-400 font-black">
                       Website
                     </p>
                     <a
                       href={
-                        job.companyURL.startsWith("http")
-                          ? job.companyURL
+                        job?.companyURL?.startsWith("http")
+                          ? job?.companyURL
                           : `https://${job.companyURL}`
                       }
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-teal-600 text-sm flex items-center gap-1 hover:underline underline-offset-4 "
                     >
-                      {job.companyURL.replace(/(^\w+:|^)\/\//, "")}{" "}
+                      {job?.companyURL?.replace(/(^\w+:|^)\/\//, "")}{" "}
                       <ExternalLink className="w-3 h-3" />
                     </a>
                   </div>
@@ -244,27 +246,27 @@ const JobDetails = () => {
                 <SummaryItem
                   icon={<Building2 />}
                   label="Company"
-                  value={job.companyName}
+                  value={job?.companyName}
                 />
                 <SummaryItem
                   icon={<MapPin />}
                   label="Location"
-                  value={job.location}
+                  value={job?.location}
                 />
                 <SummaryItem
                   icon={<Briefcase />}
                   label="Job Type"
-                  value={job.jobType}
+                  value={job?.jobType}
                 />
                 <SummaryItem
                   icon={<Clock />}
                   label="Category"
-                  value={job.category}
+                  value={job?.category}
                 />
                 <SummaryItem
                   icon={<Calendar />}
                   label="Date Posted"
-                  value={new Date(job.postedDate).toLocaleDateString()}
+                  value={new Date(job?.postedDate).toLocaleDateString()}
                 />
               </div>
 
