@@ -7,6 +7,7 @@ import ComparePlans from "./compare-plans";
 import SpecificServicePricing from "./specific-service-pricing";
 import { Newsletter } from "@/components/home/Newsletter";
 import CommunitySection from "@/components/home/CommunitySection";
+import FAQSection from "./FAQSection";
 
 const ClimateJourney = () => {
   return (
@@ -19,6 +20,7 @@ const ClimateJourney = () => {
       <PricingCTA />
       <HowItWorksSecondary />
       <ComparePlans />
+      <FAQSection />
       <SpecificServicePricing />
       <div>
         <Newsletter />
