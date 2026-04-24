@@ -193,7 +193,7 @@ const ComparePlans = () => {
   };
 
   return (
-    <section className="py-20 bg-[#eef4f5]">
+    <section className="">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl text-[#064E4B] mb-10 font-bold">
           Compare Plans
