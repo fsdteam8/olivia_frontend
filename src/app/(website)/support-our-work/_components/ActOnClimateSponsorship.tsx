@@ -58,7 +58,7 @@ const ActOnClimateSponsorship = () => {
                 target="_blank"
               >
                 <Button className="bg-[#04312d] hover:bg-[#06423d] text-white px-8 py-6 rounded-md w-full ">
-                  Contact Sponsorship Team
+                  Read our Sponsorship Plan
                 </Button>
               </Link>
               <p className="text-[10px] mt-4 text-center  text-gray-500 uppercase tracking-widest">

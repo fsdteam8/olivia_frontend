@@ -143,7 +143,7 @@ export const Navbar = () => {
                   : "text-gray-600 hover:text-[#0D3B3F]"
               }`}
             >
-              Membership Pricing
+              Membership 
               <ChevronDown
                 size={16}
                 className={`transition-transform duration-200 ${isMembershipDropdownOpen ? "rotate-180" : ""}`}
@@ -284,7 +284,7 @@ export const Navbar = () => {
                     : "text-gray-600"
                 }`}
               >
-                <span>Membership Pricing</span>
+                <span>Membership </span>
                 <ChevronDown
                   size={16}
                   className={`transition-transform duration-200 ${isMobileMembershipDropdownOpen ? "rotate-180" : ""}`}
