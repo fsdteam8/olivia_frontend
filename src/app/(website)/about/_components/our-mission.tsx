@@ -24,7 +24,7 @@ const OurMission = () => {
           <div className="w-full lg:w-1/2 space-y-8">
             <div>
               <h2 className="text-4xl md:text-5xl text-[#064E4B] mb-6">
-                Our Mission                                                      
+                Our Mission
               </h2>
               <p className="text-[#528B8A] text-lg leading-relaxed max-w-xl">
                 Act on Climate is a website-based platform for those who are
@@ -54,7 +54,7 @@ const OurMission = () => {
                   <Users className="w-5 h-5 text-[#064E4B]" />
                 </div>
                 <div>
-                  <h4 className="text-[#064E4B] text-base">Community</h4>
+                  <h4 className="  text-base">Community</h4>
                   <p className="text-[#528B8A] text-sm mt-1">
                     Connecting like-minded changemakers.
                   </p>
