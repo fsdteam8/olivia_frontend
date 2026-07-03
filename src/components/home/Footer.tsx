@@ -107,13 +107,13 @@ const Footer = () => {
             <div>
               <h4 className=" text-[#004242] mb-6">Follow us</h4>
               <div className="flex gap-4">
-                <a href="#" className="p-2 bg-[#004242] text-white rounded-md">
+                <a href="https://www.linkedin.com/company/act-on-climate1" className="p-2 bg-[#004242] text-white rounded-md">
                   <Linkedin size={18} />
                 </a>
-                <a href="#" className="p-2 bg-[#004242] text-white rounded-md">
+                <a href="https://twitter.com/acton_climate" className="p-2 bg-[#004242] text-white rounded-md">
                   <Twitter size={18} />
                 </a>
-                <a href="#" className="p-2 bg-[#004242] text-white rounded-md">
+                <a href="https://www.instagram.com/acton_climate" className="p-2 bg-[#004242] text-white rounded-md">
                   <Instagram size={18} />
                 </a>
               </div>
@@ -131,9 +131,9 @@ const Footer = () => {
         <div className="border-t  border-gray-300 pt-8 flex md:row justify-between items-center text-[16px] text-gray-400">
           <p>© Copyright 2024. All Rights Reserved</p>
           <div className="flex gap-4 mt-4 md:mt-0">
-            <a href="#">Privacy policy</a>
+            <a href="/privacy-policy" className="hover:text-green-600">Privacy policy</a>
             <span>•</span>
-            <a href="#">Terms & conditions</a>
+            <a href="/terms-of-service" className="hover:text-green-600">Terms & conditions</a>
           </div>
         </div>
       </div>
