@@ -102,7 +102,7 @@ const connectSchema = z.object({
   hubs: z.string().trim().min(1, "Please select a hub"),
   region: z.string().trim().min(1, "Please select your region"),
   updateFrequency: z.string().trim().min(1, "Please select update frequency"),
-  tellAbout: z.string().trim().min(150, "Please enter at least 150 characters"),
+  tellAbout: z.string().trim().min(5, "Please enter at least 5 characters"),
 });
 
 const stepSchemas = {

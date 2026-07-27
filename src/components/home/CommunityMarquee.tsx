@@ -3,7 +3,6 @@
 
 import React, { useState } from "react";
 import { Quote, Star, Loader2, MessageSquarePlus } from "lucide-react";
-import { Marquee } from "@/components/ui/marquee";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
@@ -148,12 +147,14 @@ export default function CommunityFeedback() {
       toast.error(error.message);
     },
   });
-  const reviews = data?.data || [];
-  const firstRow = reviews.slice(0, Math.ceil(reviews.length / 2));
-  const secondRow = reviews.slice(Math.ceil(reviews.length / 2));
+  // The marquee repeats its children to create an infinite animation. Use a
+  // unique list instead so each approved review is visible exactly once.
+  const reviews = Array.from(
+    new Map((data?.data || []).map((review) => [review._id, review])).values(),
+  );
 
   return (
-    <section className="relative flex w-full flex-col items-center justify-center overflow-hidden bg-white">
+    <section className="relative flex w-full  flex-col items-center justify-center overflow-hidden bg-white">
       {/* Header */}
       <div className="mb-12 text-center px-4">
         <h2 className="text-[42px] font-black text-[#0D3B3F] tracking-tighter mb-4">
@@ -210,22 +211,12 @@ export default function CommunityFeedback() {
       {isLoading ? (
         <FeedbackSkeleton />
       ) : reviews.length > 0 ? (
-        <div className="relative flex flex-col gap-3">
-          <Marquee pauseOnHover className="[--duration:10s]">
-            {firstRow.map((t) => (
+        <div className="w-full  pb-2">
+          <div className="mx-auto grid container grid-cols-1 justify-items-center gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {reviews.map((t) => (
               <TestimonialCard key={t._id} item={t} />
             ))}
-          </Marquee>
-
-          <Marquee reverse pauseOnHover className="[--duration:10s]">
-            {secondRow.map((t) => (
-              <TestimonialCard key={t._id} item={t} />
-            ))}
-          </Marquee>
-
-          {/* Gradient Fades */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-1/12 bg-gradient-to-r from-white"></div>
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-1/12 bg-gradient-to-l from-white"></div>
+          </div>
         </div>
       ) : (
         <p className="text-slate-400 font-medium">

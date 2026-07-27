@@ -6,23 +6,23 @@ const offers = [
   {
     title: "Careers & Resources",
     description:
-      "We host events, workshops, and networking sessions to help you build meaningful connections.",
+      "Explore climate careers, opportunities, and curated resources designed to support your growth and impact.",
     image:
-      "https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=2070&auto=format&fit=crop", // Meeting/Collaboration
+      "/whatweoffer1.jpg", // Meeting/Collaboration
   },
   {
     title: "Events & Networking",
     description:
-      "We host events, workshops, and networking sessions to help you build meaningful connections.",
+      "Join events, connect with like-minded individuals, and grow your network in the climate space.",
     image:
       "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop", // Conference/Audience
   },
   {
     title: "Community & Support",
     description:
-      "We host events, workshops, and networking sessions to help you build meaningful connections.",
+      "Access a trusted network of peers, mentors, and support systems built for climate impact.",
     image:
-      "https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=2070&auto=format&fit=crop", // Volunteer/Outdoor event
+      "/whatweoffer3.jpg", // Volunteer/Outdoor event
   },
 ];
 

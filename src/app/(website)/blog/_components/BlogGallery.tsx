@@ -155,24 +155,24 @@ interface ApiResponse {
   success: boolean;
   message: string;
   statusCode: number;
-  data: {
-    meta: {
-      page: number;
-      limit: number;
-      total: number;
-      totalPage: number;
-    };
-    data: BlogPost[];
+  data: BlogPost[];
+  meta: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPage: number;
   };
 }
 
-const fetchBlogs = async (): Promise<BlogPost[]> => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/apply-blog/get-all-blog-ideas`,
-  );
+const fetchBlogs = async (category?: string): Promise<BlogPost[]> => {
+  const params = new URLSearchParams();
+  if (category) params.set("category", category);
+
+  const query = params.toString();
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/blog/get-blogs${query ? `?${query}` : ""}`);
   const data: ApiResponse = await res.json();
-  if (!data.success) throw new Error(data.message || "Failed to fetch blogs");
-  return data.data.data; // <-- get the actual array of blog posts
+  if (!res.ok || !data.success) throw new Error(data.message || "Failed to fetch blogs");
+  return data.data;
 };
 
 const BlogGallery = () => {
@@ -182,7 +182,7 @@ const BlogGallery = () => {
     "Climate Careers",
     "Research",
     "Toolkit",
-    "Community",
+    "Renewable Energy",
   ];
 
   const [activeCategory, setActiveCategory] = useState("View All Posts");
@@ -193,14 +193,14 @@ const BlogGallery = () => {
     isLoading,
     isError,
   } = useQuery<BlogPost[]>({
-    queryKey: ["blogs"],
-    queryFn: fetchBlogs,
+    queryKey: ["blogs", activeCategory],
+    queryFn: () =>
+      fetchBlogs(
+        activeCategory === "View All Posts" ? undefined : activeCategory,
+      ),
   });
 
-  const filteredPosts =
-    activeCategory === "View All Posts"
-      ? blogPosts
-      : blogPosts.filter((post) => post.category === activeCategory);
+  const filteredPosts = blogPosts;
 
   if (isLoading) return <p className="text-center">Loading blogs...</p>;
   if (isError)
