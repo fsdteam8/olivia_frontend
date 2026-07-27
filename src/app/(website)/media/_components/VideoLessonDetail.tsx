@@ -312,9 +312,10 @@ const VideoLessonDetail = () => {
               Description
             </h3>
 
-            <p className="text-[#729094] text-sm leading-relaxed font-medium">
-              {data.description}
-            </p>
+            <p
+              className="text-[#729094] text-sm leading-relaxed font-medium"
+              dangerouslySetInnerHTML={{ __html: data.description || "" }}
+            />
           </div>
         </div>
 
