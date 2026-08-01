@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Mail, Send, Sun, User, Trash2 } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -55,14 +56,21 @@ const SidebarCard = ({
   title,
   description,
   onClick,
+  disabled = false,
 }: {
   title: string;
   description: string;
   onClick?: () => void;
+  disabled?: boolean;
 }) => (
   <div
-    onClick={onClick}
-    className="flex items-start gap-4 p-5 bg-white border border-slate-100 rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+    onClick={disabled ? undefined : onClick}
+    aria-disabled={disabled}
+    className={`flex items-start gap-4 p-5 bg-white border border-slate-100 rounded-xl shadow-sm transition-shadow ${
+      disabled
+        ? "cursor-not-allowed opacity-60"
+        : "cursor-pointer hover:shadow-md"
+    }`}
   >
     <div className="mt-1 p-2 bg-slate-50 rounded-lg border border-slate-100">
       <Mail className="w-5 h-5 text-teal-700" />
@@ -71,6 +79,114 @@ const SidebarCard = ({
       <h3 className="text-slate-800 text-[15px]">{title}</h3>
       <p className="text-sm text-slate-500 leading-snug mt-1">{description}</p>
     </div>
+  </div>
+);
+
+const renderInlineMarkdown = (text: string, keyPrefix: string) => {
+  const normalizedText = text.replace(/\[([^\]]+)\](?!\()/g, "$1");
+  const markdownPattern =
+    /!\[([^\]]*)\]\((https?:\/\/[^\s)]+)\)|\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|\*\*([^*]+)\*\*|(https?:\/\/[^\s)]+)/g;
+  const nodes: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  let index = 0;
+
+  while ((match = markdownPattern.exec(normalizedText)) !== null) {
+    if (match.index > lastIndex) {
+      nodes.push(normalizedText.slice(lastIndex, match.index));
+    }
+
+    const key = `${keyPrefix}-${index++}`;
+    if (match[1] && match[2]) {
+      nodes.push(
+        <img
+          key={key}
+          src={match[2]}
+          alt={match[1]}
+          className="mt-2 max-h-52 w-full rounded-lg border border-slate-200 object-cover"
+        />,
+      );
+    } else if (match[3] && match[4]) {
+      nodes.push(
+        <a
+          key={key}
+          href={match[4]}
+          target="_blank"
+          rel="noreferrer"
+          className="text-teal-700 underline underline-offset-2 break-all hover:text-teal-900"
+        >
+          {match[3]}
+        </a>,
+      );
+    } else if (match[5]) {
+      nodes.push(
+        <strong key={key} className="font-semibold text-slate-900">
+          {match[5]}
+        </strong>,
+      );
+    } else if (match[6]) {
+      nodes.push(
+        <a
+          key={key}
+          href={match[6]}
+          target="_blank"
+          rel="noreferrer"
+          className="text-teal-700 underline underline-offset-2 break-all hover:text-teal-900"
+        >
+          {match[6]}
+        </a>,
+      );
+    }
+
+    lastIndex = markdownPattern.lastIndex;
+  }
+
+  if (lastIndex < normalizedText.length) {
+    nodes.push(normalizedText.slice(lastIndex));
+  }
+
+  return nodes;
+};
+
+const FormattedAssistantMessage = ({ text }: { text: string }) => (
+  <div className="space-y-2 text-sm leading-relaxed text-slate-700 break-words">
+    {text.split("\n").map((line, index) => {
+      const numberedTitle = line.match(/^\s*\d+\.\s+\*\*(.+)\*\*\s*$/);
+
+      if (!line.trim()) {
+        return <div key={`space-${index}`} className="h-1" />;
+      }
+
+      if (numberedTitle) {
+        return (
+          <h4
+            key={`title-${index}`}
+            className="pt-2 font-semibold text-slate-900"
+          >
+            {numberedTitle[1]}
+          </h4>
+        );
+      }
+
+      if (line.trimStart().startsWith("- ")) {
+        return (
+          <div key={`item-${index}`} className="flex gap-2 break-words">
+            <span aria-hidden="true" className="text-teal-700">
+              •
+            </span>
+            <span>
+              {renderInlineMarkdown(line.trimStart().slice(2), `line-${index}`)}
+            </span>
+          </div>
+        );
+      }
+
+      return (
+        <p key={`line-${index}`} className="break-words">
+          {renderInlineMarkdown(line, `line-${index}`)}
+        </p>
+      );
+    })}
   </div>
 );
 
@@ -98,12 +214,12 @@ const TypingText = ({
   }, [currentIndex, text, onComplete]);
 
   return (
-    <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
-      {displayedText}
+    <div className="text-sm text-slate-700 leading-relaxed">
+      <FormattedAssistantMessage text={displayedText} />
       {currentIndex < text.length && (
         <span className="inline-block w-0.5 h-4 bg-teal-600 ml-0.5 animate-pulse" />
       )}
-    </p>
+    </div>
   );
 };
 
@@ -121,7 +237,7 @@ const Message = ({
 }) => {
   return (
     <div
-      className={`flex gap-3 max-w-[85%] ${
+      className={`flex min-w-0 gap-3 max-w-[85%] ${
         role === "user" ? "ml-auto flex-row-reverse" : ""
       }`}
     >
@@ -133,7 +249,7 @@ const Message = ({
         )}
       </div>
       <div
-        className={`p-4 rounded-2xl ${
+        className={`min-w-0 p-4 rounded-2xl ${
           role === "user"
             ? "bg-[#003D3D] rounded-tr-none text-white"
             : "bg-white rounded-tl-none border border-slate-100 shadow-sm"
@@ -141,9 +257,11 @@ const Message = ({
       >
         {isTyping && role === "assistant" ? (
           <TypingText text={content} onComplete={onTypingComplete} />
+        ) : role === "assistant" ? (
+          <FormattedAssistantMessage text={content} />
         ) : (
           <p
-            className={`text-sm ${
+            className={`text-sm break-words ${
               role === "user" ? "text-white" : "text-slate-700"
             } leading-relaxed whitespace-pre-wrap`}
           >
@@ -157,6 +275,8 @@ const Message = ({
 
 export default function ClimateCareerGuide() {
   const { data: session } = useSession();
+  const router = useRouter();
+  const isLoggedIn = Boolean(session?.user?.id);
   const userId = session?.user?.id || "guest_user";
   const queryClient = useQueryClient();
   const [query, setQuery] = useState("");
@@ -256,24 +376,25 @@ export default function ClimateCareerGuide() {
     mutationFn: async (queryText: string) => {
       // Create form data
       const formData = new URLSearchParams();
-      formData.append("user_id", userId);
-      formData.append("query", queryText);
+      // formData.append("user_id", userId);
+      formData.append("message", queryText);
 
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_CHATBOT_URL}/api/chat/`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/chatbot`,
         formData,
         {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
             accept: "application/json",
+            Authorization: `Bearer ${session?.user?.accessToken || ""}`,
           },
         },
       );
 
       console.log("Send message response:", response.data);
 
-      if (!response.data.status) {
-        throw new Error(response.data.description || "Failed to send message");
+      if (!response.data.success) {
+        throw new Error(response.data.message || "Failed to send message");
       }
       return response.data;
     },
@@ -292,7 +413,9 @@ export default function ClimateCareerGuide() {
       console.log("Processing response data:", data);
 
       // Try different possible response structures
-      if (data.response && data.response.answer) {
+      if (data.data?.answer) {
+        assistantMessage = data.data.answer;
+      } else if (data.response && data.response.answer) {
         assistantMessage = data.response.answer;
       } else if (data.answer) {
         assistantMessage = data.answer;
@@ -362,6 +485,11 @@ export default function ClimateCareerGuide() {
   });
 
   const handleSendMessage = async () => {
+    if (!isLoggedIn) {
+      router.push("/login");
+      return;
+    }
+
     if (!query.trim() || sendMessageMutation.isPending) return;
     const currentQuery = query;
     setQuery("");
@@ -384,6 +512,11 @@ export default function ClimateCareerGuide() {
   };
 
   const handleSuggestionClick = (suggestion: string) => {
+    if (!isLoggedIn) {
+      router.push("/login");
+      return;
+    }
+
     setQuery(suggestion);
     setTimeout(() => handleSendMessage(), 100);
   };
@@ -475,6 +608,7 @@ export default function ClimateCareerGuide() {
             onClick={() =>
               handleSuggestionClick("Show me climate jobs and internships")
             }
+            disabled={!isLoggedIn}
           />
           <SidebarCard
             title="Fellowships & Funding"
@@ -484,6 +618,7 @@ export default function ClimateCareerGuide() {
                 "Tell me about fellowships and funding opportunities",
               )
             }
+            disabled={!isLoggedIn}
           />
           <SidebarCard
             title="Career Transition Pathways"
@@ -493,6 +628,7 @@ export default function ClimateCareerGuide() {
                 "How can I transition into climate careers?",
               )
             }
+            disabled={!isLoggedIn}
           />
           <SidebarCard
             title="Skill-Building Resources"
@@ -502,6 +638,7 @@ export default function ClimateCareerGuide() {
                 "What skill-building resources are available?",
               )
             }
+            disabled={!isLoggedIn}
           />
           <SidebarCard
             title="Networking & Events"
@@ -509,11 +646,12 @@ export default function ClimateCareerGuide() {
             onClick={() =>
               handleSuggestionClick("Tell me about climate networking events")
             }
+            disabled={!isLoggedIn}
           />
         </div>
 
         {/* Right Column: AI Assistant Chat Interface */}
-        <div className="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden flex flex-col h-[600px]">
+        <div className="min-w-0 bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden flex flex-col h-[600px]">
           {/* Chat Header */}
           <div
             id="chat-header"
@@ -552,7 +690,7 @@ export default function ClimateCareerGuide() {
           </div>
 
           {/* Chat Messages Area - Only this area scrolls */}
-          <div className="flex-1 overflow-y-auto p-6 bg-slate-50/50">
+          <div className="flex-1 overflow-x-hidden overflow-y-auto p-6 bg-slate-50/50">
             <div className="space-y-6">
               {messages.length === 0 && !isTyping && !currentTypingMessage && (
                 <div className="flex flex-col items-center justify-center h-full text-center min-h-[400px]">
@@ -616,23 +754,45 @@ export default function ClimateCareerGuide() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Ask about climate opportunities, career paths, or skills..."
+                placeholder={
+                  isLoggedIn
+                    ? "Ask about climate opportunities, career paths, or skills..."
+                    : "Log in to chat with the Climate AI Assistant"
+                }
                 className="w-full bg-slate-100 border-none rounded-xl py-3 px-4 text-sm focus:ring-2 focus:ring-teal-600 focus:bg-white transition-all outline-none"
-                disabled={sendMessageMutation.isPending || isTyping}
+                disabled={
+                  !isLoggedIn || sendMessageMutation.isPending || isTyping
+                }
               />
               <button
                 onClick={handleSendMessage}
                 disabled={
-                  !query.trim() || sendMessageMutation.isPending || isTyping
+                  !isLoggedIn ||
+                  !query.trim() ||
+                  sendMessageMutation.isPending ||
+                  isTyping
                 }
                 className="bg-[#004D4D] p-2.5 rounded-xl text-white hover:bg-[#003D3D] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Send className="w-5 h-5" />
               </button>
             </div>
-            <p className="text-center text-[10px] text-slate-400 mt-3">
+            {!isLoggedIn && (
+              <p className="text-center text-xs text-slate-500 mt-3">
+                Please{" "}
+                <button
+                  type="button"
+                  onClick={() => router.push("/login")}
+                  className="text-teal-700 font-medium hover:underline"
+                >
+                  log in
+                </button>{" "}
+                to start chatting.
+              </p>
+            )}
+            {/* <p className="text-center text-[10px] text-slate-400 mt-3">
               Free access · No account required to start
-            </p>
+            </p> */}
           </div>
         </div>
       </main>
