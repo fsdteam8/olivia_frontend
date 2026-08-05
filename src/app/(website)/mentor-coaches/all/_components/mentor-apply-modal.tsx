@@ -53,6 +53,7 @@ interface MentorJoinFormInput {
   website: string;
   isPaidSession: string;
   hourlyRate: string;
+  bookingContactMethod: "link" | "email";
   bookingLink: string;
   motivation: string;
   goal: string;
@@ -85,8 +86,10 @@ export const MentorApplyModal = ({
     useForm<MentorJoinFormInput>({
       defaultValues: {
         email: userEmail || "",
+        bookingContactMethod: "link",
       },
     });
+  const bookingContactMethod = watch("bookingContactMethod");
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -143,13 +146,18 @@ export const MentorApplyModal = ({
     formData.append("about", data.about);
     formData.append("type", data.type);
     formData.append("experienceYears", data.experienceYears);
-    formData.append("bookingLink", data.bookingLink);
+    formData.append(
+      "bookingLink",
+      data.bookingContactMethod === "email"
+        ? `mailto:${data.bookingLink}`
+        : data.bookingLink,
+    );
     formData.append("motivation", data.motivation || "");
     formData.append("goal", data.goal || "");
 
     // Optional fields
     formData.append("phone", data.phone || "");
-    formData.append("address", data.address || "");
+    // formData.append("address", data.address || "");
     formData.append("designation", data.designation || "");
     formData.append("linkedin", data.linkedin || "");
     formData.append("website", data.website || "");
@@ -228,8 +236,7 @@ export const MentorApplyModal = ({
                 <Input
                   {...register("email", { required: true })}
                   type="email"
-                  className="bg-gray-50"
-                  readOnly
+                  className="bg-white"
                 />
               </div>
               <div className="space-y-1">
@@ -241,14 +248,14 @@ export const MentorApplyModal = ({
                   className="bg-white"
                 />
               </div>
-              <div className="space-y-1">
+              {/* <div className="space-y-1">
                 <Label className="text-xs ">Address</Label>
                 <Input
                   {...register("address")}
                   placeholder="Your address"
                   className="bg-white"
                 />
-              </div>
+              </div> */}
               <div className="space-y-1">
                 <Label className="text-xs ">Designation</Label>
                 <Input
@@ -506,7 +513,7 @@ export const MentorApplyModal = ({
             <h3 className="text-lg  text-[#064E4B] border-b pb-2">
               Session & Booking Details
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <div className="space-y-1">
                 <Label className="text-xs ">Paid Session? *</Label>
                 <Select onValueChange={(v) => setValue("isPaidSession", v)}>
@@ -529,10 +536,46 @@ export const MentorApplyModal = ({
                 />
               </div>
               <div className="space-y-1">
-                <Label className="text-xs ">Booking Link *</Label>
+                <Label className="text-xs ">Booking Via *</Label>
+                <Select
+                  defaultValue="link"
+                  onValueChange={(value: "link" | "email") => {
+                    setValue("bookingContactMethod", value);
+                    setValue("bookingLink", "");
+                  }}
+                >
+                  <SelectTrigger className="bg-white">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="link">Booking Link</SelectItem>
+                    <SelectItem value="email">Email</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-1">
+                <Label className="text-xs ">
+                  {bookingContactMethod === "email"
+                    ? "Booking Email"
+                    : "Booking Link"}{" "}
+                  *
+                </Label>
                 <Input
-                  {...register("bookingLink", { required: true })}
-                  placeholder="https://calendly.com/your-link"
+                  {...register("bookingLink", {
+                    required: true,
+                    validate: (value) =>
+                      bookingContactMethod === "email"
+                        ? /^\S+@\S+\.\S+$/.test(value) ||
+                          "Enter a valid email address"
+                        : /^https?:\/\/.+/i.test(value) ||
+                          "Enter a valid URL starting with http:// or https://",
+                  })}
+                  type={bookingContactMethod === "email" ? "email" : "url"}
+                  placeholder={
+                    bookingContactMethod === "email"
+                      ? "you@example.com"
+                      : "https://calendly.com/your-link"
+                  }
                   className="bg-white"
                 />
               </div>

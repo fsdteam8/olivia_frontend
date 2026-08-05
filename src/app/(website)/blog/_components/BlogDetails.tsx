@@ -105,7 +105,7 @@ const BlogDetails = () => {
             <main className="flex-1 space-y-8">
               <header className="space-y-4">
                 <div
-                  className="leading-relaxed text-sm text-slate-600"
+                  className="prose prose-sm prose-slate max-w-none text-slate-600 [&_p]:my-4 [&_p]:leading-relaxed"
                   dangerouslySetInnerHTML={{
                     __html: data?.content || "",
                   }}

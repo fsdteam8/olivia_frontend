@@ -312,8 +312,8 @@ const VideoLessonDetail = () => {
               Description
             </h3>
 
-            <p
-              className="text-[#729094] text-sm leading-relaxed font-medium"
+            <div
+              className="prose prose-sm prose-slate max-w-none text-[#729094] font-medium [&_p]:my-4 [&_p]:leading-relaxed"
               dangerouslySetInnerHTML={{ __html: data.description || "" }}
             />
           </div>
