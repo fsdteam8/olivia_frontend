@@ -442,12 +442,16 @@ export default function ClimateCareerGuide() {
     },
     onError: (error) => {
       setIsTyping(false);
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Sorry, I encountered an error. Please check your connection and try again.";
+
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content:
-            "Sorry, I encountered an error. Please check your connection and try again.",
+          content: errorMessage,
         },
       ]);
       console.error("Error sending message:", error);
