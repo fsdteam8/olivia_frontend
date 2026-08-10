@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Mail, Send, Sun, User, Trash2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -85,7 +86,7 @@ const SidebarCard = ({
 const renderInlineMarkdown = (text: string, keyPrefix: string) => {
   const normalizedText = text.replace(/\[([^\]]+)\](?!\()/g, "$1");
   const markdownPattern =
-    /!\[([^\]]*)\]\((https?:\/\/[^\s)]+)\)|\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|\*\*([^*]+)\*\*|(https?:\/\/[^\s)]+)/g;
+    /!\[([^\]]*)\]\((https?:\/\/[^\s)]+)\)|\[([^\]]+)\]\(((?:https?:\/\/|\/)[^\s)]+)\)|\*\*([^*]+)\*\*|(https?:\/\/[^\s)]+)/g;
   const nodes: React.ReactNode[] = [];
   let lastIndex = 0;
   let match: RegExpExecArray | null;
@@ -107,17 +108,30 @@ const renderInlineMarkdown = (text: string, keyPrefix: string) => {
         />,
       );
     } else if (match[3] && match[4]) {
-      nodes.push(
-        <a
-          key={key}
-          href={match[4]}
-          target="_blank"
-          rel="noreferrer"
-          className="text-teal-700 underline underline-offset-2 break-all hover:text-teal-900"
-        >
-          {match[3]}
-        </a>,
-      );
+      const isInternal = match[4].startsWith('/');
+      if (isInternal) {
+        nodes.push(
+          <Link
+            key={key}
+            href={match[4]}
+            className="text-teal-700 underline underline-offset-2 break-all hover:text-teal-900 font-medium"
+          >
+            {match[3]}
+          </Link>
+        );
+      } else {
+        nodes.push(
+          <a
+            key={key}
+            href={match[4]}
+            target="_blank"
+            rel="noreferrer"
+            className="text-teal-700 underline underline-offset-2 break-all hover:text-teal-900"
+          >
+            {match[3]}
+          </a>
+        );
+      }
     } else if (match[5]) {
       nodes.push(
         <strong key={key} className="font-semibold text-slate-900">
@@ -379,24 +393,48 @@ export default function ClimateCareerGuide() {
       // formData.append("user_id", userId);
       formData.append("message", queryText);
 
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/chatbot`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            accept: "application/json",
-            Authorization: `Bearer ${session?.user?.accessToken || ""}`,
+      try {
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/chatbot`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              accept: "application/json",
+              Authorization: `Bearer ${session?.user?.accessToken || ""}`,
+            },
           },
-        },
-      );
+        );
 
-      console.log("Send message response:", response.data);
+        console.log("Send message response:", response.data);
 
-      if (!response.data.success) {
-        throw new Error(response.data.message || "Failed to send message");
+        if (response.data && response.data.success === false) {
+          if (response.data.requiresSubscription || response.data.message?.includes("limit has been reached")) {
+            throw new Error(JSON.stringify({
+              type: "SUBSCRIPTION_REQUIRED",
+              message: response.data.message
+            }));
+          }
+          throw new Error(response.data.message || "Failed to send message");
+        }
+        return response.data;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        if (
+          error.response?.status === 403 || 
+          error.response?.data?.requiresSubscription || 
+          error.response?.data?.message?.includes("limit has been reached") ||
+          (error instanceof Error && error.message.includes("SUBSCRIPTION_REQUIRED"))
+        ) {
+          if (!(error instanceof Error) || !error.message.includes("SUBSCRIPTION_REQUIRED")) {
+            throw new Error(JSON.stringify({
+              type: "SUBSCRIPTION_REQUIRED",
+              message: error.response?.data?.message || "Your free chatbot limit has been reached."
+            }));
+          }
+        }
+        throw error;
       }
-      return response.data;
     },
     onMutate: async (queryText) => {
       // Add user message immediately
@@ -442,10 +480,21 @@ export default function ClimateCareerGuide() {
     },
     onError: (error) => {
       setIsTyping(false);
-      const errorMessage =
-        error instanceof Error
-          ? error.message
-          : "Sorry, I encountered an error. Please check your connection and try again.";
+      
+      let errorMessage = "Sorry, I encountered an error. Please check your connection and try again.";
+
+      if (error instanceof Error) {
+        try {
+          const parsed = JSON.parse(error.message);
+          if (parsed.type === "SUBSCRIPTION_REQUIRED") {
+            errorMessage = `Oops! ${parsed.message || "Your free chatbot limit has been reached."}\n\nTo continue chatting and unlock unlimited access, please [purchase a subscription to continue](/membership-pricing).`;
+          } else {
+            errorMessage = error.message;
+          }
+        } catch (e) {
+          errorMessage = error.message;
+        }
+      }
 
       setMessages((prev) => [
         ...prev,

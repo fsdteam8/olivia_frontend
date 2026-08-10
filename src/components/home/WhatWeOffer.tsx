@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
+import Link from "next/link";
 
 const offers = [
   {
@@ -9,6 +10,7 @@ const offers = [
       "Explore climate careers, opportunities, and curated resources designed to support your growth and impact.",
     image:
       "/whatweoffer1.jpg", // Meeting/Collaboration
+      link:"/find-your-opportunity"
   },
   {
     title: "Events & Networking",
@@ -16,13 +18,15 @@ const offers = [
       "Join events, connect with like-minded individuals, and grow your network in the climate space.",
     image:
       "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop", // Conference/Audience
-  },
+    link:"/event"
+    },
   {
     title: "Community & Support",
     description:
       "Access a trusted network of peers, mentors, and support systems built for climate impact.",
     image:
       "/whatweoffer3.jpg", // Volunteer/Outdoor event
+    link:"/membership",
   },
 ];
 
@@ -38,7 +42,8 @@ export const WhatWeOffer = () => {
         {/* Offers Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {offers.map((offer, index) => (
-            <Card
+           <Link href={offer.link} key={index}>
+          <Card
               key={index}
               className="overflow-hidden py-0 border-none shadow-sm hover:shadow-xl transition-all duration-300 rounded-[20px]"
             >
@@ -61,6 +66,7 @@ export const WhatWeOffer = () => {
                 </p>
               </CardContent>
             </Card>
+            </Link>
           ))}
         </div>
       </div>

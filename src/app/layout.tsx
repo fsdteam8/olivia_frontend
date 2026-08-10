@@ -27,9 +27,22 @@ const archivo = Archivo_Black({
 });
 
 export const metadata: Metadata = {
-  title: "Actonclimate",
+  title: "Acton Climate",
   description:
-    "Design amazing digital experiences that create more happy in the world.",
+    "Acton Climate connects people with climate action opportunities, sustainability initiatives, environmental projects, grants, fellowships, jobs, events, and resources to create a more sustainable future.",
+  keywords: [
+    "Acton Climate",
+    "climate action",
+    "climate change",
+    "sustainability",
+    "environmental sustainability",
+    "climate opportunities",
+    "climate jobs",
+    "climate grants",
+    "climate fellowships",
+    "climate events",
+    "environmental projects",
+  ],
   icons: {
     icon: "/logo.png",
   },
