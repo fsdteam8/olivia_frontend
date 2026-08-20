@@ -17,14 +17,15 @@ const AllMentors = () => {
           bgImage="/mentors-all.jpg"
           subtitle="Connect with experienced professionals across climate sectors who are ready to guide, support, and inspire your journey."
           title="Find the Right Mentor or Coach"
-          isHide={true}
+          buttonTitle="Apply Now"
+          setOpen={setIsModalOpen}
         />
       </div>
 
       <MentorsGallery />
 
       <div>
-        <ClimateCareerGuide />
+        {/* <ClimateCareerGuide /> */}
         <PageHero
           bgImage="/apply-mentor.jpg"
           subtitle="Join our growing roster of climate leaders and help guide the next generation of changemakers."
