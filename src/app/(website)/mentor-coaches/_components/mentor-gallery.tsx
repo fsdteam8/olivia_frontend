@@ -26,6 +26,9 @@ export const MentorsGallery = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [typeFilter, setTypeFilter] = useState("");
+  const [roleFunction, setRoleFunction] = useState("");
+  const [industry, setIndustry] = useState("");
   const [page, setPage] = useState(1);
   const limit = 8; // Card limit per page
 
@@ -38,13 +41,29 @@ export const MentorsGallery = () => {
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
-  // TanStack Query with searchTerm and pagination
+  // Fetch filter options dynamically
+  const { data: filterOptionsRes } = useQuery({
+    queryKey: ["mentor-filter-options"],
+    queryFn: async () => {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/mentors-coaches/filters`,
+      );
+      if (!response.ok) return { roleFunctions: [], industries: [] };
+      const res = await response.json();
+      return res.data || { roleFunctions: [], industries: [] };
+    },
+  });
+
+  const availableRoleFunctions: string[] = filterOptionsRes?.roleFunctions || [];
+  const availableIndustries: string[] = filterOptionsRes?.industries || [];
+
+  // TanStack Query with searchTerm, type, filters, and pagination
   const {
     data: apiResponse,
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["mentors", debouncedSearch, page],
+    queryKey: ["mentors", debouncedSearch, typeFilter, roleFunction, industry, page],
     queryFn: async () => {
       const url = new URL(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/mentors-coaches`,
@@ -53,6 +72,15 @@ export const MentorsGallery = () => {
       url.searchParams.append("limit", limit.toString());
       if (debouncedSearch) {
         url.searchParams.append("searchTerm", debouncedSearch);
+      }
+      if (typeFilter) {
+        url.searchParams.append("type", typeFilter);
+      }
+      if (roleFunction) {
+        url.searchParams.append("roleFunction", roleFunction);
+      }
+      if (industry) {
+        url.searchParams.append("industry", industry);
       }
 
       const response = await fetch(url.toString());
@@ -67,7 +95,7 @@ export const MentorsGallery = () => {
   return (
     <section className="py-12">
       <div className="container">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 gap-4">
           <div>
             <h2 className="text-4xl text-[#064E4B] mb-2">
               Meet Our Mentors & Coaches
@@ -88,7 +116,7 @@ export const MentorsGallery = () => {
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <Button className="bg-[#064E4B] hover:bg-[#043331] text-white rounded-full px-6 h-8 text-xs  transition-all">
+                <Button className="bg-[#064E4B] hover:bg-[#043331] text-white rounded-full px-6 h-8 text-xs transition-all">
                   Search
                 </Button>
               </div>
@@ -102,6 +130,88 @@ export const MentorsGallery = () => {
             </Link>
           )}
         </div>
+
+        {/* Complete Dropdown & Filter Bar */}
+        {isAllPage && (
+          <div className="flex flex-wrap items-center gap-6 mb-8 p-4 bg-white rounded-xl border border-[#E2E8F0]">
+            <div className="flex flex-col gap-1 min-w-[160px] flex-1 sm:flex-initial">
+              <label className="text-xs font-semibold text-[#1A2326]">
+                Type:
+              </label>
+              <select
+                value={typeFilter}
+                onChange={(e) => {
+                  setTypeFilter(e.target.value);
+                  setPage(1);
+                }}
+                className="w-full border border-[#CBD5E1] rounded-lg px-3 py-2 text-sm text-[#334155] bg-white focus:outline-none focus:ring-2 focus:ring-[#064E4B]/20 focus:border-[#064E4B] cursor-pointer"
+              >
+                <option value="">All Types</option>
+                <option value="mentor">Mentor</option>
+                <option value="coach">Coach</option>
+              </select>
+            </div>
+
+            <div className="flex flex-col gap-1 min-w-[200px] flex-1 sm:flex-initial">
+              <label className="text-xs font-semibold text-[#1A2326]">
+                Role/function:
+              </label>
+              <select
+                value={roleFunction}
+                onChange={(e) => {
+                  setRoleFunction(e.target.value);
+                  setPage(1);
+                }}
+                className="w-full border border-[#CBD5E1] rounded-lg px-3 py-2 text-sm text-[#334155] bg-white focus:outline-none focus:ring-2 focus:ring-[#064E4B]/20 focus:border-[#064E4B] cursor-pointer"
+              >
+                <option value="">Select a role/function</option>
+                {availableRoleFunctions.map((rf) => (
+                  <option key={rf} value={rf}>
+                    {rf}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="flex flex-col gap-1 min-w-[200px] flex-1 sm:flex-initial">
+              <label className="text-xs font-semibold text-[#1A2326]">
+                Industry:
+              </label>
+              <select
+                value={industry}
+                onChange={(e) => {
+                  setIndustry(e.target.value);
+                  setPage(1);
+                }}
+                className="w-full border border-[#CBD5E1] rounded-lg px-3 py-2 text-sm text-[#334155] bg-white focus:outline-none focus:ring-2 focus:ring-[#064E4B]/20 focus:border-[#064E4B] cursor-pointer"
+              >
+                <option value="">Select an industry</option>
+                {availableIndustries.map((ind) => (
+                  <option key={ind} value={ind}>
+                    {ind}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {(searchTerm || typeFilter || roleFunction || industry) && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchTerm("");
+                  setDebouncedSearch("");
+                  setTypeFilter("");
+                  setRoleFunction("");
+                  setIndustry("");
+                  setPage(1);
+                }}
+                className="text-xs font-medium text-[#064E4B] hover:underline self-end pb-2 ml-auto"
+              >
+                Clear All Filters
+              </button>
+            )}
+          </div>
+        )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {isLoading ? (

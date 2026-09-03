@@ -46,6 +46,8 @@ interface MentorJoinFormInput {
   bio: string;
   about: string;
   type: "mentor" | "coach";
+  roleFunction: string;
+  industry: string;
   skills: string;
   languages: string;
   experienceYears: string;
@@ -159,6 +161,8 @@ export const MentorApplyModal = ({
     formData.append("phone", data.phone || "");
     // formData.append("address", data.address || "");
     formData.append("designation", data.designation || "");
+    formData.append("roleFunction", data.roleFunction || "");
+    formData.append("industry", data.industry || "");
     formData.append("linkedin", data.linkedin || "");
     formData.append("website", data.website || "");
 
@@ -328,6 +332,25 @@ export const MentorApplyModal = ({
                   type="number"
                   {...register("experienceYears", { required: true })}
                   placeholder="e.g., 5"
+                  className="bg-white"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <Label className="text-xs ">Role/function</Label>
+                <Input
+                  {...register("roleFunction")}
+                  placeholder="e.g., Software Engineer"
+                  className="bg-white"
+                />
+              </div>
+              <div className="space-y-1">
+                <Label className="text-xs ">Industry</Label>
+                <Input
+                  {...register("industry")}
+                  placeholder="e.g., Technology"
                   className="bg-white"
                 />
               </div>
