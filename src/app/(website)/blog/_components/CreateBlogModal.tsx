@@ -111,6 +111,7 @@ interface RichEditorProps {
   onImageFilesChange: (files: File[]) => void;
 }
 
+
 const RichTextEditor = ({ onChange, onImageFilesChange }: RichEditorProps) => {
   const editorRef = useRef<HTMLDivElement>(null);
   const imageFilesRef = useRef<File[]>([]);
@@ -417,7 +418,7 @@ const CreateBlogModal = ({ isOpen, setOpen }: Props) => {
                     <SelectItem value="Climate Careers">Climate Careers</SelectItem>
                     <SelectItem value="Research">Research</SelectItem>
                     <SelectItem value="Toolkit">Toolkit</SelectItem>
-                    <SelectItem value="Renewable Energy">Renewable Energy</SelectItem>
+                    <SelectItem value="Community">Community</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

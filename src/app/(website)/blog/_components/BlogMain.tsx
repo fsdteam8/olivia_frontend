@@ -14,7 +14,7 @@ const BlogMain = () => {
       <PageHero
         setOpen={setIsCreateBlogOpen}
         bgImage="/blog.jpg"
-        subtitle="Transforming Workplaces with End-to-End IWMS Solutions Like Consulting, Implementation, Integration, and Support All in One Place"
+        subtitle="Explore insights, ideas, and stories on climate action, careers, innovation, and the people and organizations working to create a more sustainable future."
         title="Our Blog"
         buttonTitle="Submit a Blog for Us"
       />

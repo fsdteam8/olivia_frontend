@@ -176,50 +176,90 @@ const ComparePlans = () => {
 
   const tableData = [
     {
-      feature: "Community Access",
-      nonMember: "Limited",
-      beginner: "Full",
-      monthly: "Full",
-      yearly: "Full",
+      feature: "Price",
+      explore: "$4/month",
+      climateCareer: "$12/month",
+      climateCommitment: "$110/year",
+      foundingMember: "$60/year",
+      isPrice: true,
     },
     {
-      feature: "Resources",
-      nonMember: "Basic",
-      beginner: "Standard",
-      monthly: "Premium",
-      yearly: "Premium",
+      feature: "Best for",
+      explore: "Exploring & connecting",
+      climateCareer: "Building your career",
+      climateCommitment: "Long-term engagement",
+      foundingMember: "Early supporters",
+      isBestFor: true,
     },
     {
-      feature: "Events",
-      nonMember: "Paid",
-      beginner: "10% Off",
-      monthly: "Free",
-      yearly: "Free",
-      highlight: true,
+      feature: "Act on Climate community",
+      explore: "✓",
+      climateCareer: "✓",
+      climateCommitment: "✓",
+      foundingMember: "✓",
     },
     {
-      feature: "Courses",
-      nonMember: "Full Price",
-      beginner: "10% Off",
-      monthly: "Free",
-      yearly: "Included",
-      highlight: true,
+      feature: "Climate resources",
+      explore: "✓",
+      climateCareer: "✓",
+      climateCommitment: "✓",
+      foundingMember: "✓",
     },
     {
-      feature: "Career Services",
-      nonMember: "Full Price",
-      beginner: "10% Off",
-      monthly: "Free",
-      yearly: "Priority",
-      highlight: true,
+      feature: "Jobs & opportunities",
+      explore: "Basic access",
+      climateCareer: "Priority access",
+      climateCommitment: "Priority access",
+      foundingMember: "Priority access",
     },
     {
-      feature: "AI Chatbot",
-      nonMember: "Full Price",
-      beginner: "10% Off",
-      monthly: "Free",
-      yearly: "Unlimited",
-      highlight: true,
+      feature: "Discover climate courses",
+      explore: "✓",
+      climateCareer: "✓",
+      climateCommitment: "✓",
+      foundingMember: "✓",
+    },
+    {
+      feature: "Paid courses",
+      explore: "Available separately",
+      climateCareer: "Available separately",
+      climateCommitment: "Available separately",
+      foundingMember: "Available separately",
+    },
+    {
+      feature: "Events & workshops",
+      explore: "Member access / some paid",
+      climateCareer: "Selected included",
+      climateCommitment: "Selected included",
+      foundingMember: "Selected included",
+    },
+    {
+      feature: "AI Opportunity Assistant",
+      explore: "Limited",
+      climateCareer: "Unlimited",
+      climateCommitment: "Unlimited",
+      foundingMember: "Unlimited",
+    },
+    {
+      feature: "Mentorship",
+      explore: "Access to opportunities",
+      climateCareer: "Priority matching",
+      climateCommitment: "Priority matching",
+      foundingMember: "Priority matching",
+    },
+    {
+      feature: "Career resources",
+      explore: "—",
+      climateCareer: "✓",
+      climateCommitment: "✓",
+      foundingMember: "✓",
+    },
+    {
+      feature: "Founding recognition",
+      explore: "—",
+      climateCareer: "—",
+      climateCommitment: "—",
+      foundingMember: "✓",
     },
   ];
 
@@ -238,16 +278,16 @@ const ComparePlans = () => {
                   Feature
                 </th>
                 <th className="p-6 text-xl font-bold text-[#0a3d3d] text-center">
-                  Non-Member
+                  Explore
                 </th>
                 <th className="p-6 text-xl font-bold text-[#0a3d3d] text-center">
-                  Beginner
+                  Climate Career
                 </th>
                 <th className="p-6 text-xl font-bold text-[#0a3d3d] text-center">
-                  Monthly
+                  Climate Commitment
                 </th>
                 <th className="p-6 text-xl font-bold text-[#0a3d3d] text-center">
-                  Yearly
+                  Founding Member
                 </th>
               </tr>
             </thead>
@@ -257,20 +297,42 @@ const ComparePlans = () => {
                   key={index}
                   className="border-t border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors"
                 >
-                  <td className="p-5 font-medium text-slate-700">
+                  <td
+                    className={`p-5 ${
+                      row.isPrice || row.isBestFor
+                        ? "font-bold text-[#0a3d3d]"
+                        : "font-medium text-slate-700"
+                    }`}
+                  >
                     {row.feature}
                   </td>
-                  <td className="p-5 text-center">{row.nonMember}</td>
-                  <td className="p-5 text-center">{row.beginner}</td>
                   <td
-                    className={`p-5 text-center ${row.highlight ? "text-emerald-700 font-semibold" : ""}`}
+                    className={`p-5 text-center ${
+                      row.isPrice ? "font-bold text-[#0a3d3d]" : ""
+                    }`}
                   >
-                    {row.monthly}
+                    {row.explore}
                   </td>
                   <td
-                    className={`p-5 text-center ${row.highlight ? "text-[#1b4332] font-bold" : ""}`}
+                    className={`p-5 text-center ${
+                      row.isPrice ? "font-bold text-[#0a3d3d]" : ""
+                    }`}
                   >
-                    {row.yearly}
+                    {row.climateCareer}
+                  </td>
+                  <td
+                    className={`p-5 text-center ${
+                      row.isPrice ? "font-bold text-[#0a3d3d]" : ""
+                    }`}
+                  >
+                    {row.climateCommitment}
+                  </td>
+                  <td
+                    className={`p-5 text-center ${
+                      row.isPrice ? "font-bold text-[#0a3d3d]" : ""
+                    }`}
+                  >
+                    {row.foundingMember}
                   </td>
                 </tr>
               ))}

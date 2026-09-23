@@ -121,7 +121,7 @@ const PricingCards = () => {
 
   return (
     <section id="pricing" className="bg-[#eef4f5] py-20">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 items-stretch">
         {subscriptionPlans?.map((plan: PricingPlan, index: number) => (
           <div
             key={plan._id || index}

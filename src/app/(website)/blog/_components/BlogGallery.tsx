@@ -182,7 +182,7 @@ const BlogGallery = () => {
     "Climate Careers",
     "Research",
     "Toolkit",
-    "Renewable Energy",
+    "Community",
   ];
 
   const [activeCategory, setActiveCategory] = useState("View All Posts");

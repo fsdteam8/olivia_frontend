@@ -15,7 +15,7 @@ const ClimateJourney = () => {
       <div className="mt-16 lg:mt-20">
         <PricingCards />
       </div>
-      <PricingCTA />
+      {/* <PricingCTA /> */}
       <HowItWorksSecondary />
       <ComparePlans />
 
