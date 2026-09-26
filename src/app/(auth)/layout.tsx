@@ -11,7 +11,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         backgroundBlendMode: "overlay",
         backgroundAttachment: "fixed",
       }}
-      className="min-h-screen flex items-center justify-center lg:justify-left"
+      className="min-h-screen w-full flex items-center justify-center py-8 px-4 sm:px-6"
     >
       {children}
     </div>

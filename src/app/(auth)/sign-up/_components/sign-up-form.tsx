@@ -16,7 +16,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { useState } from "react";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2, User, GraduationCap, CheckCircle2 } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -47,6 +47,7 @@ type FormType = z.infer<typeof formSchema>;
 const SignUpForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [accountType, setAccountType] = useState<"user" | "education_partner">("user");
   const router = useRouter();
 
   const form = useForm<FormType>({
@@ -61,103 +62,130 @@ const SignUpForm = () => {
     },
   });
 
-//   const { mutate, isPending } = useMutation({
-//     mutationFn: async (values: FormType) => {
-//       const res = await fetch(
-//         `${process.env.NEXT_PUBLIC_BACKEND_URL}/user/register`,
-//         {
-//           method: "POST",
-//           headers: { "Content-Type": "application/json" },
-//           body: JSON.stringify({
-//             firstName: values.firstName,
-//             lastName: values.lastName,
-//             email: values.email,
-//             password: values.password,
-//           }),
-//         },
-//       );
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (values: FormType) => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/user/register`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            firstName: values.firstName,
+            lastName: values.lastName,
+            email: values.email,
+            password: values.password,
+          }),
+        },
+      );
 
-//       const data = await res.json();
-//  console.log(data)
-//       if (!res.ok) throw new Error(data?.message || "Registration failed");
-//       return data;
-//     },
-//     onSuccess: () => {
+      const data = await res.json();
 
-//       toast.success("Account created successfully!");
-//       router.push("/survey");
-//     },
-//     onError: (error) => {
-//       toast.error(error.message);
-//     },
-//   });
+      if (!res.ok) {
+        throw new Error(data?.message || "Registration failed");
+      }
 
+      return {
+        response: data,
+        values,
+      };
+    },
 
-const { mutate, isPending } = useMutation({
-  mutationFn: async (values: FormType) => {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/user/register`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          firstName: values.firstName,
-          lastName: values.lastName,
-          email: values.email,
-          password: values.password,
-        }),
-      },
-    );
+    onSuccess: async ({ values }) => {
+      toast.success("Account created successfully!");
 
-    const data = await res.json();
+      // AUTO LOGIN
+      const res = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
+      });
 
-    if (!res.ok) {
-      throw new Error(data?.message || "Registration failed");
-    }
+      if (res?.error) {
+        toast.error(res.error);
+        return;
+      }
 
-    return {
-      response: data,
-      values,
-    };
-  },
+      // Redirect based on selected account type
+      if (accountType === "education_partner") {
+        window.location.href = "/survey/education-partner";
+      } else {
+        window.location.href = "/survey";
+      }
+    },
 
-  onSuccess: async ({ values }) => {
-    toast.success("Account created successfully!");
-
-    // AUTO LOGIN
-    const res = await signIn("credentials", {
-      email: values.email,
-      password: values.password,
-      redirect: false,
-    });
-
-    if (res?.error) {
-      toast.error(res.error);
-      return;
-    }
-
-   window.location.href = "/survey";
-  },
-
-  onError: (error) => {
-    toast.error(error.message);
-  },
-});
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
 
   const onSubmit = (values: FormType) => {
     mutate(values);
   };
 
   return (
-    <div className="lg:max-w-[540px] w-full bg-white rounded-[24px] p-8 md:p-10 shadow-2xl mx-4">
+    <div className="lg:max-w-[580px] w-full bg-white rounded-[24px] p-8 md:p-10 shadow-2xl mx-4">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-[28px] text-[#053535] leading-tight">
+      <div className="mb-6">
+        <h1 className="text-[28px] text-[#053535] leading-tight font-bold">
           Create your Account
         </h1>
-        <p className="text-[#6B9096] text-[14px] mt-2">
-          Join the premium ticketing experience.
+        <p className="text-[#6B9096] text-[14px] mt-1">
+          Select account type and complete your registration details.
         </p>
+      </div>
+
+      {/* Account Type Selection Step */}
+      <div className="mb-6">
+        <label className="text-[#053535] text-sm font-semibold mb-2 block">
+          Registration Type <span className="text-red-500">*</span>
+        </label>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {/* General User Option */}
+          <div
+            onClick={() => setAccountType("user")}
+            className={`cursor-pointer rounded-xl p-4 border-2 transition-all relative flex flex-col justify-between ${
+              accountType === "user"
+                ? "border-[#053535] bg-[#E6F4F1] shadow-sm"
+                : "border-gray-100 hover:border-gray-200 bg-white"
+            }`}
+          >
+            {accountType === "user" && (
+              <CheckCircle2 className="w-5 h-5 text-[#053535] absolute top-3 right-3" />
+            )}
+            <div className="w-10 h-10 rounded-lg bg-[#053535]/10 flex items-center justify-center text-[#053535] mb-2">
+              <User className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="font-bold text-[#053535] text-sm">General User</h3>
+              <p className="text-xs text-[#6B9096] mt-0.5 leading-snug">
+                Join to explore climate courses & content.
+              </p>
+            </div>
+          </div>
+
+          {/* Education Partner Option */}
+          <div
+            onClick={() => setAccountType("education_partner")}
+            className={`cursor-pointer rounded-xl p-4 border-2 transition-all relative flex flex-col justify-between ${
+              accountType === "education_partner"
+                ? "border-[#053535] bg-[#E6F4F1] shadow-sm"
+                : "border-gray-100 hover:border-gray-200 bg-white"
+            }`}
+          >
+            {accountType === "education_partner" && (
+              <CheckCircle2 className="w-5 h-5 text-[#053535] absolute top-3 right-3" />
+            )}
+            <div className="w-10 h-10 rounded-lg bg-[#053535]/10 flex items-center justify-center text-[#053535] mb-2">
+              <GraduationCap className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="font-bold text-[#053535] text-sm">Education Partner</h3>
+              <p className="text-xs text-[#6B9096] mt-0.5 leading-snug">
+                Join as an institution to offer climate programs.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <Form {...form}>
@@ -320,30 +348,21 @@ const { mutate, isPending } = useMutation({
             type="submit"
             className="h-12 w-full bg-[#053535] hover:bg-[#042a2a] text-white rounded-lg text-base font-semibold transition-all"
           >
-            {isPending ? <Loader2 className="animate-spin" /> : "Sign Up"}
+            {isPending ? (
+              <Loader2 className="animate-spin" />
+            ) : accountType === "education_partner" ? (
+              "Continue to Partner Survey"
+            ) : (
+              "Sign Up"
+            )}
           </Button>
         </form>
       </Form>
 
-      {/* Divider */}
-      {/* <div className="relative my-6">
-        <div className="absolute inset-0 flex items-center"><span className="w-full border-t border-gray-100"></span></div>
-        <div className="relative flex justify-center text-[12px]"><span className="bg-white px-3 text-gray-400">Or continue with email</span></div>
-      </div> */}
-
-      {/* Social Grid */}
-      {/* <div className="grid grid-cols-4 gap-3 mb-8">
-        {["google", "facebook", "linkedin", "apple"].map((social) => (
-          <Button key={social} variant="outline" className="h-12 w-full rounded-lg border-gray-100 p-0 hover:bg-gray-50 flex items-center justify-center">
-            <Image src={`/icons/${social}.svg`} width={20} height={20} alt={social} />
-          </Button>
-        ))}
-      </div> */}
-
       <div className="text-center mt-3">
         <p className="text-[14px] text-gray-400">
           Already a Member?{" "}
-          <Link href="/login" className="text-[#053535]  hover:underline ml-1">
+          <Link href="/login" className="text-[#053535] hover:underline ml-1 font-semibold">
             Sign In
           </Link>
         </p>

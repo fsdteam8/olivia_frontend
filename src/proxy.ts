@@ -44,10 +44,12 @@ export async function proxy(request: NextRequest) {
   const isAdmin = userRole === "ADMIN";
   const isGuest = !token;
 
-  // 🚫 Block guests from /dashboard OR /survey
+  // 🚫 Block guests from /dashboard, /partner-dashboard OR /survey
   if (
     isGuest &&
-    (pathname.startsWith("/dashboard") || pathname.startsWith("/survey"))
+    (pathname.startsWith("/dashboard") ||
+      pathname.startsWith("/partner-dashboard") ||
+      pathname.startsWith("/survey"))
   ) {
     const callbackUrl = encodeURIComponent(pathname);
     return NextResponse.redirect(
