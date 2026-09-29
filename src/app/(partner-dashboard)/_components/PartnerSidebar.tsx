@@ -14,6 +14,7 @@ import {
   ExternalLink,
   ChevronRight,
   ShieldCheck,
+  BookOpen,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -27,6 +28,11 @@ const NAV_ITEMS = [
     title: "Dashboard Overview",
     href: "/partner-dashboard",
     icon: LayoutDashboard,
+  },
+  {
+    title: "My Courses",
+    href: "/partner-dashboard/courses",
+    icon: BookOpen,
   },
   {
     title: "Partner Settings",
