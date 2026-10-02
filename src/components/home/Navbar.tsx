@@ -33,6 +33,7 @@ export const Navbar = () => {
 
   // ড্রপডাউন বা সাব-লিংকসমূহ
   const servicesLinks = [
+    { name: "Meet Climate People", href: "/meet-climate-people" },
     { name: "Support Our Work", href: "/support-our-work" },
     { name: "Blogs", href: "/blog" },
     { name: "Mentors & Coaches", href: "/mentor-coaches/all" },

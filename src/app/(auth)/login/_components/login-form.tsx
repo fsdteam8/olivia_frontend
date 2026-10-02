@@ -57,7 +57,22 @@ const LoginForm = () => {
         toast.error(res.error);
         return;
       }
-      router.push("/");
+      const session = await getSession();
+      const callbackUrl = new URLSearchParams(window.location.search).get(
+        "callbackUrl",
+      );
+      const safeCallback =
+        callbackUrl?.startsWith("/") &&
+        !callbackUrl.startsWith("//") &&
+        !callbackUrl.includes("\\")
+          ? callbackUrl
+          : null;
+      router.push(
+        safeCallback ||
+          (session?.user?.role?.toUpperCase() === "USER"
+            ? "/user-dashboard"
+            : "/"),
+      );
       toast.success("Login successful!");
     } catch (error) {
       console.error(`login error : ${error}`);
