@@ -49,6 +49,7 @@ export async function proxy(request: NextRequest) {
     isGuest &&
     (pathname.startsWith("/dashboard") ||
       pathname.startsWith("/partner-dashboard") ||
+      pathname.startsWith("/user-dashboard") ||
       pathname.startsWith("/survey"))
   ) {
     const callbackUrl = encodeURIComponent(pathname);
