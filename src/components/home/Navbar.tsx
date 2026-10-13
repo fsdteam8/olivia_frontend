@@ -6,7 +6,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
-import { LogOut, Menu, X, ChevronDown } from "lucide-react";
+import { LogOut, Menu, X, ChevronDown, UserRound } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export const Navbar = () => {
   const { data: session } = useSession();
@@ -21,6 +27,15 @@ export const Navbar = () => {
     useState(false);
 
   const isLoggedIn = !!session;
+  const role = session?.user?.role?.toUpperCase();
+  const dashboardHref =
+    role === "MEMBER"
+      ? "/partner-dashboard"
+      : ["NON-MEMBER", "USER", "YEARLY", "MONTHLY", "BEGINNER"].includes(
+            role ?? "",
+          )
+        ? "/user-dashboard"
+        : null;
 
   // প্রধান লিংকসমূহ
   const mainLinks = [
@@ -175,6 +190,24 @@ export const Navbar = () => {
         <div className="hidden md:flex items-center gap-3">
           {isLoggedIn ? (
             <>
+              {dashboardHref && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button
+                      type="button"
+                      aria-label="Open user menu"
+                      className="rounded-full p-2 text-[#0D3B3F] hover:bg-gray-100"
+                    >
+                      <UserRound size={20} />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem asChild>
+                      <Link href={dashboardHref}>Dashboard</Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
               <Link href="/survey">
                 <Button className="bg-[#0D3B3F] hover:bg-[#164e53] text-white rounded-md px-6 text-xs">
                   Join Community
@@ -207,12 +240,35 @@ export const Navbar = () => {
         </div>
 
         {/* Mobile Menu Button */}
-        <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden p-2 rounded-md hover:bg-gray-100 transition-colors"
-        >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="md:hidden flex items-center gap-2">
+          {isLoggedIn && dashboardHref && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  type="button"
+                  aria-label="Open user menu"
+                  className="rounded-full p-2 text-[#0D3B3F] hover:bg-gray-100"
+                >
+                  <UserRound size={22} />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem asChild>
+                  <Link href={dashboardHref} onClick={() => setIsMobileMenuOpen(false)}>
+                    Dashboard
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="p-2 rounded-md hover:bg-gray-100 transition-colors"
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile Menu */}
