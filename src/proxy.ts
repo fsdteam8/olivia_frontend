@@ -63,6 +63,21 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
+  if (
+    userRole === "NON-MEMBER" &&
+    (pathname === "/partner-dashboard" ||
+      pathname.startsWith("/partner-dashboard/"))
+  ) {
+    return NextResponse.redirect(new URL("/user-dashboard", request.url));
+  }
+
+  if (
+    userRole === "MEMBER" &&
+    (pathname === "/user-dashboard" || pathname.startsWith("/user-dashboard/"))
+  ) {
+    return NextResponse.redirect(new URL("/partner-dashboard", request.url));
+  }
+
   return NextResponse.next();
 }
 
