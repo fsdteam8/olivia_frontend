@@ -10,6 +10,23 @@ export default function EducationPartnerSuccessModal() {
   const { data: session } = useSession();
 
   useEffect(() => {
+    // Immediately verify Stripe session if session_id query param exists
+    const sessionId =
+      typeof window !== "undefined"
+        ? new URLSearchParams(window.location.search).get("session_id")
+        : null;
+
+    if (sessionId) {
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+      fetch(`${backendUrl}/education-partner/membership/verify-session`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionId }),
+      }).catch((err) => {
+        console.error("Session verification error:", err);
+      });
+    }
+
     // Automatically sign out session if user is logged in
     if (session) {
       signOut({ redirect: false });
