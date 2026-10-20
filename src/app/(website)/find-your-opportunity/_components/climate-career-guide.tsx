@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Mail, Send, Sun, User, Trash2 } from "lucide-react";
+import { Mail, Send, Sun, User, Trash2, ExternalLink, Building2, MapPin, CheckCircle2, Sparkles } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -182,14 +182,28 @@ const FormattedAssistantMessage = ({ text }: { text: string }) => (
         );
       }
 
-      if (line.trimStart().startsWith("- ")) {
+      if (line.trimStart().startsWith("### ")) {
+        return (
+          <h4
+            key={`h3-${index}`}
+            className="pt-2 text-[15px] font-bold text-slate-900"
+          >
+            {line.trimStart().slice(4)}
+          </h4>
+        );
+      }
+
+      if (line.trimStart().startsWith("- ") || line.trimStart().startsWith("• ")) {
+        const itemText = line.trimStart().startsWith("- ")
+          ? line.trimStart().slice(2)
+          : line.trimStart().slice(2);
         return (
           <div key={`item-${index}`} className="flex gap-2 break-words">
             <span aria-hidden="true" className="text-teal-700">
               •
             </span>
             <span>
-              {renderInlineMarkdown(line.trimStart().slice(2), `line-${index}`)}
+              {renderInlineMarkdown(itemText, `line-${index}`)}
             </span>
           </div>
         );
@@ -237,15 +251,88 @@ const TypingText = ({
   );
 };
 
+export interface PartnerOpportunitySuggestion {
+  id: string;
+  title: string;
+  organizationName?: string;
+  opportunityType?: string;
+  location?: string;
+  shortDescription?: string;
+  officialLink: string;
+}
+
+const PartnerOpportunityCard = ({
+  opportunity,
+}: {
+  opportunity: PartnerOpportunitySuggestion;
+}) => {
+  return (
+    <div className="rounded-xl border border-teal-100 bg-[#f7faf9] p-3.5 sm:p-4 text-left transition-all hover:border-teal-300 hover:shadow-xs space-y-2">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <span className="inline-flex items-center gap-1 rounded-full bg-teal-50 px-2.5 py-0.5 text-[11px] font-semibold text-teal-800 border border-teal-200/60">
+          <Sparkles className="h-3 w-3 text-teal-600" />
+          {opportunity.opportunityType || "Opportunity"}
+        </span>
+        <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-700">
+          <CheckCircle2 className="h-3 w-3" />
+          Verified Partner
+        </span>
+      </div>
+
+      <div>
+        <h4 className="text-[15px] font-bold text-slate-900 leading-snug">
+          {opportunity.title}
+        </h4>
+        <div className="mt-1 flex flex-wrap items-center gap-3 text-xs text-slate-500">
+          {opportunity.organizationName && (
+            <span className="inline-flex items-center gap-1">
+              <Building2 className="h-3.5 w-3.5 text-slate-400" />
+              {opportunity.organizationName}
+            </span>
+          )}
+          {opportunity.location && (
+            <span className="inline-flex items-center gap-1">
+              <MapPin className="h-3.5 w-3.5 text-slate-400" />
+              {opportunity.location}
+            </span>
+          )}
+        </div>
+      </div>
+
+      {opportunity.shortDescription && (
+        <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed">
+          {opportunity.shortDescription}
+        </p>
+      )}
+
+      {opportunity.officialLink && (
+        <div className="pt-1">
+          <a
+            href={opportunity.officialLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 rounded-lg bg-[#004D4D] px-3.5 py-1.5 text-xs font-semibold text-white shadow-xs transition hover:bg-[#003838]"
+          >
+            Apply now
+            <ExternalLink className="h-3 w-3" />
+          </a>
+        </div>
+      )}
+    </div>
+  );
+};
+
 // Message component with typing animation
 const Message = ({
   role,
   content,
+  partnerOpportunities,
   isTyping = false,
   onTypingComplete,
 }: {
   role: "user" | "assistant";
   content: string;
+  partnerOpportunities?: PartnerOpportunitySuggestion[];
   isTyping?: boolean;
   onTypingComplete?: () => void;
 }) => {
@@ -282,6 +369,14 @@ const Message = ({
             {content}
           </p>
         )}
+
+        {partnerOpportunities && partnerOpportunities.length > 0 && (
+          <div className="mt-3.5 space-y-2.5 pt-3 border-t border-slate-100">
+            {partnerOpportunities.map((opp) => (
+              <PartnerOpportunityCard key={opp.id} opportunity={opp} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -295,7 +390,14 @@ export default function ClimateCareerGuide() {
   const queryClient = useQueryClient();
   const [query, setQuery] = useState("");
   const [messages, setMessages] = useState<
-    Array<{ role: string; content: string }>
+    Array<{
+      role: string;
+      content: string;
+      partnerOpportunities?: PartnerOpportunitySuggestion[];
+    }>
+  >([]);
+  const [currentTypingPartnerOpps, setCurrentTypingPartnerOpps] = useState<
+    PartnerOpportunitySuggestion[]
   >([]);
   const [isTyping, setIsTyping] = useState(false);
   const [currentTypingMessage, setCurrentTypingMessage] = useState<string>("");
@@ -373,7 +475,15 @@ export default function ClimateCareerGuide() {
           }
 
           console.log("Parsed history:", history);
-          setMessages(history);
+          setMessages((prev) => {
+            return history.map((h: any, i: number) => {
+              const existing = prev[i];
+              if (existing?.partnerOpportunities && existing.content === h.content) {
+                return { ...h, partnerOpportunities: existing.partnerOpportunities };
+              }
+              return h;
+            });
+          });
           return history;
         }
         return [];
@@ -443,10 +553,13 @@ export default function ClimateCareerGuide() {
       // Start typing animation for assistant response
       setIsTyping(true);
       setCurrentTypingMessage("");
+      setCurrentTypingPartnerOpps([]);
     },
     onSuccess: (data) => {
-      // Extract answer from response based on your API structure
+      // Extract answer and partner opportunities from response
       let assistantMessage = "";
+      const partnerOpps: PartnerOpportunitySuggestion[] =
+        data.data?.partnerOpportunities || [];
 
       console.log("Processing response data:", data);
 
@@ -476,6 +589,7 @@ export default function ClimateCareerGuide() {
           "I received your message but I'm not sure how to respond. Could you please rephrase?";
       }
 
+      setCurrentTypingPartnerOpps(partnerOpps);
       setCurrentTypingMessage(assistantMessage);
     },
     onError: (error) => {
@@ -579,9 +693,14 @@ export default function ClimateCareerGuide() {
     // Add the completed message to the messages array
     setMessages((prev) => [
       ...prev,
-      { role: "assistant", content: currentTypingMessage },
+      {
+        role: "assistant",
+        content: currentTypingMessage,
+        partnerOpportunities: currentTypingPartnerOpps,
+      },
     ]);
     setCurrentTypingMessage("");
+    setCurrentTypingPartnerOpps([]);
     // Refetch history to sync
     if (userId && userId !== "guest_user") {
       setTimeout(() => {
@@ -767,6 +886,7 @@ export default function ClimateCareerGuide() {
                   key={idx}
                   role={message.role as "user" | "assistant"}
                   content={message.content}
+                  partnerOpportunities={message.partnerOpportunities}
                 />
               ))}
 
@@ -775,6 +895,7 @@ export default function ClimateCareerGuide() {
                 <Message
                   role="assistant"
                   content={currentTypingMessage}
+                  partnerOpportunities={currentTypingPartnerOpps}
                   isTyping={true}
                   onTypingComplete={handleTypingComplete}
                 />
