@@ -3,6 +3,7 @@ import { Inter, Lilita_One, Archivo_Black } from "next/font/google";
 import "./globals.css";
 import MainProviders from "@/Providers/MainProviders";
 import Provider from "@/Providers/Provider";
+import SmoothScrollProvider from "@/Providers/SmoothScrollProvider";
 import { Toaster } from "sonner";
 import NextTopLoader from "nextjs-toploader";
 
@@ -65,7 +66,9 @@ export default function RootLayout({
               easing="ease-in"
               showSpinner={false}
             />
-            <main className="min-h-[calc(100vh-200px)]">{children}</main>
+            <SmoothScrollProvider>
+              <main className="min-h-[calc(100vh-200px)]">{children}</main>
+            </SmoothScrollProvider>
           </Provider>
         </MainProviders>
 
