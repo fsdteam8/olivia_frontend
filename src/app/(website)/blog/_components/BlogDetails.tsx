@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Calendar, User } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 type Blog = {
   _id: string;
@@ -107,7 +108,7 @@ const BlogDetails = () => {
                 <div
                   className="prose prose-sm prose-slate max-w-none text-slate-600 [&_p]:my-4 [&_p]:leading-relaxed"
                   dangerouslySetInnerHTML={{
-                    __html: data?.content || "",
+                    __html: sanitizeHtml(data?.content),
                   }}
                 />
               </header>

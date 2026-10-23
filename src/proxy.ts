@@ -64,7 +64,8 @@ export async function proxy(request: NextRequest) {
   }
 
   if (
-    userRole === "NON-MEMBER" &&
+    userRole !== "MEMBER" &&
+    !isAdmin &&
     (pathname === "/partner-dashboard" ||
       pathname.startsWith("/partner-dashboard/"))
   ) {

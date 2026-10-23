@@ -22,8 +22,13 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { toast } from "sonner";
+import dynamic from "next/dynamic";
 import PartnerCoursesManager from "./courses/_components/PartnerCoursesManager";
-import StripeConnectModal from "../_components/StripeConnectModal";
+
+const StripeConnectModal = dynamic(
+  () => import("../_components/StripeConnectModal"),
+  { ssr: false }
+);
 import { fetchStripeStatus, fetchStripeDashboardLink } from "../_lib/stripeConnect";
 import { StripeConnectStatus } from "./courses/_components/types";
 

@@ -138,6 +138,7 @@ import { useQuery } from "@tanstack/react-query";
 import { MoveRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 interface BlogPost {
   _id: string;
@@ -266,7 +267,7 @@ const BlogCard = ({ post }: { post: BlogPost }) => {
         <p
           className="text-[#5D8AA8] text-xs leading-relaxed mb-6 flex-grow"
           dangerouslySetInnerHTML={{
-            __html: post.content.slice(0, 450) + "...",
+            __html: sanitizeHtml(post.content ? post.content.slice(0, 450) + "..." : ""),
           }}
         />
 

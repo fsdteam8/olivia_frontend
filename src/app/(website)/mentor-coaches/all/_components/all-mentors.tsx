@@ -1,11 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import PageHero from "@/components/home/PageHero";
 import CommunitySection from "@/components/home/CommunitySection";
 import { MentorsGallery } from "../../_components/mentor-gallery";
-import { MentorApplyModal } from "./mentor-apply-modal";
-import ClimateCareerGuide from "@/app/(website)/find-your-opportunity/_components/climate-career-guide";
+
+const MentorApplyModal = dynamic(
+  () => import("./mentor-apply-modal").then((mod) => mod.MentorApplyModal),
+  { ssr: false }
+);
 
 const AllMentors = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

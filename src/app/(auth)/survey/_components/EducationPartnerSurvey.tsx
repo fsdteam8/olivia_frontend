@@ -242,9 +242,10 @@ export default function EducationPartnerSurvey() {
       } else {
         throw new Error("No Stripe checkout URL returned from server.");
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Payment checkout error:", err);
-      toast.error(err?.message || "Failed to initiate payment checkout");
+      const message = err instanceof Error ? err.message : "Failed to initiate payment checkout";
+      toast.error(message);
     } finally {
       setIsSubmitting(false);
     }

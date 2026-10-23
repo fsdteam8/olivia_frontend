@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button";
 import {
   CreditCard,
   CheckCircle2,
-  ExternalLink,
   ShieldCheck,
   AlertTriangle,
   Loader2,
@@ -84,9 +83,10 @@ export default function StripeConnectModal({
       } else {
         throw new Error("No onboarding URL returned from server");
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Stripe onboarding error:", err);
-      toast.error(err.message || "Failed to connect to Stripe. Please try again.");
+      const message = err instanceof Error ? err.message : "Failed to connect to Stripe. Please try again.";
+      toast.error(message);
       setIsLoading(false);
     }
   };
@@ -111,9 +111,10 @@ export default function StripeConnectModal({
       toast.success("Test Mode: ID & SSN verification skipped! Payouts are now active.");
       onSuccess?.();
       onClose();
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Skip error:", err);
-      toast.error(err.message || "Failed to bypass verification");
+      const message = err instanceof Error ? err.message : "Failed to bypass verification";
+      toast.error(message);
     } finally {
       setIsSkipping(false);
     }

@@ -54,9 +54,10 @@ export default function DeleteCourseDialog({
       toast.success(data.message || "Course deleted successfully");
       onDeleted(course._id);
       onClose();
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Delete course error:", err);
-      toast.error(err.message || "Something went wrong while deleting");
+      const message = err instanceof Error ? err.message : "Something went wrong while deleting";
+      toast.error(message);
     } finally {
       setIsDeleting(false);
     }

@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { sanitizeHtml } from "@/lib/sanitize";
 import {
   Pagination,
   PaginationContent,
@@ -287,9 +288,10 @@ const CuratedOpportunities = () => {
                   <p
                     className="text-slate-500 text-[13px] leading-relaxed line-clamp-3 mb-6 flex-grow"
                     dangerouslySetInnerHTML={{
-                      __html:
+                      __html: sanitizeHtml(
                         job.description ||
-                        "Building future-proof solutions for the climate ecosystem through modern technology.",
+                        "Building future-proof solutions for the climate ecosystem through modern technology."
+                      ),
                     }}
                   />
                   <Link

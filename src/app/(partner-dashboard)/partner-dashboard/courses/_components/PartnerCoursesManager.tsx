@@ -7,18 +7,14 @@ import {
   BookOpen,
   Plus,
   Search,
-  Filter,
   Eye,
   Pencil,
   Trash2,
   ExternalLink,
-  Loader2,
   X,
   ChevronLeft,
   ChevronRight,
-  Award,
   Clock,
-  DollarSign,
   GraduationCap,
   RefreshCw,
 } from "lucide-react";
@@ -32,6 +28,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
+import dynamic from "next/dynamic";
 import {
   PartnerCourse,
   PartnerCoursesMeta,
@@ -39,12 +36,23 @@ import {
   FORMAT_OPTIONS,
   StripeConnectStatus,
 } from "./types";
-import AddEditCourseModal from "./AddEditCourseModal";
-import ViewCourseModal from "./ViewCourseModal";
-import DeleteCourseDialog from "./DeleteCourseDialog";
-import StripeConnectModal from "@/app/(partner-dashboard)/_components/StripeConnectModal";
+
+const AddEditCourseModal = dynamic(() => import("./AddEditCourseModal"), {
+  ssr: false,
+});
+const ViewCourseModal = dynamic(() => import("./ViewCourseModal"), {
+  ssr: false,
+});
+const DeleteCourseDialog = dynamic(() => import("./DeleteCourseDialog"), {
+  ssr: false,
+});
+const StripeConnectModal = dynamic(
+  () => import("@/app/(partner-dashboard)/_components/StripeConnectModal"),
+  { ssr: false }
+);
+
 import { fetchStripeStatus, fetchStripeDashboardLink } from "@/app/(partner-dashboard)/_lib/stripeConnect";
-import { CreditCard, AlertTriangle, ShieldCheck, CheckCircle2, Lock } from "lucide-react";
+import { CreditCard, AlertTriangle, CheckCircle2, Lock } from "lucide-react";
 
 interface PartnerCoursesManagerProps {
   showHeader?: boolean;
@@ -103,6 +111,7 @@ export default function PartnerCoursesManager({
 
   useEffect(() => {
     if (session) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       loadStripeStatus();
     }
   }, [session, loadStripeStatus]);
@@ -113,7 +122,7 @@ export default function PartnerCoursesManager({
       const stripeParam = urlParams.get("stripe");
       if (stripeParam === "success" || stripeParam === "return") {
         toast.success("Stripe Connect status updated!");
-        loadStripeStatus();
+        loadStripeStatus();                                                             
       } else if (stripeParam === "refresh") {
         toast.info("Stripe verification can be resumed anytime.");
       }

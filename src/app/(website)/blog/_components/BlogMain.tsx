@@ -1,10 +1,14 @@
 "use client";
 import PageHero from "@/components/home/PageHero";
 import React from "react";
+import dynamic from "next/dynamic";
 import BlogGallery from "./BlogGallery";
 import SubmitBlogBanner from "./SubmitBlogBanner";
 import CommunitySection from "@/components/home/CommunitySection";
-import CreateBlogModal from "./CreateBlogModal";
+
+const CreateBlogModal = dynamic(() => import("./CreateBlogModal"), {
+  ssr: false,
+});
 
 const BlogMain = () => {
   const [isCreateBlogOpen, setIsCreateBlogOpen] = React.useState(false);

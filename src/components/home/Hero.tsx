@@ -1,19 +1,24 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 
 export const Hero = () => {
   return (
     <section className="relative h-[900px] flex items-center justify-center text-center px-4 overflow-hidden">
       {/* Background with Overlay */}
+      <Image
+        src="/hero.jpeg"
+        alt="Act on Climate hero background"
+        fill
+        priority
+        sizes="100vw"
+        quality={85}
+        className="object-cover z-0"
+      />
       <div
-        className="absolute inset-0   bg-cover z-0"
-        style={{ backgroundImage: 'url("/hero.jpeg")' }}
-      >
-        <div
-          className="absolute inset-0"
-          style={{ background: "rgba(0, 0, 0, 0.60)" }}
-        />
-      </div>
+        className="absolute inset-0 z-[1]"
+        style={{ background: "rgba(0, 0, 0, 0.60)" }}
+      />
 
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto text-white">

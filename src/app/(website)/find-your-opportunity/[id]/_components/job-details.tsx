@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { sanitizeHtml } from "@/lib/sanitize";
 // import {
 //   Dialog,
 //   DialogContent,
@@ -225,7 +226,7 @@ const JobDetails = () => {
               <h2 className="text-xl text-[#004D4D] mb-4 ">Job Description</h2>
               <div
                 className="text-slate-600 leading-relaxed prose prose-slate max-w-none"
-                dangerouslySetInnerHTML={{ __html: job.description }}
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(job.description) }}
               />
 
               <h2 className="text-xl text-[#004D4D] mt-8 mb-4 ">
@@ -233,7 +234,7 @@ const JobDetails = () => {
               </h2>
               <div
                 className="text-slate-600 leading-relaxed prose prose-slate max-w-none"
-                dangerouslySetInnerHTML={{ __html: job.responsibility }}
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(job.responsibility) }}
               />
 
               <h2 className="text-xl text-[#004D4D] mt-8 mb-4 ">
@@ -241,7 +242,7 @@ const JobDetails = () => {
               </h2>
               <div
                 className="text-slate-600 leading-relaxed prose prose-slate max-w-none"
-                dangerouslySetInnerHTML={{ __html: job.requirement }}
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(job.requirement) }}
               />
 
               <h2 className="text-xl text-[#004D4D] mt-8 mb-4 ">Core Skills</h2>

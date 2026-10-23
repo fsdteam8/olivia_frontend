@@ -222,6 +222,7 @@ import { Play, Headphones, ArrowRight, FileText } from "lucide-react";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 // ---------------- TYPES ----------------
 
@@ -382,9 +383,11 @@ const ResourceCard = ({ resource }: { resource: MediaItem }) => {
         <p
           className="text-slate-500 text-[13px] leading-relaxed mb-6 line-clamp-3"
           dangerouslySetInnerHTML={{
-            __html:
-              resource.description.slice(0, 200) +
-              (resource.description.length > 200 ? "..." : ""),
+            __html: sanitizeHtml(
+              resource.description
+                ? resource.description.slice(0, 200) + (resource.description.length > 200 ? "..." : "")
+                : ""
+            ),
           }}
         />
       </div>

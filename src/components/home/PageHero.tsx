@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import PrimaryButton from "./PrimaryButton";
 
 const PageHero = ({
@@ -20,15 +21,23 @@ const PageHero = ({
   setOpen?: (open: boolean) => void;
 }) => {
   return (
-    <section
-      className="relative h-[550px] w-full flex items-center justify-center text-center px-4"
-      style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${bgImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      <div className="max-w-4xl mx-auto space-y-6">
+    <section className="relative h-[550px] w-full flex items-center justify-center text-center px-4 overflow-hidden">
+      {bgImage && (
+        <Image
+          src={bgImage}
+          alt={title || "Page hero background"}
+          fill
+          priority
+          sizes="100vw"
+          quality={85}
+          className="object-cover z-0"
+        />
+      )}
+      <div
+        className="absolute inset-0 z-[1]"
+        style={{ background: "rgba(0, 0, 0, 0.60)" }}
+      />
+      <div className="relative z-10 max-w-4xl mx-auto space-y-6">
         {/* Main Heading */}
         <h1 className="text-white text-4xl md:text-5xl hero-font tracking-tight">
           {title}

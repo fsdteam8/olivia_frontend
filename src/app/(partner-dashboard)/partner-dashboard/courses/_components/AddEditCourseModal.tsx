@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -15,16 +17,12 @@ import {
   UploadCloud,
   X,
   Loader2,
-  BookOpen,
-  GraduationCap,
-  Video,
-  User,
+
   Sparkles,
   Clock,
   Calendar,
   DollarSign,
   Link as LinkIcon,
-  CheckCircle2,
 } from "lucide-react";
 import { toast } from "sonner";
 import {

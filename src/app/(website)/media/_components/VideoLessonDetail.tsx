@@ -15,6 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 interface MediaItem {
   _id: string;
@@ -314,7 +315,7 @@ const VideoLessonDetail = () => {
 
             <div
               className="prose prose-sm prose-slate max-w-none text-[#729094] font-medium [&_p]:my-4 [&_p]:leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: data.description || "" }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(data.description) }}
             />
           </div>
         </div>
