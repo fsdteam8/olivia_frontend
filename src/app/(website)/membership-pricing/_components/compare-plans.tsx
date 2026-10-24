@@ -247,13 +247,13 @@ const ComparePlans = () => {
       climateCommitment: "Priority matching",
       foundingMember: "Priority matching",
     },
-    {
-      feature: "Career resources",
-      explore: "—",
-      climateCareer: "✓",
-      climateCommitment: "✓",
-      foundingMember: "✓",
-    },
+    // {
+    //   feature: "Career resources",
+    //   explore: "—",
+    //   climateCareer: "✓",
+    //   climateCommitment: "✓",
+    //   foundingMember: "✓",
+    // },
     {
       feature: "Founding recognition",
       explore: "—",

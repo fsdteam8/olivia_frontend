@@ -20,6 +20,7 @@ import {
   Award,
   Loader2,
   X,
+  CheckCircle2,
 } from "lucide-react";
 import { PartnerCourse, STATUS_CONFIG } from "./types";
 
@@ -232,6 +233,23 @@ export default function ViewCourseModal({
                   </p>
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* Section: Learning Outcomes / What You Will Gain */}
+          {course.learningOutcomes && course.learningOutcomes.length > 0 && (
+            <div className="border border-gray-200 rounded-xl p-5 bg-[#fbfdfd]">
+              <span className="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-3 flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#004242]" /> What You Will Gain / Learning Outcomes
+              </span>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-gray-700">
+                {course.learningOutcomes.map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#008080] shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           )}
 

@@ -13,10 +13,22 @@ import {
   MapPin,
   Search,
   Users,
+  Sparkles,
+  Rocket,
+  MessageSquare,
+  CheckCircle2,
+  ArrowRight,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 // Public endpoints do not require an account or session.
 const publicApi = axios.create({
@@ -45,6 +57,8 @@ export type ClimateProfile = {
   linkedin?: string;
   website?: string;
   portfolio?: string;
+  excitingProjects?: string[];
+  howToConnect?: string;
 };
 function Portrait({
   profile,
@@ -99,6 +113,76 @@ function Loading() {
   );
 }
 
+export function CommunityConnectModal({
+  open,
+  onOpenChange,
+  memberName,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  memberName?: string;
+}) {
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent
+        data-lenis-prevent
+        className="sm:max-w-md p-6 sm:p-7 bg-white rounded-3xl border border-[#D5E6E4] shadow-2xl"
+      >
+        <DialogHeader className="space-y-2 text-center sm:text-left">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E6F4F1] border border-[#BBE3DC] text-[#008080] text-xs font-semibold w-fit mx-auto sm:mx-0">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Act on Climate Member Network</span>
+          </div>
+          <DialogTitle className="text-xl sm:text-2xl font-bold text-[#004242] hero-font">
+            Connect with {memberName || "Community Members"}
+          </DialogTitle>
+          <DialogDescription className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+            Direct 1-on-1 collaboration and messaging are exclusive to verified Act on Climate Members to protect member privacy and foster high-trust connections.
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="my-4 rounded-2xl bg-[#F4F9F8] border border-[#D5E6E4] p-4 space-y-3">
+          <div className="flex items-start gap-2.5 text-xs text-[#053535]">
+            <CheckCircle2 className="w-4 h-4 text-[#008080] shrink-0 mt-0.5" />
+            <span>Direct 1-on-1 messaging in our private Mighty community hub</span>
+          </div>
+          <div className="flex items-start gap-2.5 text-xs text-[#053535]">
+            <CheckCircle2 className="w-4 h-4 text-[#008080] shrink-0 mt-0.5" />
+            <span>Access to weekly virtual networking lounges &amp; masterclasses</span>
+          </div>
+          <div className="flex items-start gap-2.5 text-xs text-[#053535]">
+            <CheckCircle2 className="w-4 h-4 text-[#008080] shrink-0 mt-0.5" />
+            <span>Search &amp; connect with 1,000+ vetted climate leaders</span>
+          </div>
+        </div>
+
+        <div className="space-y-3 pt-2">
+          <Link
+            href="/membership-pricing"
+            onClick={() => onOpenChange(false)}
+            className="w-full block"
+          >
+            <Button className="w-full bg-[#004242] hover:bg-[#053535] text-white py-5 rounded-xl font-semibold text-xs shadow-md flex items-center justify-center gap-2">
+              <span>Unlock Community Membership</span>
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+          </Link>
+          <p className="text-center text-[11px] text-gray-500">
+            Already an active member?{" "}
+            <Link
+              href="/login"
+              onClick={() => onOpenChange(false)}
+              className="font-semibold text-[#004242] underline"
+            >
+              Log in here
+            </Link>
+          </p>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 export function ProfileDirectory() {
   const [search, setSearch] = useState("");
   const [interest, setInterest] = useState("");
@@ -108,6 +192,8 @@ export function ProfileDirectory() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [retry, setRetry] = useState(0);
+  const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
+  const [selectedMemberName, setSelectedMemberName] = useState("");
   useEffect(() => {
     const controller = new AbortController();
     setLoading(true);
@@ -147,14 +233,13 @@ export function ProfileDirectory() {
         <div className="mb-10 max-w-2xl">
           <span className="inline-flex items-center gap-2 rounded-full border border-[#004242]/15 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#004242]">
             <Leaf className="h-4 w-4" />
-            People powering change
+            Act on Climate Member Network
           </span>
-          <h1 className="mt-6 text-4xl font-semibold tracking-tight text-[#004242] sm:text-5xl">
-            Meet the climate community
+          <h1 className="mt-6 text-4xl font-semibold tracking-tight text-[#004242] sm:text-5xl hero-font">
+            Meet the Act on Climate Community
           </h1>
           <p className="mt-5 text-base leading-7 text-gray-600">
-            Discover the people building a better future. Find shared interests,
-            explore their experience, and make your next connection.
+            Discover our vetted global network of sustainability leaders, climate tech innovators, and changemakers. Connect, collaborate, and scale your impact.
           </p>
         </div>
         <form
@@ -298,14 +383,26 @@ export function ProfileDirectory() {
                         <Tags items={profile.skills} />
                       </div>
                     ) : null}
-                    <Link
-                      href={`/meet-climate-people/${encodeURIComponent(profile._id)}`}
-                      aria-label={`View ${profile.name}'s profile`}
-                      className="mt-auto flex items-center justify-between border-t border-gray-100 pt-5 text-sm font-semibold text-[#004242]"
-                    >
-                      View profile
-                      <ArrowUpRight className="h-4 w-4" />
-                    </Link>
+                    <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-5">
+                      <Link
+                        href={`/meet-climate-people/${encodeURIComponent(profile._id)}`}
+                        aria-label={`View ${profile.name}'s profile`}
+                        className="flex items-center gap-1 text-sm font-semibold text-[#004242] transition-colors hover:text-[#053535]"
+                      >
+                        View profile
+                        <ArrowUpRight className="h-4 w-4" />
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedMemberName(profile.name);
+                          setIsConnectModalOpen(true);
+                        }}
+                        className="inline-flex items-center gap-1.5 rounded-lg bg-[#004242] px-3.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#053535] cursor-pointer"
+                      >
+                        Connect
+                      </button>
+                    </div>
                   </article>
                 ))}
               </div>
@@ -340,6 +437,11 @@ export function ProfileDirectory() {
             )}
           </>
         )}
+        <CommunityConnectModal
+          open={isConnectModalOpen}
+          onOpenChange={setIsConnectModalOpen}
+          memberName={selectedMemberName}
+        />
       </section>
     </div>
   );
@@ -358,6 +460,7 @@ export function ProfileDetails({ id }: { id: string }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [retry, setRetry] = useState(0);
+  const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
   useEffect(() => {
     const controller = new AbortController();
     setLoading(true);
@@ -386,7 +489,7 @@ export function ProfileDetails({ id }: { id: string }) {
   const box = "rounded-2xl border border-gray-200 bg-white p-6 sm:p-8";
   return (
     <div className="min-h-screen bg-[#f7faf8] pb-20 pt-28 sm:pt-36">
-      <div className="mx-auto max-w-6xl px-4 sm:px-8">
+      <div className="mx-auto container px-4 sm:px-8">
         <Link
           href="/meet-climate-people"
           className="mb-7 inline-flex items-center gap-2 text-sm font-semibold text-[#004242]"
@@ -446,6 +549,36 @@ export function ProfileDetails({ id }: { id: string }) {
                     {profile.about || "This member hasn’t added a bio yet."}
                   </p>
                 </section>
+                {profile.excitingProjects && profile.excitingProjects.length > 0 && (
+                  <section className={box}>
+                    <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-[#004242]">
+                      <Sparkles className="h-5 w-5 text-[#008080]" />
+                      Exciting projects I am part of
+                    </h2>
+                    <ul className="space-y-3">
+                      {profile.excitingProjects.map((project, idx) => (
+                        <li
+                          key={idx}
+                          className="flex items-start gap-3 text-sm leading-6 text-gray-700"
+                        >
+                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#008080]" />
+                          <span>{project}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
+                {profile.howToConnect && (
+                  <section className={box}>
+                    <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-[#004242]">
+                      <Users className="h-5 w-5 text-[#008080]" />
+                      How to connect with me
+                    </h2>
+                    <p className="whitespace-pre-line text-sm leading-7 text-gray-600">
+                      {profile.howToConnect}
+                    </p>
+                  </section>
+                )}
                 {(
                   [
                     ["Skills", profile.skills],
@@ -525,6 +658,26 @@ export function ProfileDetails({ id }: { id: string }) {
                 ) : null}
               </div>
               <aside className="space-y-6">
+                <section className="rounded-2xl border-2 border-[#004242]/20 bg-gradient-to-br from-[#004242]/5 to-[#E6F4F1]/60 p-6 shadow-sm">
+                  <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#004242]">
+                    <Sparkles className="h-4 w-4 text-[#008080]" />
+                    <span>Member Network</span>
+                  </div>
+                  <h3 className="mt-2 text-lg font-bold text-[#004242]">
+                    Connect with {profile.name.split(" ")[0]}
+                  </h3>
+                  <p className="mt-2 text-xs leading-relaxed text-gray-600">
+                    Direct messaging and collaboration are available to active Act on Climate members.
+                  </p>
+                  <Button
+                    type="button"
+                    onClick={() => setIsConnectModalOpen(true)}
+                    className="mt-4 w-full bg-[#004242] hover:bg-[#053535] text-white rounded-xl py-2.5 text-xs font-semibold shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <span>Connect with {profile.name.split(" ")[0]}</span>
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </section>
                 {(
                   [
                     ["Climate interests", profile.climateInterests],
@@ -575,6 +728,11 @@ export function ProfileDetails({ id }: { id: string }) {
                 )}
               </aside>
             </div>
+            <CommunityConnectModal
+              open={isConnectModalOpen}
+              onOpenChange={setIsConnectModalOpen}
+              memberName={profile.name}
+            />
           </>
         ) : (
           <p className="py-10 text-gray-600">

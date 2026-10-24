@@ -1,20 +1,26 @@
 import Link from "next/link";
 import { ArrowRight, Megaphone } from "lucide-react";
+import PersonalizedRecommendations from "./_components/PersonalizedRecommendations";
 
 export default function UserDashboardPage() {
   return (
-    <div className="space-y-8">
-      <div>
+    <div className="space-y-10">
+      {/* <div>
         <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#008080]">
-          User dashboard
+          Member Workspace
         </p>
         <h1 className="text-3xl font-semibold text-[#004242]">
-          Welcome to your workspace
+          Welcome to your Dashboard
         </h1>
-        <p className="mt-3 text-sm leading-6 text-gray-500">
-          Manage your presence and share what you do with the community.
+        <p className="mt-2 text-sm leading-6 text-gray-500">
+          Explore opportunities, programs, and connections curated for your climate career journey.
         </p>
-      </div>
+      </div> */}
+
+      {/* Primary Feature: Personalized AI Recommendations */}
+      <PersonalizedRecommendations />
+
+      {/* Promote Me Feature */}
       <section className="rounded-2xl border border-gray-200 bg-white p-6 sm:p-8">
         <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-[#004242]/5 text-[#004242]">
           <Megaphone className="h-6 w-6" />

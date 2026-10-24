@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Clock, Search } from "lucide-react";
+import { Clock, Search, CheckCircle2, GraduationCap, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -19,6 +19,7 @@ import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useMemo, useDeferredValue, useEffect } from "react";
 import {
+  Course,
   CoursesApiResponse,
   formatCoursePrice,
   getCourseDuration,
@@ -26,6 +27,7 @@ import {
   getCourseLessonCount,
   getCourseLevel,
   getCourseLevelColor,
+  getCourseOutcomes,
 } from "@/lib/course-utils";
 
 const CourseCardSkeleton = () => (
@@ -81,7 +83,7 @@ const CourseListSection = () => {
     return Array.from(uniqueCategories);
   }, [allCoursesData]);
 
-  // Fetch courses for current filter
+  // Fetch courses for current category
   const { data, isLoading, error } = useQuery<CoursesApiResponse>({
     queryKey: ["courses", selectedCategory],
     queryFn: async () => {
@@ -100,9 +102,15 @@ const CourseListSection = () => {
     const allCourses = data?.data || [];
     if (!allCourses.length) return [];
     if (!debouncedSearchTerm.trim()) return allCourses;
-    return allCourses.filter((course) =>
-      course.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase()),
-    );
+
+    const term = debouncedSearchTerm.toLowerCase();
+    return allCourses.filter((course) => {
+      const inTitle = course.title?.toLowerCase().includes(term);
+      const inCat = course.category?.toLowerCase().includes(term);
+      const inDesc = course.description?.toLowerCase().includes(term);
+      const inSummary = course.summary?.toLowerCase().includes(term);
+      return inTitle || inCat || inDesc || inSummary;
+    });
   }, [data?.data, debouncedSearchTerm]);
 
   const paginatedCourses = useMemo(() => {
@@ -119,7 +127,10 @@ const CourseListSection = () => {
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const directory = document.getElementById("course-directory");
+    if (directory) {
+      directory.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const renderPaginationItems = () => {
@@ -131,7 +142,7 @@ const CourseListSection = () => {
         items.push(
           <PaginationItem key={i}>
             <PaginationLink
-              href="#"
+              href="#course-directory"
               onClick={(e) => {
                 e.preventDefault();
                 handlePageChange(i);
@@ -139,7 +150,7 @@ const CourseListSection = () => {
               isActive={currentPage === i}
               className={
                 currentPage === i
-                  ? "bg-[#B4C7C7] text-[#004242] hover:bg-[#B4C7C7] border-none"
+                  ? "bg-[#B4C7C7] text-[#004242] hover:bg-[#B4C7C7] border-none font-semibold"
                   : "border-none hover:bg-gray-100"
               }
             >
@@ -153,7 +164,7 @@ const CourseListSection = () => {
       items.push(
         <PaginationItem key={1}>
           <PaginationLink
-            href="#"
+            href="#course-directory"
             onClick={(e) => {
               e.preventDefault();
               handlePageChange(1);
@@ -165,12 +176,13 @@ const CourseListSection = () => {
         </PaginationItem>,
       );
 
-      if (currentPage > 3)
+      if (currentPage > 3) {
         items.push(
           <PaginationItem key="e1">
             <PaginationEllipsis />
           </PaginationItem>,
         );
+      }
 
       const start = Math.max(2, currentPage - 1);
       const end = Math.min(totalPages - 1, currentPage + 1);
@@ -179,7 +191,7 @@ const CourseListSection = () => {
         items.push(
           <PaginationItem key={i}>
             <PaginationLink
-              href="#"
+              href="#course-directory"
               onClick={(e) => {
                 e.preventDefault();
                 handlePageChange(i);
@@ -192,18 +204,19 @@ const CourseListSection = () => {
         );
       }
 
-      if (currentPage < totalPages - 2)
+      if (currentPage < totalPages - 2) {
         items.push(
           <PaginationItem key="e2">
             <PaginationEllipsis />
           </PaginationItem>,
         );
+      }
 
       // Last Page
       items.push(
         <PaginationItem key={totalPages}>
           <PaginationLink
-            href="#"
+            href="#course-directory"
             onClick={(e) => {
               e.preventDefault();
               handlePageChange(totalPages);
@@ -220,7 +233,7 @@ const CourseListSection = () => {
 
   if (error) {
     return (
-      <section>
+      <section id="course-directory">
         <div className="container py-12 text-center">
           <p className="text-red-500">Error loading courses.</p>
           <Button
@@ -238,54 +251,58 @@ const CourseListSection = () => {
     !isLoading && filteredCourses.length === 0 && searchTerm;
 
   return (
-    <section>
+    <section id="course-directory" className="py-6">
       <div className="container">
-        {/* Filter & Search */}
-        <div className="flex flex-col lg:flex-row items-center justify-between mb-5 gap-5">
-          <div className="flex flex-wrap gap-3">
-            {isLoadingCategories
-              ? Array.from({ length: 4 }).map((_, i) => (
-                  <CategorySkeleton key={i} />
-                ))
-              : dynamicCategories.map((cat) => (
-                  <Button
-                    key={cat}
-                    variant="ghost"
-                    onClick={() => {
-                      setSelectedCategory(cat);
-                      setSearchTerm("");
-                    }}
-                    className={`h-10 px-5 rounded-md text-sm ${selectedCategory === cat ? "bg-[#004242] text-white" : "bg-white text-gray-600 shadow-sm"}`}
-                  >
-                    {cat}
-                  </Button>
-                ))}
-          </div>
+        {/* Dedicated Centered Search Bar */}
+        <div className="max-w-xl mx-auto mb-8 relative">
+          <Search className="absolute left-3.5 top-3.5 text-gray-400" size={18} />
+          <Input
+            type="text"
+            placeholder="Search courses by title, topic, or skills..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="h-11 pl-10 pr-9 bg-white border border-gray-200 rounded-lg text-sm shadow-sm focus-visible:ring-1 focus-visible:ring-[#004242]"
+          />
+          {searchTerm && (
+            <button
+              type="button"
+              onClick={() => setSearchTerm("")}
+              className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
+              aria-label="Clear search"
+            >
+              <X size={16} />
+            </button>
+          )}
+        </div>
 
-          <div className="relative flex items-center bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-            <Search className="absolute left-3 text-gray-400" size={18} />
-            <Input
-              type="text"
-              placeholder="Search courses..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="border-none focus-visible:ring-0 w-64 h-11 text-sm px-10"
-            />
-            {searchTerm && (
-              <button
-                onClick={() => setSearchTerm("")}
-                className="absolute right-3 text-gray-400"
-              >
-                ✕
-              </button>
-            )}
-          </div>
+        {/* Filter Categories */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
+          {isLoadingCategories
+            ? Array.from({ length: 4 }).map((_, i) => (
+                <CategorySkeleton key={i} />
+              ))
+            : dynamicCategories.map((cat) => (
+                <Button
+                  key={cat}
+                  variant="ghost"
+                  onClick={() => {
+                    setSelectedCategory(cat);
+                  }}
+                  className={`h-10 px-5 rounded-md text-sm transition-colors ${
+                    selectedCategory === cat
+                      ? "bg-[#004242] text-white hover:bg-[#003333]"
+                      : "bg-white text-gray-600 shadow-sm border border-gray-100 hover:bg-gray-50"
+                  }`}
+                >
+                  {cat}
+                </Button>
+              ))}
         </div>
 
         {/* Results Info */}
         {!isLoading && searchTerm && (
-          <div className="mb-6 text-sm text-gray-600">
-            Found {filteredCourses.length} results for {searchTerm}
+          <div className="mb-6 text-sm text-gray-600 text-center">
+            Found {filteredCourses.length} results for &ldquo;{searchTerm}&rdquo;
           </div>
         )}
 
@@ -313,6 +330,8 @@ const CourseListSection = () => {
                     const level = getCourseLevel(course.lessons);
                     const levelColor = getCourseLevelColor(level);
                     const lessonCount = getCourseLessonCount(course);
+                    const outcomes = getCourseOutcomes(course);
+
                     return (
                       <div
                         key={course._id}
@@ -335,7 +354,7 @@ const CourseListSection = () => {
                         </div>
 
                         <div className="p-6 flex flex-col flex-grow">
-                          <div className="flex items-center justify-between mb-4">
+                          <div className="flex items-center justify-between mb-3">
                             <span
                               className={`text-[13px] font-medium px-2 py-0.5 rounded-full ${levelColor}`}
                             >
@@ -346,16 +365,47 @@ const CourseListSection = () => {
                               {getCourseDuration(course)}
                             </div>
                           </div>
-                          <h3 className="text-xl font-extrabold text-[#004242] mb-3 line-clamp-2">
+
+                          <h3 className="text-xl font-extrabold text-[#004242] mb-2 line-clamp-2">
                             {course.title}
                           </h3>
-                          <p className="text-gray-500 text-[14px] line-clamp-2 mb-4">
-                            {lessonCount} lessons •{" "}
-                            {course.totalEnrolled || 0} enrolled
+
+                          {/* Offering Institution */}
+                          <p className="text-xs text-gray-500 mb-3 flex items-center gap-1.5">
+                            <GraduationCap size={14} className="text-[#004242] shrink-0" />
+                            <span className="truncate">
+                              {course.institution ||
+                                (typeof course.providerId === "object" &&
+                                  course.providerId?.name) ||
+                                "Act on Climate Partner Academy"}
+                            </span>
                           </p>
+
+                          {/* Dynamic Value Proposition Highlights */}
+                          {outcomes.length > 0 && (
+                            <div className="my-2 space-y-1.5 border-t border-b border-gray-100 py-3 text-xs text-gray-600">
+                              <p className="text-[11px] font-semibold text-[#004242] uppercase tracking-wider mb-1">
+                                What you will gain
+                              </p>
+                              {outcomes.map((item, idx) => (
+                                <div key={idx} className="flex items-start gap-2">
+                                  <CheckCircle2
+                                    size={14}
+                                    className="text-[#004242] shrink-0 mt-0.5"
+                                  />
+                                  <span className="line-clamp-1">{item}</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+
+                          <p className="text-gray-500 text-[14px] line-clamp-1 mb-4">
+                            {lessonCount} lessons • {course.totalEnrolled || 0} enrolled
+                          </p>
+
                           <div className="mt-auto">
                             <Link href={`/courses/${course._id}`}>
-                              <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg">
+                              <Button className="w-full bg-[#004242] hover:bg-[#003333] text-white py-6 rounded-lg font-medium">
                                 {course.price && course.price > 0
                                   ? "Enroll Now"
                                   : "Start Free"}
@@ -375,11 +425,10 @@ const CourseListSection = () => {
                   <PaginationContent className="bg-white border border-gray-200 rounded-lg p-1 shadow-sm">
                     <PaginationItem>
                       <PaginationPrevious
-                        href="#"
+                        href="#course-directory"
                         onClick={(e) => {
                           e.preventDefault();
-                          if (currentPage > 1)
-                            handlePageChange(currentPage - 1);
+                          if (currentPage > 1) handlePageChange(currentPage - 1);
                         }}
                         className={
                           currentPage === 1
@@ -391,7 +440,7 @@ const CourseListSection = () => {
                     {renderPaginationItems()}
                     <PaginationItem>
                       <PaginationNext
-                        href="#"
+                        href="#course-directory"
                         onClick={(e) => {
                           e.preventDefault();
                           if (currentPage < totalPages)

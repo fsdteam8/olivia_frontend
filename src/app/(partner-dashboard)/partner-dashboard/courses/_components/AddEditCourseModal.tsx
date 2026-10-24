@@ -57,6 +57,7 @@ export default function AddEditCourseModal({
   const [estimatedWeeks, setEstimatedWeeks] = useState<string>("");
   const [price, setPrice] = useState<string>("");
   const [courseBoxUrl, setCourseBoxUrl] = useState("");
+  const [learningOutcomes, setLearningOutcomes] = useState<string>("");
 
   // Course Thumbnail
   const [showThumbnail, setShowThumbnail] = useState(true);
@@ -104,6 +105,11 @@ export default function AddEditCourseModal({
       setCourseBoxUrl(
         courseToEdit.courseBoxUrl || courseToEdit.enrollmentUrl || ""
       );
+      setLearningOutcomes(
+        Array.isArray(courseToEdit.learningOutcomes)
+          ? courseToEdit.learningOutcomes.join("\n")
+          : ""
+      );
 
       const thumbUrl =
         courseToEdit.image?.url || courseToEdit.coverImage?.url || "";
@@ -142,6 +148,7 @@ export default function AddEditCourseModal({
       setEstimatedWeeks("");
       setPrice("");
       setCourseBoxUrl("");
+      setLearningOutcomes("");
       setThumbnailFile(null);
       setExistingThumbnailUrl("");
       setShowThumbnail(true);
@@ -235,6 +242,18 @@ export default function AddEditCourseModal({
       if (courseBoxUrl.trim()) {
         formData.append("courseBoxUrl", courseBoxUrl.trim());
         formData.append("enrollmentUrl", courseBoxUrl.trim());
+      }
+
+      // Learning Outcomes / What you will gain
+      const outcomesArray = learningOutcomes
+        .split("\n")
+        .map((s) => s.trim())
+        .filter(Boolean);
+      if (outcomesArray.length > 0) {
+        outcomesArray.forEach((outcome, idx) => {
+          formData.append(`learningOutcomes[${idx}]`, outcome);
+        });
+        formData.append("learningOutcomes", JSON.stringify(outcomesArray));
       }
 
       // Course Thumbnail
@@ -488,6 +507,25 @@ export default function AddEditCourseModal({
                     placeholder="https://example.com/course"
                     className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:border-[#004242] focus:ring-2 focus:ring-[#004242]/20 transition-all bg-white hover:border-slate-400 outline-none shadow-2xs"
                   />
+                </label>
+              </div>
+
+              {/* Dynamic Learning Outcomes / What you will gain */}
+              <div className="md:col-span-2">
+                <label className="block space-y-1.5">
+                  <span className="text-xs sm:text-sm font-semibold text-slate-700 flex items-center gap-1.5">
+                    What You Will Gain / Learning Outcomes (Optional)
+                  </span>
+                  <textarea
+                    rows={3}
+                    value={learningOutcomes}
+                    onChange={(e) => setLearningOutcomes(e.target.value)}
+                    placeholder="Enter each outcome on a new line, e.g.:&#10;Master corporate Scope 1-3 GHG accounting&#10;Earn an industry-recognized Certificate of Completion"
+                    className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:border-[#004242] focus:ring-2 focus:ring-[#004242]/20 transition-all bg-white hover:border-slate-400 outline-none shadow-2xs"
+                  />
+                  <span className="text-[11px] text-slate-500 block">
+                    Shown directly on public course cards under &ldquo;What you will gain&rdquo;.
+                  </span>
                 </label>
               </div>
 

@@ -64,36 +64,36 @@ const FAQSection = () => {
         },
       ],
     },
-    {
-      category: "Education",
-      items: [
-        {
-          question: "Are courses included with membership?",
-          answer:
-            "No. Courses are offered separately by Education Partners. Each provider sets their own pricing.",
-        },
-        {
-          question: "Can non-members purchase courses?",
-          answer:
-            "Yes. Courses can be made available to anyone according to the Education Partner's terms.",
-        },
-      ],
-    },
-    {
-      category: "Career Services",
-      items: [
-        {
-          question: "Do I need to be a member to use Career Services?",
-          answer:
-            "As an Act on Climate member, you get access to career support as part of your membership including the opportunity to connect with and receive support from other members of the community. For those who do not want to purchase our membership and career support through our community will need to pay.",
-        },
-        {
-          question: "Can I book a free consultation?",
-          answer:
-            "Yes. If you're unsure which career service is right for you, you can book a free consultation.",
-        },
-      ],
-    },
+    // {
+    //   category: "Education",
+    //   items: [
+    //     {
+    //       question: "Are courses included with membership?",
+    //       answer:
+    //         "No. Courses are offered separately by Education Partners. Each provider sets their own pricing.",
+    //     },
+    //     {
+    //       question: "Can non-members purchase courses?",
+    //       answer:
+    //         "Yes. Courses can be made available to anyone according to the Education Partner's terms.",
+    //     },
+    //   ],
+    // },
+    // {
+    //   category: "Career Services",
+    //   items: [
+    //     {
+    //       question: "Do I need to be a member to use Career Services?",
+    //       answer:
+    //         "As an Act on Climate member, you get access to career support as part of your membership including the opportunity to connect with and receive support from other members of the community. For those who do not want to purchase our membership and career support through our community will need to pay.",
+    //     },
+    //     {
+    //       question: "Can I book a free consultation?",
+    //       answer:
+    //         "Yes. If you're unsure which career service is right for you, you can book a free consultation.",
+    //     },
+    //   ],
+    // },
     {
       category: "Professional Profiles",
       items: [

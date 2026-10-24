@@ -38,6 +38,8 @@ const schema = z.object({
   canHelpWith: z.string(),
   skills: z.string(),
   areasOfExpertise: z.string(),
+  excitingProjects: z.string(),
+  howToConnect: z.string(),
   education: z.array(
     z.object({
       school: z.string().trim().min(1, "School is required"),
@@ -66,6 +68,7 @@ const listFields = [
   "canHelpWith",
   "skills",
   "areasOfExpertise",
+  "excitingProjects",
 ] as const;
 type Profile = Omit<
   Values,
@@ -78,6 +81,8 @@ type Profile = Omit<
   canHelpWith: string[];
   skills: string[];
   areasOfExpertise: string[];
+  excitingProjects?: string[];
+  howToConnect?: string;
   education: (Values["education"][number] | string)[];
   experience: (Values["experience"][number] | string)[];
 };
@@ -93,6 +98,8 @@ const defaults: Values = {
   canHelpWith: "",
   skills: "",
   areasOfExpertise: "",
+  excitingProjects: "",
+  howToConnect: "",
   education: [],
   experience: [],
   linkedin: "",
@@ -356,6 +363,40 @@ export default function ClimateProfileForm() {
               "Areas of expertise",
               "Clean Energy Solutions, Decarbonization",
             )}
+          </div>
+        </section>
+        <section className={sectionClass}>
+          <div>
+            <h2 className="text-lg font-semibold text-[#004242]">
+              Community & Collaboration
+            </h2>
+            <p className="mt-1 text-xs text-gray-500">
+              Highlight your ongoing climate initiatives and how fellow community members can connect with you.
+            </p>
+          </div>
+          <div className="space-y-4">
+            {field(
+              "excitingProjects",
+              "Exciting projects I am part of",
+              "e.g. Scaling Community Solar Microgrids, Biochar Soil Regeneration",
+            )}
+            <p className="-mt-2 text-xs text-gray-500">
+              Separate each project with a comma.
+            </p>
+            <div className="space-y-2">
+              <label
+                htmlFor="howToConnect"
+                className="text-sm font-medium text-[#004242]"
+              >
+                How to connect with me
+              </label>
+              <Textarea
+                id="howToConnect"
+                {...register("howToConnect")}
+                rows={3}
+                placeholder="e.g. Open to advisory calls, mentorship, joint research, and startup advice. Best reached via member network DM."
+              />
+            </div>
           </div>
         </section>
         <section className={sectionClass}>

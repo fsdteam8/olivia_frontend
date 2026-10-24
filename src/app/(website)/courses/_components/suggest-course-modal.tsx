@@ -243,16 +243,24 @@ const SuggestCourseModal = ({ open, onOpenChange }: ModalProps) => {
               )}
             />
 
-            {/* Key Topics */}
+            {/* Key Topics & What Learners Will Gain */}
             <FormField
               control={form.control}
               name="keyTopics"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Key Topics (comma separated)</FormLabel>
+                  <FormLabel>
+                    Key Topics &amp; What Learners Will Gain (comma separated)
+                  </FormLabel>
                   <FormControl>
-                    <Input placeholder="Topic 1, Topic 2, Topic 3" {...field} />
+                    <Input
+                      placeholder="e.g. Scope 1-3 GHG accounting, Climate policy frameworks, Project portfolio"
+                      {...field}
+                    />
                   </FormControl>
+                  <p className="text-[11px] text-gray-500">
+                    Specify the core skills, topics, or career takeaways learners will gain.
+                  </p>
                   <FormMessage />
                 </FormItem>
               )}

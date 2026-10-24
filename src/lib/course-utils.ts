@@ -33,6 +33,18 @@ export interface Course {
   totalEnrolled?: number;
   image?: CourseImage;
   lessons?: CourseLesson[];
+  summary?: string;
+  learningOutcomes?: string[];
+  format?: string;
+  hasCertificate?: boolean;
+  institution?: string;
+  source?: string;
+  providerId?: {
+    _id?: string;
+    name?: string;
+    logo?: string;
+    organizationName?: string;
+  } | string;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -139,4 +151,18 @@ export const getVideoEmbedUrl = (url?: string) => {
   }
 
   return url;
+};
+
+/**
+ * Returns the dynamic learning outcomes ("What you will gain") entered for this course in the dashboard.
+ * If no outcomes were entered for the course, returns an empty array (no static fallback data).
+ */
+export const getCourseOutcomes = (course: Course): string[] => {
+  if (course.learningOutcomes && Array.isArray(course.learningOutcomes)) {
+    return course.learningOutcomes
+      .map((item) => (typeof item === "string" ? item.trim() : ""))
+      .filter((item) => item.length > 0)
+      .slice(0, 2);
+  }
+  return [];
 };
