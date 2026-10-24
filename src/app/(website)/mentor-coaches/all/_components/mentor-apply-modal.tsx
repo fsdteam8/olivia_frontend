@@ -40,7 +40,6 @@ interface MentorJoinFormInput {
   firstName: string;
   lastName: string;
   email: string;
-  phone: string;
   address: string;
   designation: string;
   bio: string;
@@ -55,7 +54,6 @@ interface MentorJoinFormInput {
   website: string;
   isPaidSession: string;
   hourlyRate: string;
-  bookingContactMethod: "link" | "email";
   bookingLink: string;
   motivation: string;
   goal: string;
@@ -84,14 +82,12 @@ export const MentorApplyModal = ({
     { title: "", description: "" },
   ]);
 
-  const { register, handleSubmit, reset, setValue, watch } =
+  const { register, handleSubmit, reset, setValue } =
     useForm<MentorJoinFormInput>({
       defaultValues: {
         email: userEmail || "",
-        bookingContactMethod: "link",
       },
     });
-  const bookingContactMethod = watch("bookingContactMethod");
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -148,17 +144,11 @@ export const MentorApplyModal = ({
     formData.append("about", data.about);
     formData.append("type", data.type);
     formData.append("experienceYears", data.experienceYears);
-    formData.append(
-      "bookingLink",
-      data.bookingContactMethod === "email"
-        ? `mailto:${data.bookingLink}`
-        : data.bookingLink,
-    );
+    formData.append("bookingLink", data.bookingLink.trim());
     formData.append("motivation", data.motivation || "");
     formData.append("goal", data.goal || "");
 
     // Optional fields
-    formData.append("phone", data.phone || "");
     // formData.append("address", data.address || "");
     formData.append("designation", data.designation || "");
     formData.append("roleFunction", data.roleFunction || "");
@@ -243,23 +233,6 @@ export const MentorApplyModal = ({
                   className="bg-white"
                 />
               </div>
-              <div className="space-y-1">
-                <Label className="text-xs ">Phone</Label>
-                <Input
-                  {...register("phone")}
-                  type="tel"
-                  placeholder="+880XXXXXXXXX"
-                  className="bg-white"
-                />
-              </div>
-              {/* <div className="space-y-1">
-                <Label className="text-xs ">Address</Label>
-                <Input
-                  {...register("address")}
-                  placeholder="Your address"
-                  className="bg-white"
-                />
-              </div> */}
               <div className="space-y-1">
                 <Label className="text-xs ">Designation</Label>
                 <Input
@@ -558,50 +531,26 @@ export const MentorApplyModal = ({
                   className="bg-white"
                 />
               </div>
-              <div className="space-y-1">
-                <Label className="text-xs ">Booking Via *</Label>
-                <Select
-                  defaultValue="link"
-                  onValueChange={(value: "link" | "email") => {
-                    setValue("bookingContactMethod", value);
-                    setValue("bookingLink", "");
-                  }}
-                >
-                  <SelectTrigger className="bg-white">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="link">Booking Link</SelectItem>
-                    <SelectItem value="email">Email</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-1">
-                <Label className="text-xs ">
-                  {bookingContactMethod === "email"
-                    ? "Booking Email"
-                    : "Booking Link"}{" "}
-                  *
-                </Label>
-                <Input
-                  {...register("bookingLink", {
-                    required: true,
-                    validate: (value) =>
-                      bookingContactMethod === "email"
-                        ? /^\S+@\S+\.\S+$/.test(value) ||
-                          "Enter a valid email address"
-                        : /^https?:\/\/.+/i.test(value) ||
-                          "Enter a valid URL starting with http:// or https://",
-                  })}
-                  type={bookingContactMethod === "email" ? "email" : "url"}
-                  placeholder={
-                    bookingContactMethod === "email"
-                      ? "you@example.com"
-                      : "https://calendly.com/your-link"
-                  }
-                  className="bg-white"
-                />
-              </div>
+            </div>
+
+            <div className="space-y-1">
+              <Label className="text-xs ">
+                Third-Party Booking Link (e.g., Calendly, Cal.com) *
+              </Label>
+              <Input
+                {...register("bookingLink", {
+                  required: "Booking link is required",
+                  validate: (value) =>
+                    /^https?:\/\/.+/i.test(value?.trim() || "") ||
+                    "Enter a valid URL starting with http:// or https:// (e.g. https://calendly.com/your-username)",
+                })}
+                type="url"
+                placeholder="https://calendly.com/your-username"
+                className="bg-white"
+              />
+              <p className="text-xs text-gray-500">
+                Direct booking link so mentees can schedule sessions directly with you without emailing.
+              </p>
             </div>
           </div>
 

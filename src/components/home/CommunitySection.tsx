@@ -1,7 +1,12 @@
+"use client";
+
+import React, { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import JoinCommunityModal from "@/components/modals/JoinCommunityModal";
 
 const CommunitySection = () => {
+  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
+
   return (
     <section className="bg-[#EEF4F5] md:px-20 py-16">
       <div className="container grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -26,13 +31,19 @@ const CommunitySection = () => {
             Learn more about the experts who will be helping you harness the
             power of AI.
           </p> */}
-          <Link href={"/survey"}>
-            <button className="bg-[#003d3d] text-white px-8 py-3 rounded-md font-semibold hover:bg-[#002b2b] transition-colors">
-              Join Community
-            </button>
-          </Link>
+          <button
+            onClick={() => setIsJoinModalOpen(true)}
+            className="bg-[#003d3d] text-white px-8 py-3 rounded-md font-semibold hover:bg-[#002b2b] transition-colors"
+          >
+            Join Community
+          </button>
         </div>
       </div>
+
+      <JoinCommunityModal
+        open={isJoinModalOpen}
+        onOpenChange={setIsJoinModalOpen}
+      />
     </section>
   );
 };

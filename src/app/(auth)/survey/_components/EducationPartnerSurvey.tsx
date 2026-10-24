@@ -722,7 +722,10 @@ export default function EducationPartnerSurvey() {
 
       {/* Confirmation Payment Modal */}
       {showPaymentModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+        <div
+          data-lenis-prevent
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto"
+        >
           <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 space-y-5 relative animate-in fade-in zoom-in-95 duration-200 text-left">
             {/* Header */}
             <div className="flex items-start justify-between border-b border-gray-100 pb-3">

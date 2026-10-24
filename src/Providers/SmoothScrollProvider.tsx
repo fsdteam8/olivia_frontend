@@ -40,6 +40,51 @@ export default function SmoothScrollProvider({
       touchMultiplier: 0, // Never hijack touch gestures on mobile/trackpad pinch
       syncTouch: false,
       autoRaf: false, // We control the requestAnimationFrame for maximum efficiency
+      prevent: (node: HTMLElement) => {
+        if (!node || typeof node.closest !== "function") return false;
+
+        // A. Any element explicitly marked with data-lenis-prevent
+        if (node.closest("[data-lenis-prevent], [data-lenis-prevent-wheel]")) {
+          return true;
+        }
+
+        // B. Any modal, dialog, sheet, drawer, popup, or Radix portal
+        if (
+          node.closest(
+            '[role="dialog"], [role="alertdialog"], [data-radix-portal], [data-slot="dialog-content"], [data-slot="sheet-content"], [aria-modal="true"], .modal, .dialog'
+          )
+        ) {
+          return true;
+        }
+
+        // C. If any modal is currently open in the DOM, prevent Lenis from scrolling the background website
+        const isModalOpen = Boolean(
+          document.querySelector(
+            '[role="dialog"], [data-radix-portal] [data-state="open"], [aria-modal="true"], [data-slot="dialog-content"][data-state="open"]'
+          ) ||
+          document.body.hasAttribute("data-scroll-locked") ||
+          document.body.style.overflow === "hidden"
+        );
+        if (isModalOpen) {
+          return true;
+        }
+
+        // D. Any nested scrollable container where content exceeds client height
+        let el: HTMLElement | null = node;
+        while (el && el !== document.body && el !== document.documentElement) {
+          const style = window.getComputedStyle(el);
+          const overflowY = style.overflowY;
+          if (
+            (overflowY === "auto" || overflowY === "scroll") &&
+            el.scrollHeight > el.clientHeight
+          ) {
+            return true;
+          }
+          el = el.parentElement;
+        }
+
+        return false;
+      },
     });
 
     // If on a touchscreen device, don't smooth wheel either to ensure 0 CPU overhead
@@ -47,6 +92,29 @@ export default function SmoothScrollProvider({
       lenis.destroy();
       return;
     }
+
+    // 4. Synchronize modal open/close states so the background page never scrolls while a modal is open
+    const modalObserver = new MutationObserver(() => {
+      const hasOpenModal = Boolean(
+        document.querySelector(
+          '[role="dialog"], [data-radix-portal] [data-state="open"], [aria-modal="true"], [data-slot="dialog-content"][data-state="open"]'
+        ) ||
+        document.body.hasAttribute("data-scroll-locked") ||
+        document.body.style.overflow === "hidden"
+      );
+      if (hasOpenModal) {
+        lenis.stop();
+      } else {
+        lenis.start();
+      }
+    });
+
+    modalObserver.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["data-scroll-locked", "style", "class"],
+      childList: true,
+      subtree: false,
+    });
 
     let rafId: number;
     function raf(time: number) {
@@ -59,6 +127,7 @@ export default function SmoothScrollProvider({
     (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
 
     return () => {
+      modalObserver.disconnect();
       cancelAnimationFrame(rafId);
       lenis.destroy();
       delete (window as unknown as { __lenis?: Lenis }).__lenis;
@@ -75,3 +144,4 @@ export default function SmoothScrollProvider({
 
   return <>{children}</>;
 }
+

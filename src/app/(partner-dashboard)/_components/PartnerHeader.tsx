@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useSession } from "next-auth/react";
-import { Menu, User, Settings, ShieldCheck } from "lucide-react";
+import { Menu, Settings,} from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";

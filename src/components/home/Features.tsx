@@ -1,8 +1,10 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import { Users, TrendingUp, Heart, ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import JoinCommunityModal from "@/components/modals/JoinCommunityModal";
 
 const features = [
   {
@@ -23,6 +25,8 @@ const features = [
 ];
 
 export const Features = () => {
+  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
+
   return (
     <section className=" bg-white">
       <div className="container">
@@ -49,14 +53,20 @@ export const Features = () => {
         </div>
 
         <div className="flex justify-center">
-          <Link href={"/survey"}>
-            <Button className="bg-[#0D3B3F] hover:bg-[#164e53] text-white px-10 h-12 rounded-md  group">
-              Join Community
-              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Button>
-          </Link>
+          <Button
+            onClick={() => setIsJoinModalOpen(true)}
+            className="bg-[#0D3B3F] hover:bg-[#164e53] text-white px-10 h-12 rounded-md  group"
+          >
+            Join Community
+            <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Button>
         </div>
       </div>
+
+      <JoinCommunityModal
+        open={isJoinModalOpen}
+        onOpenChange={setIsJoinModalOpen}
+      />
     </section>
   );
 };

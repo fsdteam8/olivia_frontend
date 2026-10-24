@@ -1,10 +1,9 @@
 import { Newsletter } from "@/components/home/Newsletter";
 import ClimateCareerGuide from "./_components/climate-career-guide";
 import ContributeToClimatePage from "./_components/contribute-to-climate-page";
-import CuratedOpportunities from "./_components/curated-opportunities";
 import PageHeader from "./_components/page-header";
 import CommunitySection from "@/components/home/CommunitySection";
-import PartnerOpportunities from "./_components/partner-opportunities";
+import UnifiedOpportunities from "./_components/unified-opportunities";
 
 const page = () => {
   return (
@@ -13,8 +12,7 @@ const page = () => {
         <PageHeader />
         <ClimateCareerGuide />
       </div>
-      <CuratedOpportunities />
-      <PartnerOpportunities />
+      <UnifiedOpportunities />
       <div>
         <ContributeToClimatePage />
         <Newsletter />

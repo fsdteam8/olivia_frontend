@@ -97,10 +97,12 @@ const MentorDetails = () => {
                 <Globe size={18} className="text-[#008080]" />
                 <span>{mentor.languages?.join(", ") || "English"}</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Mail size={18} className="text-[#008080]" />
-                <span className="truncate">{mentor.email}</span>
-              </div>
+              {mentor.isEmailPublic && mentor.email && (
+                <div className="flex items-center gap-2">
+                  <Mail size={18} className="text-[#008080]" />
+                  <span className="truncate">{mentor.email}</span>
+                </div>
+              )}
               <div className="flex items-center gap-2">
                 <Calendar size={18} className="text-[#008080]" />
                 <span>{mentor.availability || "Available for sessions"}</span>
@@ -108,12 +110,16 @@ const MentorDetails = () => {
             </div>
 
             <div className="flex flex-wrap gap-4 pt-4">
-              <Link
-                href={mentor.bookingLink || "#"}
-                className="bg-[#053535] hover:bg-[#042a2a] text-white px-8 py-4 rounded-xl flex items-center gap-2 transition-all active:scale-95 "
-              >
-                Book a Session <ArrowRight size={20} />
-              </Link>
+              {mentor.bookingLink && (
+                <Link
+                  href={mentor.bookingLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#053535] hover:bg-[#042a2a] text-white px-8 py-4 rounded-xl flex items-center gap-2 transition-all active:scale-95 "
+                >
+                  Book a Session <ArrowRight size={20} />
+                </Link>
+              )}
               <div className="flex gap-2">
                 {mentor.linkedin && (
                   <Link

@@ -18,6 +18,7 @@ interface Mentor {
   experience: { title: string }[];
   skills: string[];
   bio: string;
+  bookingLink?: string;
 }
 
 export const MentorsGallery = () => {
@@ -276,9 +277,25 @@ export const MentorsGallery = () => {
                       View Profile
                     </Button>
                   </Link>
-                  <button className="bg-[#064E4B] text-white p-2 rounded-lg hover:bg-[#043331] transition-colors">
-                    <CalendarDays className="w-4 h-4" />
-                  </button>
+                  {mentor.bookingLink ? (
+                    <a
+                      href={mentor.bookingLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-[#064E4B] text-white p-2 rounded-lg hover:bg-[#043331] transition-colors flex items-center justify-center shrink-0"
+                      title="Book a Session"
+                    >
+                      <CalendarDays className="w-4 h-4" />
+                    </a>
+                  ) : (
+                    <Link
+                      href={`/mentor-coaches/${mentor?._id}`}
+                      className="bg-[#064E4B] text-white p-2 rounded-lg hover:bg-[#043331] transition-colors flex items-center justify-center shrink-0"
+                      title="View Profile"
+                    >
+                      <CalendarDays className="w-4 h-4" />
+                    </Link>
+                  )}
                 </div>
               </div>
             ))

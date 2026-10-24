@@ -1,8 +1,14 @@
+"use client";
+
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
+import JoinCommunityModal from "@/components/modals/JoinCommunityModal";
 
 export const Hero = () => {
+  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
+
   return (
     <section className="relative h-[900px] flex items-center justify-center text-center px-4 overflow-hidden">
       {/* Background with Overlay */}
@@ -31,11 +37,12 @@ export const Hero = () => {
           the climate space.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link href={"/survey"}>
-            <Button className="bg-[#004242] hover:bg-[#006668] text-white px-8 h-12 rounded-md  text-sm min-w-[160px]">
-              Join Community
-            </Button>
-          </Link>
+          <Button
+            onClick={() => setIsJoinModalOpen(true)}
+            className="bg-[#004242] hover:bg-[#006668] text-white px-8 h-12 rounded-md  text-sm min-w-[160px]"
+          >
+            Join Community
+          </Button>
           <Link href={"/membership"}>
             <Button
               variant="outline"
@@ -46,6 +53,11 @@ export const Hero = () => {
           </Link>
         </div>
       </div>
+
+      <JoinCommunityModal
+        open={isJoinModalOpen}
+        onOpenChange={setIsJoinModalOpen}
+      />
     </section>
   );
 };

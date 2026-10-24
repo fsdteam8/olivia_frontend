@@ -1,8 +1,12 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import JoinCommunityModal from "@/components/modals/JoinCommunityModal";
 
 export const CommunityCTA = () => {
+  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
+
   return (
     <section className="relative h-[500px] flex items-center justify-center text-center overflow-hidden">
       {/* Background with Dark Overlay */}
@@ -23,12 +27,18 @@ export const CommunityCTA = () => {
           meaningful opportunities, and accelerate your impact in building a
           more sustainable future.
         </p>
-        <Link href={"/survey"}>
-          <Button className="bg-[#0D3B3F] hover:bg-[#164e53] text-white px-10 h-10 rounded-md text-sm transition-all">
-            Join Community
-          </Button>
-        </Link>
+        <Button
+          onClick={() => setIsJoinModalOpen(true)}
+          className="bg-[#0D3B3F] hover:bg-[#164e53] text-white px-10 h-10 rounded-md text-sm transition-all"
+        >
+          Join Community
+        </Button>
       </div>
+
+      <JoinCommunityModal
+        open={isJoinModalOpen}
+        onOpenChange={setIsJoinModalOpen}
+      />
     </section>
   );
 };

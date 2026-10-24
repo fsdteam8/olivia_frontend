@@ -13,6 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import JoinCommunityModal from "@/components/modals/JoinCommunityModal";
 
 export const Navbar = () => {
   const { data: session } = useSession();
@@ -25,6 +26,7 @@ export const Navbar = () => {
   const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState(false);
   const [isMobileMembershipDropdownOpen, setIsMobileMembershipDropdownOpen] =
     useState(false);
+  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
 
   const isLoggedIn = !!session;
   const role = session?.user?.role?.toUpperCase();
@@ -54,6 +56,7 @@ export const Navbar = () => {
     { name: "Mentors & Coaches", href: "/mentor-coaches/all" },
     { name: "Career Services", href: "/career-services" },
     { name: "Find Your Opportunity", href: "/find-your-opportunity" },
+    { name: "Educational Partners", href: "/educational-partners" },
   ];
 
   const membershipLinks = [
@@ -208,11 +211,12 @@ export const Navbar = () => {
                   </DropdownMenuContent>
                 </DropdownMenu>
               )}
-              <Link href="/survey">
-                <Button className="bg-[#0D3B3F] hover:bg-[#164e53] text-white rounded-md px-6 text-xs">
-                  Join Community
-                </Button>
-              </Link>
+              <Button
+                onClick={() => setIsJoinModalOpen(true)}
+                className="bg-[#0D3B3F] hover:bg-[#164e53] text-white rounded-md px-6 text-xs"
+              >
+                Join Community
+              </Button>
               <Button
                 onClick={handleLogout}
                 className="bg-red-600 hover:bg-red-700 text-white rounded-md px-6 text-xs gap-2"
@@ -223,11 +227,12 @@ export const Navbar = () => {
             </>
           ) : (
             <>
-              <Link href="/survey">
-                <Button className="bg-[#0D3B3F] hover:bg-[#164e53] text-white rounded-md px-6 text-xs">
-                  Join Community
-                </Button>
-              </Link>
+              <Button
+                onClick={() => setIsJoinModalOpen(true)}
+                className="bg-[#0D3B3F] hover:bg-[#164e53] text-white rounded-md px-6 text-xs"
+              >
+                Join Community
+              </Button>
               <Button
                 onClick={handleLogin}
                 variant="outline"
@@ -372,14 +377,15 @@ export const Navbar = () => {
             <div className="pt-3 border-t border-gray-100 flex flex-col gap-3">
               {isLoggedIn ? (
                 <>
-                  <Link
-                    href="/survey"
-                    onClick={() => setIsMobileMenuOpen(false)}
+                  <Button
+                    onClick={() => {
+                      setIsJoinModalOpen(true);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="w-full bg-[#0D3B3F] hover:bg-[#164e53] text-white rounded-md text-xs"
                   >
-                    <Button className="w-full bg-[#0D3B3F] hover:bg-[#164e53] text-white rounded-md text-xs">
-                      Join Community
-                    </Button>
-                  </Link>
+                    Join Community
+                  </Button>
                   <Button
                     onClick={() => {
                       handleLogout();
@@ -393,14 +399,15 @@ export const Navbar = () => {
                 </>
               ) : (
                 <>
-                  <Link
-                    href="/survey"
-                    onClick={() => setIsMobileMenuOpen(false)}
+                  <Button
+                    onClick={() => {
+                      setIsJoinModalOpen(true);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="w-full bg-[#0D3B3F] hover:bg-[#164e53] text-white rounded-md text-xs"
                   >
-                    <Button className="w-full bg-[#0D3B3F] hover:bg-[#164e53] text-white rounded-md text-xs">
-                      Join Community
-                    </Button>
-                  </Link>
+                    Join Community
+                  </Button>
                   <Button
                     onClick={() => {
                       handleLogin();
@@ -417,6 +424,12 @@ export const Navbar = () => {
           </div>
         </div>
       )}
+
+      {/* Join Community Dual-Choice Modal */}
+      <JoinCommunityModal
+        open={isJoinModalOpen}
+        onOpenChange={setIsJoinModalOpen}
+      />
     </div>
   );
 };

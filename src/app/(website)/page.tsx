@@ -2,6 +2,7 @@ import { AboutSection } from "@/components/home/AboutSection";
 import { CommunityCTA } from "@/components/home/CommunityCTA";
 import CommunityFeedback from "@/components/home/CommunityMarquee";
 import CommunitySection from "@/components/home/CommunitySection";
+import { EducationalPartnerBanner } from "@/components/home/EducationalPartnerBanner";
 import { Features } from "@/components/home/Features";
 import { Hero } from "@/components/home/Hero";
 import { HowItWorks } from "@/components/home/HowItWorks";
@@ -20,6 +21,7 @@ export default function Home() {
       <CommunityFeedback />
       <div>
         <UpcomingEvents />
+        <EducationalPartnerBanner />
         <CommunityCTA />
         <Newsletter />
         <CommunitySection />

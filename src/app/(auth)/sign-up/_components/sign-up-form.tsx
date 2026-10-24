@@ -186,6 +186,31 @@ const SignUpForm = () => {
             </div>
           </div>
         </div>
+
+        {/* Contextual guidance link */}
+        <div className="mt-3 p-3 rounded-lg bg-[#F4F9F8] border border-[#D5E6E4] text-xs">
+          {accountType === "education_partner" ? (
+            <p className="text-[#527977] leading-relaxed">
+              Are you an educational institution?{" "}
+              <Link
+                href="/educational-partners"
+                className="font-semibold text-[#053535] underline underline-offset-2 hover:text-[#008080]"
+              >
+                Check out the Educational Partners Program &rarr;
+              </Link>
+            </p>
+          ) : (
+            <p className="text-[#527977] leading-relaxed">
+              Joining as an individual?{" "}
+              <Link
+                href="/membership-pricing"
+                className="font-semibold text-[#053535] underline underline-offset-2 hover:text-[#008080]"
+              >
+                Learn more about individual membership &rarr;
+              </Link>
+            </p>
+          )}
+        </div>
       </div>
 
       <Form {...form}>

@@ -72,7 +72,7 @@ export default function ContributeToClimatePage() {
 
   return (
     <div className="min-h-screen bg-[#F4F9F9] text-[#003D3D]">
-      <main className="container max-w-7xl mx-auto py-12 md:py-20 grid grid-cols-1 lg:grid-cols-2 gap-16 items-start px-4">
+      <main id="contribute-to-climate" className="container max-w-7xl mx-auto py-12 md:py-20 grid grid-cols-1 lg:grid-cols-2 gap-16 items-start px-4 scroll-mt-20">
         {/* LEFT COLUMN: Value Propositions */}
         <div className="space-y-12">
           <div className="space-y-4">
