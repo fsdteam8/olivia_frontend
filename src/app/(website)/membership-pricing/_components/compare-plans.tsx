@@ -22,14 +22,14 @@ interface PricingPlan {
     aiChatbot: string;
     events: string;
     courses: string;
-    careerServices: string;
+    careerServices?: string;
     mentorship: string;
   };
   discounts: {
     aiChatbot: number;
     events: number;
     courses: number;
-    careerServices: number;
+    careerServices?: number;
   };
 }
 
@@ -78,16 +78,6 @@ const ComparePlans = () => {
         if (plan.discounts?.courses === 30) return "30% Off";
         return plan.accessLevels?.courses === "paid" ? "Paid" : "Full Price";
 
-      case "Career Services":
-        if (plan.title === "Enterprise") return "Priority";
-        if (plan.discounts?.careerServices === 100) return "Free";
-        if (plan.discounts?.careerServices === 10) return "10% Off";
-        if (plan.discounts?.careerServices === 20) return "20% Off";
-        if (plan.discounts?.careerServices === 30) return "30% Off";
-        return plan.accessLevels?.careerServices === "paid"
-          ? "Paid"
-          : "Full Price";
-
       case "AI Chatbot":
         if (plan.title === "Enterprise") return "Unlimited";
         if (plan.discounts?.aiChatbot === 100) return "Free";
@@ -112,7 +102,6 @@ const ComparePlans = () => {
     "Resources",
     "Events",
     "Courses",
-    "Career Services",
     "AI Chatbot",
     "Mentorship",
   ];
@@ -247,13 +236,6 @@ const ComparePlans = () => {
       climateCommitment: "Priority matching",
       foundingMember: "Priority matching",
     },
-    // {
-    //   feature: "Career resources",
-    //   explore: "—",
-    //   climateCareer: "✓",
-    //   climateCommitment: "✓",
-    //   foundingMember: "✓",
-    // },
     {
       feature: "Founding recognition",
       explore: "—",

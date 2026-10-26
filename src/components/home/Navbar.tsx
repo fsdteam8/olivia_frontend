@@ -54,7 +54,6 @@ export const Navbar = () => {
     { name: "Support Our Work", href: "/support-our-work" },
     { name: "Blogs", href: "/blog" },
     { name: "Mentors & Coaches", href: "/mentor-coaches/all" },
-    { name: "Career Services", href: "/career-services" },
     { name: "Find Your Opportunity", href: "/find-your-opportunity" },
     { name: "Educational Partners", href: "/educational-partners" },
   ];
