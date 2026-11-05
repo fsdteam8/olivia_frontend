@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import PartnerHero from "./_components/PartnerHero";
 import PartnerBenefits from "./_components/PartnerBenefits";
+import FreeCoursesSection from "./_components/FreeCoursesSection";
 import WhoCanJoin from "./_components/WhoCanJoin";
 import PartnerHowItWorks from "./_components/PartnerHowItWorks";
 import PartnerFAQ from "./_components/PartnerFAQ";
@@ -9,7 +10,7 @@ import PartnerCTA from "./_components/PartnerCTA";
 export const metadata: Metadata = {
   title: "Educational Partners Program | Act on Climate",
   description:
-    "Partner with Act on Climate to feature your university degrees, certificates, and climate curriculum. Connect directly with thousands of learners transitioning into green careers.",
+    "Join the Act on Climate Education Partnership Program and showcase your courses, certificates, workshops and training programs to people looking to build their climate and sustainability knowledge.",
   keywords: [
     "Climate Education Partners",
     "University Climate Programs",
@@ -25,6 +26,7 @@ export default function EducationalPartnersPage() {
     <main className="min-h-screen bg-white">
       <PartnerHero />
       <PartnerBenefits />
+      <FreeCoursesSection />
       <WhoCanJoin />
       <PartnerHowItWorks />
       <PartnerFAQ />

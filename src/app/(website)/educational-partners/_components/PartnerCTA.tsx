@@ -25,14 +25,24 @@ export default function PartnerCTA() {
             </h2>
 
             <p className="text-sm sm:text-base lg:text-lg text-gray-200 leading-relaxed max-w-2xl mx-auto">
-              Connect your climate courses, degrees, and certificates with thousands of passionate students and professionals actively driving the transition to net-zero.
+              Join the Act on Climate Education Partnership Program and showcase your courses, certificates, workshops and training programs to people looking to build their climate and sustainability knowledge.
             </p>
 
+            {/* Pricing Information Card */}
+            <div className="inline-block p-4 sm:p-5 rounded-2xl bg-white/10 border border-white/20 backdrop-blur-md text-center max-w-xl mx-auto space-y-1">
+              <span className="text-base sm:text-lg font-extrabold text-[#6CE5D9] block">
+                $150/year - 0% commission - Keep 100% of your course revenue
+              </span>
+              <span className="text-xs text-gray-200 block">
+                No referral fees. No transaction fees. No percentage of your course sales.
+              </span>
+            </div>
+
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
               <Link href="/survey/education-partner" className="w-full sm:w-auto">
                 <Button className="w-full sm:w-auto bg-[#6CE5D9] hover:bg-[#52D3C5] text-[#053535] px-8 py-6 rounded-xl font-bold text-sm shadow-xl transition-all flex items-center justify-center gap-2 group">
-                  <span>Apply as an Education Partner</span>
+                  <span>Become an Education Partner - $150/year</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>

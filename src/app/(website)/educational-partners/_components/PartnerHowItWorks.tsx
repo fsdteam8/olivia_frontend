@@ -110,8 +110,8 @@ export default function PartnerHowItWorks() {
             </p>
           </div>
           <Link href="/survey/education-partner" className="shrink-0 w-full sm:w-auto">
-            <Button className="w-full sm:w-auto bg-[#053535] hover:bg-[#084848] text-white px-7 py-5 rounded-xl font-semibold text-xs shadow-md">
-              Start Application Survey
+            <Button className="w-full sm:w-auto bg-[#053535] hover:bg-[#084848] text-white px-7 py-5 rounded-xl font-bold text-xs shadow-md">
+              Become an Education Partner - $150/year
             </Button>
           </Link>
         </div>

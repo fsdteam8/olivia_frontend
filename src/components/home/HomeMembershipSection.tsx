@@ -32,10 +32,10 @@ export const HomeMembershipSection = () => {
     },
     {
       icon: <GraduationCap className="w-5 h-5 text-[#008080]" />,
-      title: "Education Partner Discounts",
+      title: "Education Partners Program",
       description:
-        "Enjoy exclusive discounts and direct enrollment pathways with accredited climate academies and universities.",
-      highlight: "Up to 30% course savings",
+        "Connect directly with accredited climate academies and universities to discover relevant courses, learning opportunities, and pathways to advance your climate knowledge and skills.",
+      highlight: "Get Access to Courses and More",
     },
     {
       icon: <Sparkles className="w-5 h-5 text-[#008080]" />,

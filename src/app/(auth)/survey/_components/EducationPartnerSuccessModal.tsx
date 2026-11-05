@@ -48,7 +48,7 @@ export default function EducationPartnerSuccessModal() {
 
         {/* Subtitle */}
         <p className="text-[#6B9096] text-sm md:text-base max-w-md mx-auto mb-8">
-          Thank you for completing your Education Partner survey and membership payment ($50.00).
+          Thank you for completing your Education Partner survey and membership payment ($150.00).
         </p>
 
         {/* Status Highlight Box */}

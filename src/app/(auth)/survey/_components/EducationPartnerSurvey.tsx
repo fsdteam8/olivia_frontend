@@ -709,13 +709,13 @@ export default function EducationPartnerSurvey() {
         {/* Centered Submit Action */}
         <div className="pt-4 flex flex-col items-center justify-center text-center space-y-3 border-t border-gray-100">
           <p className="text-xs text-gray-500">
-            Next step: Membership confirmation & Stripe payment checkout ($50/yr).
+            Next step: Membership confirmation & Stripe payment checkout ($150/yr).
           </p>
           <Button
             type="submit"
             className="w-full sm:w-auto h-11 px-10 bg-gradient-to-r from-[#053535] to-[#008080] hover:from-[#032525] hover:to-[#006666] text-white rounded-xl font-bold text-sm shadow-xl transition-all active:scale-95"
           >
-            Continue to Payment ($50/year)
+            Continue to Payment ($150/year)
           </Button>
         </div>
       </form>
@@ -756,7 +756,7 @@ export default function EducationPartnerSurvey() {
               </div>
               <div className="flex justify-between items-center text-base border-t border-gray-200 pt-2 mt-1">
                 <span className="font-bold text-[#053535]">Annual Fee:</span>
-                <span className="font-extrabold text-xl text-[#053535]">$50.00 / year</span>
+                <span className="font-extrabold text-xl text-[#053535]">$150.00 / year</span>
               </div>
             </div>
 
@@ -788,7 +788,7 @@ export default function EducationPartnerSurvey() {
                   </span>
                 ) : (
                   <span className="flex items-center justify-center gap-2">
-                    <ShieldCheck className="w-4 h-4" /> Proceed to Stripe Payment ($50/year) <ArrowRight className="w-4 h-4" />
+                    <ShieldCheck className="w-4 h-4" /> Proceed to Stripe Payment ($150/year) <ArrowRight className="w-4 h-4" />
                   </span>
                 )}
               </Button>

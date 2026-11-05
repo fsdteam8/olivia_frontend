@@ -196,7 +196,7 @@ export default function PartnerDashboardPage() {
           </span>
           <div className="flex items-center gap-2">
             <Award className="w-6 h-6 text-[#004242]" />
-            <span className="text-base font-bold text-[#181919]">$50.00 / year</span>
+            <span className="text-base font-bold text-[#181919]">$150.00 / year</span>
           </div>
           <p className="text-xs text-[#6c6c6c] leading-relaxed">
             0% Commission fee — Keep 100% of student tuition.
