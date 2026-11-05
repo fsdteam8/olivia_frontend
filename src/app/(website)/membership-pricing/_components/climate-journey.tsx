@@ -1,6 +1,5 @@
 import ClimateJourneyBanner from "./climate-journey-banner";
 import PricingCards from "./pricing-cards";
-import PricingCTA from "./pricing-cta";
 import HowItWorksSecondary from "./how-it-work-secoundary";
 import ComparePlans from "./compare-plans";
 import CommunitySection from "@/components/home/CommunitySection";

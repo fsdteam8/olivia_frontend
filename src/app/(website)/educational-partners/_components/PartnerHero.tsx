@@ -23,18 +23,25 @@ export default function PartnerHero() {
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl text-[#053535] hero-font font-bold leading-[1.15] tracking-tight">
-              Empower Global Climate Talent with Your Institution&apos;s Curriculum
+              Help more people discover your climate and sustainability education.
             </h1>
 
             <p className="text-base sm:text-lg text-[#527977] leading-relaxed max-w-2xl">
-              Connect your university degree, certificate program, or specialized climate masterclass with thousands of passionate professionals and learners actively transitioning into the green economy.
+              Join the Act on Climate Education Partnership Program and showcase your courses, certificates, workshops and training programs to people looking to build their climate and sustainability knowledge.
             </p>
 
+            {/* Pricing Information */}
+            <div className="p-4 rounded-2xl bg-[#E6F4F1] border border-[#BBE3DC] text-[#053535]">
+              <span className="text-base sm:text-lg font-extrabold text-[#053535] block">
+                $150/year - 0% commission - Keep 100% of your course revenue
+              </span>
+            </div>
+
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-1">
               <Link href="/survey/education-partner" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto bg-[#053535] hover:bg-[#084848] text-white px-8 py-6 rounded-xl font-semibold text-sm shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 group">
-                  <span>Apply as an Education Partner</span>
+                <Button className="w-full sm:w-auto bg-[#053535] hover:bg-[#084848] text-white px-8 py-6 rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 group">
+                  <span>Become an Education Partner - $150/year</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
@@ -46,6 +53,14 @@ export default function PartnerHero() {
                   How the Program Works
                 </Button>
               </a>
+            </div>
+
+            {/* Additional Information */}
+            <div className="pt-1">
+              <p className="text-xs sm:text-sm font-semibold text-[#008080] flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-[#008080] shrink-0" />
+                <span>No referral fees. No transaction fees. No percentage of your course sales.</span>
+              </p>
             </div>
 
             {/* Micro Highlights */}

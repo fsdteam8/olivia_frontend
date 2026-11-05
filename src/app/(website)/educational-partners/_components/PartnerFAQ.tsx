@@ -30,7 +30,12 @@ const faqs = [
   {
     question: "Is there any cost to join as an Educational Partner?",
     answer:
-      "We provide flexible partnership models. Institutions can apply to become verified partners and publish approved climate courses. For enhanced visibility—such as homepage spotlights, newsletter features, and priority search placement—we offer dedicated institutional sponsorship packages.",
+      "Education Partner membership is $150 per year with 0% commission on your course sales. You keep 100% of your course revenue. There are no referral fees, no transaction fees, and no percentage taken of your course sales.",
+  },
+  {
+    question: "Can we list free courses and workshops?",
+    answer:
+      "Yes! Free courses are welcome. Education Partners can submit free courses, workshops and learning resources alongside paid programs. Whether your course is free or paid, Act on Climate can help learners discover it.",
   },
   {
     question: "How does the partner verification process work?",

@@ -55,6 +55,11 @@ const nextConfig: NextConfig = {
         destination: "/membership-pricing",
         permanent: false,
       },
+      {
+        source: "/pricing",
+        destination: "/membership-pricing",
+        permanent: false,
+      },
     ];
   },
 };
