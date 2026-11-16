@@ -101,10 +101,10 @@ export const MentorsGallery = () => {
             <h2 className="text-4xl text-[#064E4B] mb-2">
               Meet Our Mentors & Coaches
             </h2>
-            <p className="text-[#528B8A]">
+            {/* <p className="text-[#528B8A]">
               Browse {isLoading ? "..." : meta?.total || 0} professionals
               available for guidance.
-            </p>
+            </p> */}
           </div>
 
           {isAllPage ? (
