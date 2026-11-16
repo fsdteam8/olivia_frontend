@@ -105,7 +105,7 @@ export const MentorsGallery = () => {
               Browse {isLoading ? "..." : meta?.total || 0} professionals
               available for guidance.
             </p> */}
-          </div>
+          </div>         
 
           {isAllPage ? (
             <div className="relative w-full max-w-sm">
