@@ -42,9 +42,9 @@ export const Navbar = () => {
   // প্রধান লিংকসমূহ
   const mainLinks = [
     { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { name: "Event", href: "/event" },
+    { name: "Events", href: "/event" },
     { name: "Courses", href: "/courses" },
+    { name: "Educational Partners", href: "/educational-partners" },
     { name: "Media", href: "/media" },
   ];
 
@@ -55,7 +55,6 @@ export const Navbar = () => {
     { name: "Blogs", href: "/blog" },
     { name: "Mentors & Coaches", href: "/mentor-coaches/all" },
     { name: "Find Your Opportunity", href: "/find-your-opportunity" },
-    { name: "Educational Partners", href: "/educational-partners" },
   ];
 
   const membershipLinks = [
@@ -94,12 +93,12 @@ export const Navbar = () => {
         </Link>
 
         {/* Desktop Nav Links */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-4 lg:gap-6 xl:gap-8">
           {mainLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className={`text-sm font-medium transition-colors ${
+              className={`text-sm font-medium transition-colors whitespace-nowrap ${
                 isActive(link.href)
                   ? "text-[#0D3B3F] font-semibold"
                   : "text-gray-600 hover:text-[#0D3B3F]"
@@ -116,7 +115,7 @@ export const Navbar = () => {
             onMouseLeave={() => setIsDropdownOpen(false)}
           >
             <button
-              className={`flex items-center gap-1 text-sm font-medium transition-colors ${
+              className={`flex items-center gap-1 text-sm font-medium transition-colors whitespace-nowrap ${
                 isServicesActive
                   ? "text-[#0D3B3F] font-semibold"
                   : "text-gray-600 hover:text-[#0D3B3F]"
@@ -155,7 +154,7 @@ export const Navbar = () => {
             onMouseLeave={() => setIsMembershipDropdownOpen(false)}
           >
             <button
-              className={`flex items-center gap-1 text-sm font-medium transition-colors ${
+              className={`flex items-center gap-1 text-sm font-medium transition-colors whitespace-nowrap ${
                 isMembershipActive
                   ? "text-[#0D3B3F] font-semibold"
                   : "text-gray-600 hover:text-[#0D3B3F]"

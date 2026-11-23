@@ -137,7 +137,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t  border-gray-300 pt-8 flex md:row justify-between items-center text-[16px] text-gray-400">
-          <p>© Copyright 2024. All Rights Reserved</p>
+          <p>© Copyright 2026. All Rights Reserved</p>
           <div className="flex gap-4 mt-4 md:mt-0">
             <a href="/privacy-policy" className="hover:text-green-600">Privacy policy</a>
             <span>•</span>
